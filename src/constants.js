@@ -1,0 +1,2 @@
+const TURN_START_HAND_SIZE = 4;
+const MAX_HAND_SIZE = 7;

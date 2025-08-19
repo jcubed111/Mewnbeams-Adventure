@@ -9,20 +9,20 @@ const cardLibrary = {
 
         damage = 1;
     },
-    Maul: class extends Card{
-        cardName = 'Maul';
-        primaryColor = '#822';
-        actionCost = 2;
+    // Maul: class extends Card{
+    //     cardName = 'Maul';
+    //     primaryColor = '#822';
+    //     actionCost = 2;
 
-        damage = 3;
-    },
-    Paw: class extends Card{
-        cardName = 'Paw';
-        primaryColor = '#822';
-        actionCost = 0;
+    //     damage = 3;
+    // },
+    // Paw: class extends Card{
+    //     cardName = 'Paw';
+    //     primaryColor = '#822';
+    //     actionCost = 0;
 
-        damage = 0;
-    },
+    //     damage = 0;
+    // },
     Swipe: class extends Card{
         cardName = 'Swipe';
         primaryColor = '#b52';
@@ -33,13 +33,13 @@ const cardLibrary = {
         damage = 1;
         exhaust = true;
     },
-    Scratch: class extends Card{
-        cardName = 'Scratch';
-        primaryColor = '#822';
-        actionCost = 1;
+    // Scratch: class extends Card{
+    //     cardName = 'Scratch';
+    //     primaryColor = '#822';
+    //     actionCost = 1;
 
-        bleed = 1;
-    },
+    //     bleed = 1;
+    // },
     Meow: class extends Card{
         cardName = 'Meow';
         primaryColor = '#822';
@@ -47,21 +47,21 @@ const cardLibrary = {
 
         draw = 2;
     },
-    Bite: class extends Card{
-        cardName = 'Bite';
-        primaryColor = '#822';
-        actionCost = 1;
+    // Bite: class extends Card{
+    //     cardName = 'Bite';
+    //     primaryColor = '#822';
+    //     actionCost = 1;
 
-        damage = 1;
-        selfHeal = 1;
-    },
-    Hiss: class extends Card{
-        cardName = 'Hiss';
-        primaryColor = '#822';
-        actionCost = 1;
+    //     damage = 1;
+    //     selfHeal = 1;
+    // },
+    // Hiss: class extends Card{
+    //     cardName = 'Hiss';
+    //     primaryColor = '#822';
+    //     actionCost = 1;
 
-        fear = 1;
-    },
+    //     fear = 1;
+    // },
 
     // - dodge - next attack misses
     // - swat - move enemy left 1 spot

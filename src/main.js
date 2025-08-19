@@ -2,70 +2,21 @@ const enemyManager = new EnemyManager();
 const cardManager = new CardManager([
     new cardLibrary.Claw(),
     new cardLibrary.Claw(),
-    new cardLibrary.Swipe(),
+    new cardLibrary.Meow(),
+    new cardLibrary.Meow(),
+    new cardLibrary.ConveneWithSpirits(),
+    new cardLibrary.Meow(),
+    new cardLibrary.Meow(),
+    new cardLibrary.Meow(),
     new cardLibrary.Swipe(),
     new cardLibrary.Swipe(),
     new cardLibrary.SeeGhost(),
     new cardLibrary.Channel(),
 ]);
-const player = new class extends Character{
-    characterName = 'Mewnbeam';
-    size = 210;
-    maxHp = 40;
-
-    actionPoints = 3;
-    manaPoints = 1;
-
-    render() {
-        super.render();
-        this.el.style.bottom = '270rem';
-        this.el.style.left = '50rem';
-        this.el.classList.add('C--playerCharacter');
-
-        this.resourceSprite.showAndRender(this.actionPoints, this.manaPoints);
-    }
-
-    resourceSprite = new class extends Sprite{
-        makeEl() {
-            return div('C--resources', [
-                div('C--manaRow'),
-                div('C--actionPointRow'),
-            ]);
-        }
-        render(actionPoints, manaPoints) {
-            setChildNumber(
-                this.el.querySelector('.C--actionPointRow'),
-                actionPoints,
-                _ => div('C--costA'),
-            );
-            setChildNumber(
-                this.el.querySelector('.C--manaRow'),
-                manaPoints,
-                _ => div('C--costM'),
-            );
-        }
-    }
-
-    pay(actionCost, manaCost) {
-        this.actionPoints -= actionCost;
-        this.manaPoints -= manaCost;
-        this.render();
-    }
-};
+const player = new Player();
 
 
 async function main() {
-    // const card = new cardLibrary.ConveneWithSpirits();
-    // card.showAndRender();
-
-    // await enemyManager.animateIn([
-    // ]);
-    // await enemyManager.animateIn([
-    // ], 1);
-    // const monster = new BasicRat();
-    // monster.showAndRender();
-    // monster.el.addEventListener('click', () => monster.animateDamage(1));
-
     // keep this here so it doesn't get optimized out
     zzfx(...[,,925,.04,.3,.6,1,.3,,6.27,-184,.09,.17]); // Game Over
 
@@ -74,9 +25,9 @@ async function main() {
     player.showAndRender();
 
     await runBattle([
-        new BasicRat(),
-        new RatGuard(),
-        new RatWizard(),
+        new monsterLibrary.BasicRat(),
+        new monsterLibrary.RatGuard(),
+        new monsterLibrary.RatWizard(),
     ]);
 }
 window.addEventListener('load', main);
@@ -87,11 +38,9 @@ async function runBattle(enemies) {
     cardManager.resetForRound();
     await wait(0.1);
 
-    const HAND_SIZE = 5;
-
     await Promise.all([
         enemyManager.animateIn(enemies),
-        cardManager.draw(HAND_SIZE),
+        cardManager.draw(TURN_START_HAND_SIZE),
     ]);
 
     battleTurnLoop: while(true) {
@@ -109,9 +58,11 @@ async function runBattle(enemies) {
 
                 player.pay(card.actionCost, card.manaCost);
 
-                card.play(target ? [target] : enemyManager.activeEnemies);
-
-                await wait(0.2);
+                // if the card is instant, wait at least 0.2 secs
+                await Promise.all([
+                    card.play(target ? [target] : enemyManager.activeEnemies),
+                    wait(0.2),
+                ]);
 
                 enemyManager.removeDead();
                 if(enemyManager.activeEnemies.length == 0) {
@@ -154,7 +105,7 @@ async function runBattle(enemies) {
 
         enemyManager.activeEnemies.forEach(enemy => enemy.resetAction());
 
-        await cardManager.draw(HAND_SIZE);
+        await cardManager.draw(TURN_START_HAND_SIZE);
     }
 
     // cleanup

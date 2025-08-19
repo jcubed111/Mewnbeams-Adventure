@@ -134,12 +134,15 @@ class Card extends Sprite{
             && player.actionPoints >= this.actionCost;
     }
 
-    play(targets) {
+    async play(targets) {
         if(this.damage != undefined) {
             targets.forEach(t => t.animateDamage(this.damage));
         }
         if(this.gainMana != undefined) {
             player.pay(0, -this.gainMana);
+        }
+        if(this.draw) {
+            await cardManager.draw(this.draw);
         }
         // TODO: other effects
     }

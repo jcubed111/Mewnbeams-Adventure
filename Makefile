@@ -1,10 +1,13 @@
 JS_FILES := \
 	src/zzfx.js \
+	src/constants.js \
 	src/utils.js \
 	src/monsterActions.js \
 	src/sprite.js \
 	src/character.js \
 	src/card.js \
+	src/player.js \
+	src/monsterLibrary.js \
 	src/cardLibrary.js \
 	src/cardManager.js \
 	src/enemyManager.js \

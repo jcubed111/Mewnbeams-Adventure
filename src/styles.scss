@@ -45,20 +45,17 @@ body{
     border: 5rem solid #469;
     // z index ranges from 11-20, 24 for hover, 25 for draw & discard
 
-    &:hover{
+    &:hover, &.C--active{
         transform: rotate(0deg)!important;
-        z-index: 24;
+        z-index: 24!important;
     }
 
     &.C--active{
-        z-index: 24;
-        transform: rotate(0deg)!important;
         box-shadow: 0 0 0 4rem #fff;
         transition:
             inset 0.1s linear,
             transform 0.4s ease-out,
             opacity 0.4s linear;
-            z-index: 24;
     }
 
     &.C--unplayable{

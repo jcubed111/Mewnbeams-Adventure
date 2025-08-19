@@ -131,7 +131,12 @@ class CardManager{
                 await wait(0.4);
             }
         }
-        this.hand.unshift(this.drawPile.pop());
+        // If your hand is full, your draws go to the discard pile
+        const dest = this.hand.length < MAX_HAND_SIZE
+            ? this.hand
+            : this.discardPile;
+        dest.unshift(this.drawPile.pop());
+
         this.render();
         if(!instant) {
             await wait(0.4);

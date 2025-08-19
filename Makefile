@@ -1,6 +1,7 @@
 JS_FILES := \
 	src/zzfx.js \
 	src/utils.js \
+	src/monsterActions.js \
 	src/sprite.js \
 	src/character.js \
 	src/card.js \

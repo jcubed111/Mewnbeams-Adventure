@@ -95,8 +95,11 @@ async function runBattle(enemies) {
     ]);
 
     battleTurnLoop: while(true) {
-        // player turn
+        /* player turn */
         while(true) {
+            // update enemy actions
+            enemyManager.render();
+
             const result = await getMove();
             if(result == "pass") {
                 console.log("pass");
@@ -125,9 +128,31 @@ async function runBattle(enemies) {
 
         await cardManager.discardHand();
 
+        /* monster turn */
+        enemyManager.activeEnemies.forEach(e => e.resetBlock());
+
+        const startOfRoundEnemies = [...enemyManager.activeEnemies];
+        for(const enemy of startOfRoundEnemies) {
+            // It's possible this got killed by a fellow enemy before
+            // moving. If so, skip.
+            if(enemy.currentHp <= 0) continue;
+            enemy.peekAction().run(enemy);
+            enemyManager.removeDead();
+            await wait(0.1);
+            enemy.clearAction();
+            await wait(0.5);
+        }
+
+        if(enemyManager.activeEnemies.length == 0) {
+            break battleTurnLoop;
+        }
+
+        /* reset */
         player.manaPoints += 1;
         player.actionPoints = 3;
         player.render();
+
+        enemyManager.activeEnemies.forEach(enemy => enemy.resetAction());
 
         await cardManager.draw(HAND_SIZE);
     }

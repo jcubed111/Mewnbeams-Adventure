@@ -30,10 +30,12 @@ body{
     display: flex;
     flex-direction: column;
     position: absolute;
+    margin: 0;
     transition:
         inset 0.4s ease-in-out,
         transform 0.4s ease-in-out,
-        opacity 0.4s linear;
+        opacity 0.4s linear,
+        margin 0.15s linear;  // used for attack animation
 }
 
 .C--card{
@@ -146,8 +148,6 @@ body{
     align-items: center;
     gap: 5rem;
 
-    // .C--playerCharacter is the player
-
     .C--gettingMonsterTarget &:hover:not(.C--playerCharacter){
         box-shadow: 0 0 15rem #fff8;
     }
@@ -162,7 +162,7 @@ body{
         font-size: 21rem;
     }
 
-    .C--hp{
+    .C--hp, .C--block{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -173,10 +173,18 @@ body{
             max-width: 201rem;
         }
     }
+
+    .C--pendingAction{
+        font-size: 30rem;
+    }
+}
+
+.C--playerCharacter .C--pendingAction{
+    display: none;
 }
 
 // hp chunks
-.C--hpChunk-full, .C--hpChunk-empty, .C--hpChunk-pending{
+.C--hpChunk-full, .C--hpChunk-empty, .C--hpChunk-pending, .C--blockChunk{
     width: 20rem;
     height: 20rem;
     $outset: 25%;
@@ -187,15 +195,18 @@ body{
         0% - $outset 50%,
     );
 }
-.C--hpChunk-full{  // a full hp
+.C--hpChunk-full{
     background: #ef2641;
 }
-.C--hpChunk-pending{  // a pending hp
+.C--hpChunk-pending{
     background: #ddd;
 }
-.C--hpChunk-empty{  // an empty hp
+.C--hpChunk-empty{
     background: #52304f;
     transition: background 0.4s;
+}
+.C--blockChunk{
+    background: #bbb;
 }
 
 .C--arrowCanvas{

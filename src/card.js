@@ -10,7 +10,7 @@ class Card extends Sprite{
     primaryColor = '#f00';
     actionCost = 1;
     manaCost = 0;
-    discardSpot = range(0, 1).map(_ => Math.random() * 150 - 75);
+    discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
 
     /* Card effect props, roughly in display order */
     // Numbers use `undefined` so that the value `0` is

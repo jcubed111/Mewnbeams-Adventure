@@ -38,12 +38,14 @@ class EnemyManager{
         this.activeEnemies = [];
     }
 
-    removeDead() {
+    async removeDead() {
         const dead = this.activeEnemies.filter(e => e.currentHp <= 0);
         this.activeEnemies = this.activeEnemies.filter(e => e.currentHp > 0);
         dead.forEach(async enemy => {
             await enemy.fadeOut();
             enemy.hide();
         });
+        await wait(0.4);
+        this.render();
     }
 }

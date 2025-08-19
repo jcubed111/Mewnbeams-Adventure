@@ -1,0 +1,215 @@
+class CardManager{
+    drawPile = [];
+    hand = [];
+    pending = [];
+    discardPile = [];
+    exhaustPile = [];
+    targetArrow = new class extends Sprite{
+        makeEl() {
+            return styled('canvas', 'arrow');
+        }
+
+        render(startEl, endX, endY) {
+            if(!startEl) return;
+            const {width, height, left, top} = document.body.getBoundingClientRect();
+            this.el.width = width;
+            this.el.height = height;
+            const bounds = startEl.getBoundingClientRect();
+            const startX = bounds.left - left + bounds.width / 2;
+            const startY = bounds.top - top + bounds.height / 2;
+
+            const ctx = this.el.getContext('2d');
+            ctx.clearRect(0, 0, 1e6, 1e6);
+            ctx.lineCap = 'round';
+            ctx.setLineDash([30]);
+            ctx.beginPath();
+            ctx.moveTo(endX, endY);
+            ctx.lineTo(startX, startY);
+
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 28;
+            ctx.stroke();
+
+            ctx.strokeStyle = '#a0f';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+        }
+    };
+
+    passButton = new class extends Sprite{
+        makeEl() {
+            return div('pass', ["End Turn"]);
+        }
+    }
+
+    // Tracks activating a card to play it
+    active = null;
+    activationPosition = [];  // [x, y, dx, dy]
+    // the x,y is used for an absolute screen
+    // position, whereas dx,dy is ued when dragging
+    // a card.
+
+    constructor(startingDeck) {
+        this.deck = [...startingDeck];
+    }
+
+    render() {
+        this.passButton.showAndRender();
+
+        const [ax, ay, activeDx, activeDy] = this.activationPosition;
+
+        this.drawPile.forEach(card => {
+            card.showAndRender();
+            card.setDrawPosition();
+        });
+        this.pending.forEach(card => {
+            card.showAndRender();
+        });
+        this.hand.forEach((card, i) => {
+            card.showAndRender();
+            const isActive = card === this.active;
+            card.setHandPosition(
+                i,
+                this.hand.length,
+                isActive,
+                ...(isActive && !card.isTargeted() ? [activeDx || 0, activeDy || 0] : [0, 0]),
+            );
+        });
+        this.discardPile.forEach(card => {
+            card.showAndRender();
+            card.setDiscardPosition();
+        });
+        this.exhaustPile.forEach(card => {
+            card.showAndRender();
+            card.setExhaustedPosition();
+        });
+
+        // render activation
+        if(this.active?.isTargeted()) {
+            this.targetArrow.showAndRender(this.active?.el, ax, ay);
+        }else{
+            this.targetArrow.hide();
+        }
+    }
+
+    canDraw() {
+        return this.drawPile.length > 0 || this.discardPile.length > 0;
+    }
+
+    resetForRound() {
+        // hide all first to make sure we hide any non-deck cards stuck in
+        // hand/exhaust/etc.
+        this.hideAll();
+        // reset our piles to just the deck
+        this.drawPile = shuffleInPlace([...this.deck]);
+        this.hand = [];
+        this.pending = [];
+        this.discardPile = [];
+        this.exhaustPile = [];
+        // render, but don't yet deal.
+        this.render();
+    }
+
+    hideAll() {
+        // remove all cards from view
+        [
+            ...this.deck,
+            ...this.drawPile,
+            ...this.hand,
+            ...this.pending,
+            ...this.discardPile,
+            ...this.exhaustPile,
+        ].forEach(c => c.hide());
+    }
+
+    async drawOne(instant = false) {
+        if(this.drawPile.length == 0) {
+            if(this.discardPile.length == 0) return;  // can't draw
+            this.reshuffle();
+            this.render();
+            if(!instant) {
+                await wait(0.4);
+            }
+        }
+        this.hand.unshift(this.drawPile.pop());
+        this.render();
+        if(!instant) {
+            await wait(0.4);
+        }
+    }
+
+    async draw(num, instant = false) {
+        for(let i = 0; i < num; i++) {
+            if(!this.canDraw()) return;
+            await this.drawOne(instant);
+        }
+    }
+
+    reshuffle() {
+        this.drawPile = [...this.drawPile, ...this.discardPile];
+        this.discardPile = [];
+        shuffleInPlace(this.drawPile);
+    }
+
+    async getCardActivateOrPass() {
+        // Adds listeners to wait for a card activate event
+        // returns the card the gets activated and the event,
+        // then removes listeners.
+        const removers = [];
+        document.body.classList.add('getC');
+        this.render();
+        const [card, activateEvent] = await new Promise(resolve => {
+            for(const card of this.hand) {
+                if(!card.playable()) continue;
+                const cb = e => resolve([card, e]);
+                card.el.addEventListener('mousedown', cb);
+                removers.push(() => card.el.removeEventListener('mousedown', cb));
+            }
+
+            const pass = e => resolve(["pass", e]);
+            this.passButton.el.addEventListener('click', pass);
+            removers.push(() => {
+                this.passButton.el.removeEventListener('click', pass);
+            });
+        });
+        document.body.classList.remove('getC');
+        removers.forEach(r => r());
+
+        if(card != "pass") {
+            this.active = card;
+        }
+        this.render();
+        return [card, activateEvent];
+    }
+
+    setPending(card) {
+        this.pending.push(card);
+        this.hand = this.hand.filter(c => c != card);
+        this.render();
+    }
+
+    discardPending() {
+        this.discardPile.push(...this.pending);
+        this.pending = [];
+        this.render();
+    }
+
+    async discardHand(instant = false) {
+        this.discardPile.push(...this.hand);
+        this.hand = [];
+        this.render();
+        if(!instant) await wait(0.4);
+    }
+
+    exhaustPending() {
+        this.exhaustPile.push(...this.pending);
+        this.pending = [];
+        this.render();
+    }
+
+    deactivate() {
+        this.activationPosition = [];
+        this.active = null;
+        this.render();
+    }
+}

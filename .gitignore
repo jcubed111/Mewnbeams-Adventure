@@ -1,0 +1,6 @@
+dist/
+dev/
+build/
+out.zip
+node_modules
+js13kgames2025.sublime-workspace

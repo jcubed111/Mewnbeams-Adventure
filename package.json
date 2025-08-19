@@ -1,0 +1,11 @@
+{
+  "name": "js13kgames2025",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "google-closure-compiler": "^20250813.0.0",
+    "html-minifier": "^4.0.0",
+    "sass": "^1.90.0"
+  }
+}

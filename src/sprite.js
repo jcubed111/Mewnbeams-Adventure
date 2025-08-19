@@ -1,0 +1,25 @@
+class Sprite{
+    el = null;
+    makeEl() {
+        return div();
+    }
+
+    showAndRender(...renderArgs) {
+        if(!this.el) {
+            this.el = this.makeEl();
+            document.body.appendChild(this.el);
+        }
+        this.render(...renderArgs);
+    }
+    render() {}
+    hide() {
+        this.el?.remove();
+        this.el = null;
+    }
+
+    async fadeOut() {
+        this.el.style.opacity = 0;
+        this.el.style.pointerEvents = 'none';
+        await wait(0.5);
+    }
+}

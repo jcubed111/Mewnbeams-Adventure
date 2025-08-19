@@ -1,0 +1,237 @@
+html{
+    // define the font size as 1% of the view square
+    font-size: min(0.1vw, 0.1vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+body{
+    background: #102;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+    width: 1000rem;
+    height: 1000rem;
+    overflow: hidden;
+    font-size: 15rem;
+    margin: 0;
+    text-wrap: balance;
+    position: relative;
+    color: #ddd;
+    user-select: none;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.card, .monst{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    transition:
+        inset 0.4s ease-in-out,
+        transform 0.4s ease-in-out,
+        opacity 0.4s linear;
+}
+
+.card{
+    width: 190rem;
+    height: 285rem;
+    background: #123;
+    border: 5rem solid #469;
+    // z index ranges from 11-20, 24 for hover, 25 for draw & discard
+
+    &:hover{
+        transform: rotate(0deg)!important;
+        z-index: 24;
+    }
+
+    &.act{
+        z-index: 24;
+        transform: rotate(0deg)!important;
+        box-shadow: 0 0 0 4rem #fff;
+        transition:
+            inset 0.1s linear,
+            transform 0.4s ease-out,
+            opacity 0.4s linear;
+            z-index: 24;
+    }
+
+    &.unplayable{
+        filter: grayscale(50%);
+        border-color: #666;
+    }
+
+    .pic{
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        image-rendering: pixelated;
+        background: url(c.png) 25% top / 500% 500% color-mix(in oklab, var(--color), #000 70%);
+        // prevents rounding errors from showing the adjacent sprite at the edges
+        box-shadow: inset 0 0 0 1px #000;
+    }
+
+    .costA, .costM{
+        position: absolute;
+        top: -2rem;
+        left: -2rem;
+        z-index: 1;
+    }
+
+    .costM{
+        top: 38rem;
+    }
+
+    .name{
+        background: var(--color);
+        font-size: 21rem;
+        padding: 5rem;
+    }
+
+    .text{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 5rem;
+        flex: 1 1 auto;
+        font-size: 18rem;
+        justify-content: center;
+
+        .line{
+
+        }
+    }
+}
+
+.costA, .costM{
+    font-size: 21rem;
+    width: 35rem;
+    height: 35rem;
+    font-weight: bold;
+    padding: 2rem;
+    position: relative;
+    &:before{
+        content: '';
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.costA:before{
+    inset: 0;
+    background: #a08;
+    outline: 2rem solid #804;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.costM:before{
+    inset: -3rem;
+    background: #08a;
+    outline: 2rem solid #048;
+    border-radius: 50%;
+}
+
+.monst{
+    align-items: center;
+    gap: 5rem;
+
+    // .pl is the player
+
+    .getM &:hover:not(.pl){
+        box-shadow: 0 0 15rem #fff8;
+    }
+
+    .pic{
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background: #fff6;
+    }
+
+    .name{
+        font-size: 21rem;
+    }
+
+    .hp{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        max-width: 101rem;
+
+        &.wide{
+            max-width: 201rem;
+        }
+    }
+
+    // hp chunks
+    .f, .e, .p{
+        width: 20rem;
+        height: 20rem;
+        $outset: 25%;
+        clip-path: polygon(
+            50% 0% - $outset,
+            100% + $outset 50%,
+            50% 100% + $outset,
+            0% - $outset 50%,
+        );
+    }
+    .f{  // a full hp
+        background: #ef2641;
+    }
+    .p{  // a pending hp
+        background: #ddd;
+    }
+    .e{  // an empty hp
+        background: #52304f;
+        transition: background 0.4s;
+    }
+}
+
+.arrow{
+    // the arrow canvas
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9;
+}
+
+.pass{
+    position: absolute;
+    right: 10rem;
+    bottom: 310rem;
+    z-index: 30;
+    padding: 7rem 14rem;
+    font-size: 22rem;
+    background: #123;
+    border: 5rem solid #469;
+}
+
+.resources{
+    position: absolute;
+    left: 10rem;
+    bottom: 310rem;
+    z-index: 9;
+    .act, .mana {
+        margin-top: 15rem;
+        display: flex;
+        flex-direction: row;
+        height: 35rem;
+
+        &>div:before{
+            box-shadow: 0 0 0 6rem #fffa;
+        }
+    }
+}
+
+.getC .card:not(.unplayable), .getC .pass{
+    // the "click a card" state
+    box-shadow: 0 0 0 4rem #8bd;
+    cursor: pointer;
+
+    &:hover{
+        box-shadow: 0 0 0 4rem #e8f;
+    }
+}

@@ -79,7 +79,7 @@ body{
         width: 100%;
         aspect-ratio: 4 / 3;
         image-rendering: pixelated;
-        background: url(c.png) 25% top / 500% 500% color-mix(in oklab, var(--color), #000 70%);
+        background: url(c.png) 25% top / 500% 500%;
         // prevents rounding errors from showing the adjacent sprite at the edges
         box-shadow: inset 0 0 0 1px #000;
     }

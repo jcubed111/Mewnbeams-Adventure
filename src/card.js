@@ -1,6 +1,7 @@
-function CardPic(index, hueShiftDeg) {
-    return [index, hueShiftDeg];
-}
+const CardPic = (index, primaryColor) => () => styledDiv('C--pic', {
+    backgroundPosition: `${(index % 5) * 25}% ${(~~(index / 5)) * 25}%`,
+    backgroundColor: primaryColor,
+});
 
 
 class Card extends Sprite{
@@ -15,14 +16,14 @@ class Card extends Sprite{
 
     /* Render Methods */
     makeEl() {
-        const [picIndex, hueShiftDeg] = this.pic;
         return styledDiv('C--card', {'--color': this.primaryColor}, [
             div('C--costA', ['' + this.actionCost]),
             this.manaCost > 0 && div('C--costM', ['' + this.manaCost]),
-            styledDiv('C--pic', {
-                backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
-                filter: `hue-rotate(${hueShiftDeg}deg)`,
-            }),
+            // styledDiv('C--pic', {
+            //     backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
+            //     filter: `hue-rotate(${hueShiftDeg}deg)`,
+            // }),
+            this.pic(),
             div('C--name', [this.cardName]),
             div(
                 'C--text',

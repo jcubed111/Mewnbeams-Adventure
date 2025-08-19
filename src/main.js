@@ -20,28 +20,28 @@ const player = new class extends Character{
         super.render();
         this.el.style.bottom = '270rem';
         this.el.style.left = '50rem';
-        this.el.classList.add('pl');
+        this.el.classList.add('C--playerCharacter');
 
         this.resourceSprite.showAndRender(this.actionPoints, this.manaPoints);
     }
 
     resourceSprite = new class extends Sprite{
         makeEl() {
-            return div('resources', [
-                div('mana'),
-                div('act'),
+            return div('C--resources', [
+                div('C--manaRow'),
+                div('C--actionPointRow'),
             ]);
         }
         render(actionPoints, manaPoints) {
             setChildNumber(
-                this.el.querySelector('.act'),
+                this.el.querySelector('.C--actionPointRow'),
                 actionPoints,
-                _ => div('costA'),
+                _ => div('C--costA'),
             );
             setChildNumber(
-                this.el.querySelector('.mana'),
+                this.el.querySelector('.C--manaRow'),
                 manaPoints,
-                _ => div('costM'),
+                _ => div('C--costM'),
             );
         }
     }
@@ -189,7 +189,7 @@ async function getMove() {
         }
 
         if(activeCard.isTargeted()) {
-            document.body.classList.add('getM');
+            document.body.classList.add('C--gettingMonsterTarget');
         }
         window.addEventListener('mouseup', onMouseUp, {'once': true});
         window.addEventListener('mousemove', onMouseMove);
@@ -199,7 +199,7 @@ async function getMove() {
             window.removeEventListener('click', onEnd);
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('keydown', onKeyDown);
-            document.body.classList.remove('getM');
+            document.body.classList.remove('C--gettingMonsterTarget');
         };
     });
 

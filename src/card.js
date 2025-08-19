@@ -41,24 +41,24 @@ class Card extends Sprite{
     /* Render Methods */
     makeEl() {
         const [picIndex, hueShiftDeg] = this.pic;
-        return styledDiv('card', {'--color': this.primaryColor}, [
-            div('costA', ['' + this.actionCost]),
-            this.manaCost > 0 && div('costM', ['' + this.manaCost]),
-            styledDiv('pic', {
+        return styledDiv('C--card', {'--color': this.primaryColor}, [
+            div('C--costA', ['' + this.actionCost]),
+            this.manaCost > 0 && div('C--costM', ['' + this.manaCost]),
+            styledDiv('C--pic', {
                 backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
                 filter: `hue-rotate(${hueShiftDeg}deg)`,
             }),
-            div('name', [this.cardName]),
+            div('C--name', [this.cardName]),
             div(
-                'text',
+                'C--text',
                 this.getTextLines()
-                    .map(d => div('line', [d]))
+                    .map(d => div('', [d]))
             ),
         ]);
     }
 
     render() {
-        this.el.classList.toggle('unplayable', !this.playable());
+        this.el.classList.toggle('C--unplayable', !this.playable());
     }
 
     getTextLines() {
@@ -92,7 +92,7 @@ class Card extends Sprite{
         this.el.style.left = `calc(${leftRem}rem + ${dx}px)`;
         this.el.style.bottom = `calc(${bottomRem}rem - ${dy}px)`;
 
-        this.el.classList.toggle('act', activated);
+        this.el.classList.toggle('C--active', activated);
     }
 
     setDrawPosition() {
@@ -100,7 +100,7 @@ class Card extends Sprite{
         this.el.style.zIndex = 25;
         this.el.style.left = '-250rem';
         this.el.style.bottom = '-100rem';
-        this.el.classList.toggle('act', false);
+        this.el.classList.toggle('C--active', false);
     }
 
     setDiscardPosition() {
@@ -108,7 +108,7 @@ class Card extends Sprite{
         this.el.style.zIndex = 25;
         this.el.style.left = '1050rem';
         this.el.style.bottom = '-100rem';
-        this.el.classList.toggle('act', false);
+        this.el.classList.toggle('C--active', false);
     }
 
     setExhaustedPosition() {

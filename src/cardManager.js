@@ -6,7 +6,7 @@ class CardManager{
     exhaustPile = [];
     targetArrow = new class extends Sprite{
         makeEl() {
-            return styled('canvas', 'arrow');
+            return styled('canvas', 'C--arrowCanvas');
         }
 
         render(startEl, endX, endY) {
@@ -38,7 +38,7 @@ class CardManager{
 
     passButton = new class extends Sprite{
         makeEl() {
-            return div('pass', ["End Turn"]);
+            return div('C--passButton', ["End Turn"]);
         }
     }
 
@@ -156,7 +156,7 @@ class CardManager{
         // returns the card the gets activated and the event,
         // then removes listeners.
         const removers = [];
-        document.body.classList.add('getC');
+        document.body.classList.add('C--gettingCard');
         this.render();
         const [card, activateEvent] = await new Promise(resolve => {
             for(const card of this.hand) {
@@ -172,7 +172,7 @@ class CardManager{
                 this.passButton.el.removeEventListener('click', pass);
             });
         });
-        document.body.classList.remove('getC');
+        document.body.classList.remove('C--gettingCard');
         removers.forEach(r => r());
 
         if(card != "pass") {

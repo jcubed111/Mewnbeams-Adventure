@@ -10,6 +10,7 @@ class Card extends Sprite{
     primaryColor = '#f00';
     actionCost = 1;
     manaCost = 0;
+    discardSpot = range(0, 1).map(_ => Math.random() * 150 - 75);
 
     /* Card effect props, roughly in display order */
     // Numbers use `undefined` so that the value `0` is
@@ -93,6 +94,7 @@ class Card extends Sprite{
         this.el.style.bottom = `calc(${bottomRem}rem - ${dy}px)`;
 
         this.el.classList.toggle('C--active', activated);
+        this.el.classList.toggle('C--faceDown', false);
     }
 
     setDrawPosition() {
@@ -101,14 +103,17 @@ class Card extends Sprite{
         this.el.style.left = '-250rem';
         this.el.style.bottom = '-100rem';
         this.el.classList.toggle('C--active', false);
+        this.el.classList.toggle('C--faceDown', true);
     }
 
     setDiscardPosition() {
+        const [dx, dy] = this.discardSpot;
         this.el.style.transform = `rotate(0deg)`;
         this.el.style.zIndex = 25;
-        this.el.style.left = '1050rem';
-        this.el.style.bottom = '-100rem';
+        this.el.style.left = `${dx + 1100}rem`;
+        this.el.style.bottom = `${dy - 100}rem`;
         this.el.classList.toggle('C--active', false);
+        this.el.classList.toggle('C--faceDown', false);
     }
 
     setExhaustedPosition() {

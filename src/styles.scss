@@ -64,6 +64,18 @@ body{
         border-color: #666;
     }
 
+    &.C--faceDown:before{
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: repeating-linear-gradient(45deg, #123 0 10rem, #246 10rem 20rem);
+    }
+
+    &.C--faceDown .C--costA{
+        display: none;
+    }
+
     .C--pic{
         width: 100%;
         aspect-ratio: 4 / 3;

@@ -9,7 +9,7 @@ const cardManager = new CardManager([
     new cardLibrary.Channel(),
 ]);
 const player = new class extends Character{
-    characterName = 'Moona';
+    characterName = 'Mewnbeam';
     size = 210;
     maxHp = 40;
 

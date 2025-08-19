@@ -12,32 +12,6 @@ class Card extends Sprite{
     manaCost = 0;
     discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
 
-    /* Card effect props, roughly in display order */
-    // Numbers use `undefined` so that the value `0` is
-    // available, ie `Attack 0` is a valid card.
-
-    // TARGETING
-    // makes the card hit all enemies
-    toAll = false;
-
-    // ENEMY EFFECTS
-    // damage?: number
-    damage;
-    // bleed?: number - damage per turn, decay 1 per turn
-    bleed;
-    // fear?: number - reduces next attack by X, decay all
-    fear;
-
-    // SELF EFFECTS
-    // gainMana?: number - gain mana
-    gainMana;
-    // selfHeal ?: number - heal for this amount
-    selfHeal;
-    // draw?: number - draw more cards
-    draw;
-
-    // exhaust after playing
-    exhaust = false;
 
     /* Render Methods */
     makeEl() {
@@ -60,21 +34,6 @@ class Card extends Sprite{
 
     render() {
         this.el.classList.toggle('C--unplayable', !this.playable());
-    }
-
-    getTextLines() {
-        const toAllText = this.toAll ? ' to All' : '';
-        return [
-            this.damage != undefined && `Attack ${this.damage}${toAllText}`,
-            this.bleed != undefined && `Bleed ${this.bleed}${toAllText}`,
-            this.fear != undefined && `Scare ${this.fear}${toAllText}`,
-
-            this.gainMana != undefined && `Gain ${this.gainMana} Mana`,
-            this.selfHeal != undefined && `Heal ${this.selfHeal}`,
-            this.draw != undefined && `Draw ${this.draw}`,
-
-            this.exhaust && `Exhaust`,
-        ].filter(l => l);
     }
 
     setHandPosition(index, outOf, activated, dx, dy) {
@@ -134,16 +93,61 @@ class Card extends Sprite{
             && player.actionPoints >= this.actionCost;
     }
 
+    /* Card Effects */
+    /* roughly in display order */
+    // Numbers use `undefined` so that the value `0` is
+    // available, ie `Attack 0` is a valid card.
+
+    // NON-PLAY EFFECTS (not used in the play method)
+    // makes the card hit all enemies
+    toAll = false;
+    // exhaust after playing
+    exhaust = false;
+
+    // ENEMY EFFECTS
+    // damage?: number
+    damage;
+    // bleed?: number - damage per turn, decay 1 per turn
+    bleed;
+    // fear?: number - reduces next attack by X, decay all
+    fear;
+
+    // SELF EFFECTS
+    // gainMana?: number - gain mana
+    gainMana;
+    // selfHeal ?: number - heal for this amount
+    selfHeal;
+    // draw?: number - draw more cards
+    draw;
+
+    getTextLines() {
+        const toAllText = this.toAll ? ' to All' : '';
+        return [
+            this.damage != undefined && `Attack ${this.damage}${toAllText}`,
+            this.bleed != undefined && `Bleed ${this.bleed}${toAllText}`,
+            this.fear != undefined && `Scare ${this.fear}${toAllText}`,
+
+            this.gainMana != undefined && `Gain ${this.gainMana} Mana`,
+            this.selfHeal != undefined && `Heal ${this.selfHeal}`,
+            this.draw != undefined && `Draw ${this.draw}`,
+
+            this.exhaust && `Exhaust`,
+        ].filter(l => l);
+    }
+
     async play(targets) {
         if(this.damage != undefined) {
             targets.forEach(t => t.animateDamage(this.damage));
         }
+        // TODO: bleed
+        // TODO: fear
+
         if(this.gainMana != undefined) {
             player.pay(0, -this.gainMana);
         }
+        // TODO: self heal
         if(this.draw) {
             await cardManager.draw(this.draw);
         }
-        // TODO: other effects
     }
 }

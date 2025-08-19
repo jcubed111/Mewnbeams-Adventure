@@ -1,18 +1,15 @@
 const CardPic = (index, primaryColor) => () => styledDiv('C--pic', {
-    backgroundPosition: `${(index % 5) * 25}% ${(~~(index / 5)) * 25}%`,
-    backgroundColor: primaryColor,
+    background: `url(c.png) ${(index % 5) * 25}% ${(~~(index / 5)) * 25}%/500% ${primaryColor}`,
 });
 
 
 class Card extends Sprite{
-    pic = CardPic(0, 0);
+    pic = CardPic(0, '#f0a');
     // Universal props
     cardName = '?';
     primaryColor = '#f00';
     actionCost = 1;
     manaCost = 0;
-    discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
-
 
     /* Render Methods */
     makeEl() {
@@ -65,8 +62,11 @@ class Card extends Sprite{
         this.el.classList.add('C--faceDown');
     }
 
+    // pick a static (but random) discard spot so we don't change it
+    // every render.
+    _discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
     setDiscardPosition() {
-        const [dx, dy] = this.discardSpot;
+        const [dx, dy] = this._discardSpot;
         this.el.style.zIndex = 25;
         this.el.style.transform = `rotate(0deg)`;
         this.el.style.left = `${dx + 1100}rem`;

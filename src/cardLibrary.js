@@ -1,31 +1,28 @@
 const cardLibrary = {
     // Each (standard) card definition takes up about 22bytes zipped.
 
-    Claw: class extends Card{
+    Paw: class extends RareCard{
+        cardName = 'Paw';
+        actionCost = 0;
+
+        damage = 0;
+    },
+    Claw: class extends CommonCard{
         cardName = 'Claw';
-        primaryColor = '#822';
         actionCost = 1;
         pic = SpriteSheetPic(1, '#d0f');
 
         damage = 1;
     },
-    // Maul: class extends Card{
-    //     cardName = 'Maul';
-    //     primaryColor = '#822';
-    //     actionCost = 2;
+    Maul: class extends CommonCard{
+        cardName = 'Maul';
+        actionCost = 2;
 
-    //     damage = 3;
-    // },
-    // Paw: class extends Card{
-    //     cardName = 'Paw';
-    //     primaryColor = '#822';
-    //     actionCost = 0;
+        damage = 3;
+    },
 
-    //     damage = 0;
-    // },
-    Swipe: class extends Card{
+    Swipe: class extends CommonCard{
         cardName = 'Swipe';
-        primaryColor = '#b52';
         actionCost = 1;
         pic = SpriteSheetPic(2, '#f50');
 
@@ -33,31 +30,28 @@ const cardLibrary = {
         damage = 1;
         exhaust = true;
     },
-    // Scratch: class extends Card{
-    //     cardName = 'Scratch';
-    //     primaryColor = '#822';
-    //     actionCost = 1;
+    Scratch: class extends CommonCard{
+        cardName = 'Scratch';
+        actionCost = 1;
 
-    //     bleed = 1;
-    // },
-    Meow: class extends Card{
+        bleed = 2;
+    },
+
+    Meow: class extends CommonCard{
         cardName = 'Meow';
-        primaryColor = '#822';
         actionCost = 1;
 
         draw = 2;
     },
-    // Bite: class extends Card{
+    // Bite: class extends CommonCard{
     //     cardName = 'Bite';
-    //     primaryColor = '#822';
     //     actionCost = 1;
 
     //     damage = 1;
     //     selfHeal = 1;
     // },
-    // Hiss: class extends Card{
+    // Hiss: class extends CommonCard{
     //     cardName = 'Hiss';
-    //     primaryColor = '#822';
     //     actionCost = 1;
 
     //     fear = 1;
@@ -69,26 +63,23 @@ const cardLibrary = {
     // - swipe - damage 1 to ALL
 
 
-    ConveneWithSpirits: class extends Card{
+    ConveneWithSpirits: class extends LegendaryCard{
         cardName = 'Convene with Spirits';
-        primaryColor = '#84c';
         actionCost = 1;
         manaCost = 1;
 
         draw = 4;
         exhaust = true;
     },
-    Channel: class extends Card{
+    Channel: class extends RareCard{
         cardName = 'Channel';
-        primaryColor = '#822';
         actionCost = 0;
         manaCost = 0;
 
         gainMana = 2;
     },
-    SeeGhost: class extends Card{
+    SeeGhost: class extends RareCard{
         cardName = 'See Ghost';
-        primaryColor = '#822';
         actionCost = 0;
         manaCost = 2;
 

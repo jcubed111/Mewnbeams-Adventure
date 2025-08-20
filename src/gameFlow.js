@@ -1,4 +1,13 @@
 async function runMainMenu() {
+    // placeholder - remove
+    await runBattle([
+        new monsterLibrary.BasicRat(),
+        new monsterLibrary.RatGuard(),
+        new monsterLibrary.RatWizard(),
+    ]);
+    //////////////
+
+
     const selction = await showChoiceMenu(0,
         plainElement('h1', ['Mewnbeam’s Quest']),
         'Start',
@@ -41,14 +50,14 @@ async function runGameRun() {
         new cardLibrary.ConveneWithSpirits(),
         new cardLibrary.Meow(),
     ];
-    const store = shuffleInPlace([
+    const flavorTextStore = shuffleInPlace([
         'potion shop',
         'apothecary',
         'grave yard',
         'broom emporium',
     ])[0];
     const boonChoice = await showChoiceMenu(2,
-        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${store}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
+        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ...choices.map(c => c.asStaticElement()),
     );
     cardManager.addToDeck(choices[boonChoice]);
@@ -136,6 +145,9 @@ function showChoiceMenu(mode, mainContent, ...options) {
 async function runBattle(enemies) {
     enemyManager.clear();
     cardManager.resetForRound();
+    player.manaPoints = INITIAL_MANA;
+    player.actionPoints = ACTIONS_PER_ROUND;
+    player.render();
     await wait(0.1);
 
     await Promise.all([
@@ -187,7 +199,14 @@ async function runBattleMain() {
         await cardManager.discardHand();
 
         /* monster turn */
-        enemyManager.activeEnemies.forEach(e => e.resetBlock());
+        for(const e of enemyManager.activeEnemies) {
+            await e.onStartOfTurn();
+
+            enemyManager.removeDead();
+            if(enemyManager.activeEnemies.length == 0) {
+                return;
+            }
+        }
 
         const startOfRoundEnemies = [...enemyManager.activeEnemies];
         for(const enemy of startOfRoundEnemies) {
@@ -206,8 +225,8 @@ async function runBattleMain() {
         }
 
         /* reset */
-        player.manaPoints += 1;
-        player.actionPoints = 3;
+        player.manaPoints += MANA_PER_ROUND;
+        player.actionPoints = ACTIONS_PER_ROUND;
         player.render();
 
         enemyManager.activeEnemies.forEach(enemy => enemy.resetAction());

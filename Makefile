@@ -27,8 +27,11 @@ all: $(IMAGES_DEV) dev/index.html out.zip report
 
 clean:
 	rm -rf dev/*
+	rm -rf dev/.[!.]*
 	rm -rf dist/*
+	rm -rf dist/.[!.]*
 	rm -rf build/*
+	rm -rf build/.[!.]*
 
 dev/%.png: src/%.png
 	cp $^ $@
@@ -79,8 +82,12 @@ dist/index.html: build/index.html build/main-min.js build/styles-min.css combine
 
 out.zip: dist/index.html $(IMAGES_DIST)
 	@echo $@ "<-" $^
-	@rm -f out.zip
-	@7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $^
+	@rm -f $@
+	@cd dist && 7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $($^:dist/%=%)
+	@mv dist/$@ $@
+	@npx advzip --recompress --shrink-insane -q -i250 $@
+	@rm -rf test_extract
+	@unzip out.zip -d test_extract > /dev/null
 
 report: out.zip
 	@echo '------------------------------------';

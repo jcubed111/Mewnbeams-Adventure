@@ -30,7 +30,7 @@ class Card extends Sprite{
             this.pic(),
             styledDiv(
                 'C--cardName',
-                {background: this.primaryColor},
+                {backgroundColor: this.primaryColor},
                 [this.cardName],
             ),
             div(
@@ -151,7 +151,9 @@ class Card extends Sprite{
         if(this.damage != undefined) {
             targets.forEach(t => t.animateDamage(this.damage));
         }
-        // TODO: bleed
+        if(this.bleed != undefined) {
+            targets.forEach(t => t.gainBleed(this.bleed));
+        }
         // TODO: fear
 
         if(this.gainMana != undefined) {
@@ -162,4 +164,17 @@ class Card extends Sprite{
             await cardManager.draw(this.draw);
         }
     }
+}
+
+class ItemCard extends Card{
+    primaryColor = '#513324';
+}
+class CommonCard extends Card{
+    primaryColor = '#554396';
+}
+class RareCard extends Card{
+    primaryColor = '#8915a0';
+}
+class LegendaryCard extends Card{
+    primaryColor = '#b66b17';
 }

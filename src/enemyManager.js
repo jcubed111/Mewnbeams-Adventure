@@ -5,7 +5,7 @@ class EnemyManager{
         const SPACING = 60;
         const totalWidth = this.activeEnemies
             .map(e => e.size)
-            .reduce((a, b) => a + b)
+            .reduce((a, b) => a + b, 0)
             + SPACING * (this.activeEnemies.length - 1);
 
         let x = 500 - totalWidth / 2;

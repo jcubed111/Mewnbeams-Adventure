@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "advzip-bin": "^2.0.0",
     "google-closure-compiler": "^20250813.0.0",
     "html-minifier": "^4.0.0",
     "sass": "^1.90.0"

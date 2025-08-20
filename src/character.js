@@ -12,6 +12,7 @@ class Character extends Sprite{
     /* State, don't override */
     currentHp;
     block = 0;
+    bleed = 0;
 
     /* Methods */
     hpBarEl;
@@ -26,10 +27,10 @@ class Character extends Sprite{
 
         // const [picIndex, hueShiftDeg] = this.pic;
         return styledDiv('C--character', {width: `${this.size}rem`}, [
-            div('', [this.characterName]),
-            this.hpBarEl,
             this.blockBarEl,
+            this.hpBarEl,
             this.pic(),
+            div('', [this.characterName]),
             this.pendingActionEl,
         ]);
     }
@@ -47,14 +48,23 @@ class Character extends Sprite{
         }, durationSec * 1000);
     }
 
+    gainBleed(bleed) {
+        this.bleed += bleed;
+        this.render();
+    }
+
     gainBlock(block) {
         this.block += block;
         this.render();
     }
 
-    resetBlock(block) {
+    async onStartOfTurn(block) {
         this.block = 0;
         this.render();
+        if(this.bleed > 0) {
+            this.animateDamage(this.bleed--);
+            await wait(0.3);
+        }
     }
 
     async animateAttack(direction=1) {
@@ -71,9 +81,14 @@ class Character extends Sprite{
 
         setChildNumber(this.hpBarEl, this.maxHp, () => div());
         for(let i = 0; i < this.maxHp; i++) {
-            this.hpBarEl.children[i].className = i < this.currentHp
-                ? 'C--hpChunk-full'
-                : i < this._preAnimateHp ? 'C--hpChunk-pending' : 'C--hpChunk-empty';
+            this.hpBarEl.children[i].className =
+                i < this.currentHp - this.bleed
+                    ? 'C--hpChunk-full'
+                    : i < this.currentHp
+                        ? 'C--hpChunk-bleed'
+                        : i < this._preAnimateHp
+                            ? 'C--hpChunk-pending'
+                            : 'C--hpChunk-empty';
         }
 
         setChildNumber(this.blockBarEl, this.block, () => div('C--blockChunk'));

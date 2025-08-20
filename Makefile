@@ -11,6 +11,7 @@ JS_FILES := \
 	src/cardLibrary.js \
 	src/cardManager.js \
 	src/enemyManager.js \
+	src/eventUi.js \
 	src/gameFlow.js \
 	src/main.js
 
@@ -71,7 +72,7 @@ build/index.html: src/index.html
 dist/%.png: src/%.png
 	@echo $@ "<-" $^
 	@cp $^ $@
-	@optipng -o7 -zm1-9 -strip all -quiet -fix $@
+	@optipng -o7 -zm1-9 -strip all -fix -quiet $@
 
 dist/styles-min.css: build/styles-min.css
 	cp $^ $@
@@ -92,13 +93,16 @@ out.zip: dist/index.html $(IMAGES_DIST)
 report: out.zip
 	@echo '------------------------------------';
 	@echo;
-	@FILE_SIZE=$$(stat -c%s $^ 2>/dev/null || stat -f%z $^); \
+	@FILE_SIZE=$$(stat -c%s out.zip 2>/dev/null || stat -f%z out.zip); \
 		PERCENT=$$(awk -v f="$$FILE_SIZE" -v t="13312" 'BEGIN { printf "%.3f", (f/t)*100 }'); \
 		if (( $$(echo "$$PERCENT > 100" | bc -l) )); then \
 			MESSAGE=$$(echo "🛑 TOO LARGE 🛑"); \
 		else \
 			MESSAGE=$$(echo "👍"); \
 		fi; \
-		echo "   $$FILE_SIZE / 13,312  =  $$PERCENT%  $$MESSAGE"
+		echo "    $$FILE_SIZE / 13,312  =  $$PERCENT%  $$MESSAGE"
+	@FILE_SIZE=$$(stat -c%s dist/c.png 2>/dev/null || stat -f%z dist/c.png); \
+		PERCENT=$$(awk -v f="$$FILE_SIZE" -v t="13312" 'BEGIN { printf "%.3f", (f/t)*100 }'); \
+		echo "      * c.png: $$FILE_SIZE (pre-zip)"
 	@echo;
 	@echo '------------------------------------';

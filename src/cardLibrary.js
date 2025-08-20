@@ -35,6 +35,7 @@ const cardLibrary = {
     Scratch: class extends CommonCard{
         cardName = 'Scratch';
         actionCost = 1;
+        pic = SpriteSheetPic(11, '#f00');
 
         bleed = 2;
     },
@@ -95,8 +96,9 @@ const cardLibrary = {
 
         gainMana = 2;
     },
-    FireBall: class extends CommonCard{
-        cardName = 'Fire Ball';
+    Fireball: class extends CommonCard{
+        cardName = 'Fireball';
+        pic = SpriteSheetPic(12, '#f61');
         actionCost = 1;
         manaCost = 2;
 

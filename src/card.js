@@ -13,7 +13,7 @@ class Card extends Sprite{
         // in deck/reward selection/etc.
         const clone = new this.constructor();
         clone.el = clone.makeEl();
-        clone.render();
+        clone.render(true);
         clone.el.style.position = 'relative';
         clone.el.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
         return clone.el;
@@ -41,8 +41,8 @@ class Card extends Sprite{
         ]);
     }
 
-    render() {
-        this.el.classList.toggle('C--unplayable', !this.playable());
+    render(forcePlayable) {
+        this.el.classList.toggle('C--unplayable', !(forcePlayable ?? this.playable()));
     }
 
     setHandPosition(index, outOf, activated, dx, dy) {
@@ -159,7 +159,9 @@ class Card extends Sprite{
         if(this.gainMana != undefined) {
             player.pay(0, -this.gainMana);
         }
-        // TODO: self heal
+        if(this.selfHeal) {
+            player.heal(this.selfHeal);
+        }
         if(this.draw) {
             await cardManager.draw(this.draw);
         }

@@ -1,12 +1,12 @@
 async function runMainMenu() {
     // placeholder - remove
-    await runBattle([
-        new monsterLibrary.BasicRat(),
-        new monsterLibrary.RatGuard(),
-        new monsterLibrary.RatWizard(),
-    ]);
+    await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
+    // await runBattle([
+    //     new monsterLibrary.BasicRat(),
+    //     new monsterLibrary.RatGuard(),
+    //     new monsterLibrary.RatWizard(),
+    // ]);
     //////////////
-
 
     const selction = await showChoiceMenu(0,
         plainElement('h1', ['Mewnbeam’s Quest']),
@@ -92,6 +92,16 @@ function victoryScreen() {
     );
 }
 
+function cardListViewScreen(cards) {
+    return showChoiceMenu(3,
+        div('C--cardList',
+            cards.map(card => card.asStaticElement()),
+        ),
+        'Back',
+    );
+
+}
+
 function showChoiceMenu(mode, mainContent, ...options) {
     // Modes:
     // 0 - centered menu, centered row of options
@@ -122,7 +132,7 @@ function showChoiceMenu(mode, mainContent, ...options) {
                 );
 
                 const optionsWrapper = div('C--choiceMenuOptions', optionDivs);
-                if(mode != 0) {
+                if(mode != 0 && mode != 3) {
                     optionsWrapper.style.visibility = 'hidden';
                     wait(0.5).then(() => optionsWrapper.style.visibility = '');
                 }

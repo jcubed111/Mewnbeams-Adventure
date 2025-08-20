@@ -3,19 +3,21 @@ const cardLibrary = {
 
     Paw: class extends RareCard{
         cardName = 'Paw';
+        pic = SpriteSheetPic(4, '#ff32f1');
         actionCost = 0;
 
         damage = 0;
     },
     Claw: class extends CommonCard{
         cardName = 'Claw';
-        actionCost = 1;
         pic = SpriteSheetPic(1, '#d0f');
+        actionCost = 1;
 
         damage = 1;
     },
     Maul: class extends CommonCard{
         cardName = 'Maul';
+        pic = SpriteSheetPic(5, '#f80');
         actionCost = 2;
 
         damage = 3;
@@ -23,8 +25,8 @@ const cardLibrary = {
 
     Swipe: class extends CommonCard{
         cardName = 'Swipe';
-        actionCost = 1;
         pic = SpriteSheetPic(2, '#f50');
+        actionCost = 1;
 
         toAll = true;
         damage = 1;
@@ -43,13 +45,16 @@ const cardLibrary = {
 
         draw = 2;
     },
-    // Bite: class extends CommonCard{
-    //     cardName = 'Bite';
-    //     actionCost = 1;
 
-    //     damage = 1;
-    //     selfHeal = 1;
-    // },
+    Bite: class extends RareCard{
+        cardName = 'Bite';
+        pic = SpriteSheetPic(6, '#f00');
+        actionCost = 1;
+
+        damage = 1;
+        selfHeal = 1;
+    },
+
     // Hiss: class extends CommonCard{
     //     cardName = 'Hiss';
     //     actionCost = 1;
@@ -65,6 +70,7 @@ const cardLibrary = {
 
     ConveneWithSpirits: class extends LegendaryCard{
         cardName = 'Convene with Spirits';
+        pic = SpriteSheetPic(7, '#0f7');
         actionCost = 1;
         manaCost = 1;
 
@@ -73,20 +79,28 @@ const cardLibrary = {
     },
     Channel: class extends RareCard{
         cardName = 'Channel';
+        pic = SpriteSheetPic(8, '#3bf');
         actionCost = 0;
         manaCost = 0;
 
         gainMana = 2;
     },
-    SeeGhost: class extends RareCard{
-        cardName = 'See Ghost';
-        actionCost = 0;
+    FireBall: class extends CommonCard{
+        cardName = 'Fire Ball';
+        actionCost = 1;
         manaCost = 2;
 
-        pic = SpriteSheetPic(3, '#0f0');
-
-        getTextLines() { return ['Replay the Previous Card'] };
+        damage = 4;
     },
+    // SeeGhost: class extends RareCard{
+    //     cardName = 'See Ghost';
+    //     actionCost = 0;
+    //     manaCost = 2;
+
+    //     pic = SpriteSheetPic(3, '#0f0');
+
+    //     getTextLines() { return ['Replay the Previous Card'] };
+    // },
 
     // - fireball - damage 3
     // - see ghost - replay the previous card

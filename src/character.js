@@ -48,6 +48,12 @@ class Character extends Sprite{
         }, durationSec * 1000);
     }
 
+    heal(hp) {
+        this.currentHp += hp;
+        this._preAnimateHp = undefined;
+        this.render();
+    }
+
     gainBleed(bleed) {
         this.bleed += bleed;
         this.render();

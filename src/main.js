@@ -1,6 +1,6 @@
 const enemyManager = new EnemyManager();
 const cardManager = new CardManager([
-    new cardLibrary.Claw(),
+    new cardLibrary.Paw(),
     new cardLibrary.Scratch(),
     // new cardLibrary.Claw(),
     new cardLibrary.Meow(),

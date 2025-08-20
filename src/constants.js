@@ -2,4 +2,4 @@ const TURN_START_HAND_SIZE = 4;
 const MAX_HAND_SIZE = 7;
 const INITIAL_MANA = 1;
 const MANA_PER_ROUND = 1;
-const ACTIONS_PER_ROUND = 2;
+const ACTIONS_PER_ROUND = 3;

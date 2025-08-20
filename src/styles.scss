@@ -62,11 +62,21 @@ body{
     background: #0004;
     backdrop-filter: blur(20rem);
 }
+    .C--darkBlackMenuBack{
+        background: #000b;
+        overflow: auto;
+
+        .C--choiceMenu{
+            padding: 200rem 100rem 250rem;
+            min-height: 100%;
+        }
+        .C--choiceMenuOptions{
+            position: absolute;
+            inset: auto 100rem 200rem;
+        }
+    }
+
     .C--choiceMenu{
-        background: #123;
-        border: 5rem solid #469;
-        position: absolute;
-        inset: 150rem 50rem;
         padding: 50rem;
         display: flex;
         flex-direction: column;
@@ -80,6 +90,12 @@ body{
         h1{
             font-size: 60rem;
         }
+    }
+    .C--choiceMenuBordered{
+        background: #123;
+        border: 5rem solid #469;
+        position: absolute;
+        inset: 150rem 50rem;
     }
 
     .C--centeredMenu{

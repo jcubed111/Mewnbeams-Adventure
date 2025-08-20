@@ -13,7 +13,7 @@ function fadeInText(textStringParts, ...els) {
     const parts = textStringParts.flatMap((part, i) => {
         return [
             ...part.split(/( )/g).map(p => plainElement('span', [p])),
-            els[i] ?? plainElement('span'),
+            plainElement('span', [els[i]]),
         ];
     });
     parts.forEach(async (p, i) => {
@@ -26,13 +26,13 @@ function fadeInText(textStringParts, ...els) {
 
 async function runGameRun() {
     const choice = await showChoiceMenu(1,
-        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [fadeInText`take care of`])} that ${plainElement('b', [fadeInText`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
+        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [`take care of`])} that ${plainElement('b', [`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
         'Mrow?',
         'Hiiisssss!',
     );
     if(choice == 0) {
         await showChoiceMenu(1,
-            fadeInText`Shouldn’t be a big deal, just run through the castle defeating his minions, then ${plainElement('b', [fadeInText`take him down!`])}`,
+            fadeInText`Shouldn’t be a big deal, just run through the castle defeating his minions, then ${plainElement('b', [`take him down!`])}`,
             'Hiiisssss?'
         );
     }
@@ -41,8 +41,14 @@ async function runGameRun() {
         new cardLibrary.ConveneWithSpirits(),
         new cardLibrary.Meow(),
     ];
+    const store = shuffleInPlace([
+        'potion shop',
+        'apothecary',
+        'grave yard',
+        'broom emporium',
+    ])[0];
     const boonChoice = await showChoiceMenu(2,
-        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the potion store, but I suppose I could give you a hand before I go.${br()}${br()}What’ll it be?`,
+        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${store}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ...choices.map(c => c.asStaticElement()),
     );
     cardManager.addToDeck(choices[boonChoice]);
@@ -52,6 +58,29 @@ async function runGameRun() {
         new monsterLibrary.RatGuard(),
         new monsterLibrary.RatWizard(),
     ]);
+
+    // TODO: end the run
+    await deathScreen();
+    await victoryScreen();
+}
+
+function deathScreen() {
+    return showChoiceMenu(3,
+        fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
+        'Try Again',
+    );
+}
+
+function victoryScreen() {
+    return showChoiceMenu(0,
+        div('', [
+            plainElement('h1', ['Victory!']),
+            styledDiv('', {textAlign: 'left'}, [
+                fadeInText`Mewnbeam, I'm back! How was killing the ${plainElement('b', [`Rat King`])}? Tasty?${br()}${br()}I got you a treat for your hard work!`,
+            ]),
+        ]),
+        'Continue',
+    );
 }
 
 function showChoiceMenu(mode, mainContent, ...options) {
@@ -59,10 +88,12 @@ function showChoiceMenu(mode, mainContent, ...options) {
     // 0 - centered menu, centered row of options
     // 1 - left menu, left aligned list of options, option show delay
     // 2 - left menu, centered row of options, option show delay
+    // 3 - floating menu, dark black bg, no box
     const extraClasses = [
         'C--centeredMenu',
         'C--leftMenu C--colOptions',
         'C--leftMenu',
+        'C--leftMenu C--darkBlackMenuBack'
     ][mode];
     // resolves with the index of the chosen option
     return new Promise(resolve => {
@@ -88,7 +119,7 @@ function showChoiceMenu(mode, mainContent, ...options) {
                 }
 
                 return div('C--choiceMenuWrapper ' + extraClasses, [
-                    div('C--choiceMenu', [
+                    div(mode == 3 ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered', [
                         div('C--choiceMenuTitle', [mainContent]),
                         styledDiv('', {flexGrow: 1}),
                         optionsWrapper,

@@ -1,8 +1,9 @@
 
 class Card extends Sprite{
-    pic = SpriteSheetPic(0, '#f0a');
-    // Universal props
     cardName = '?';
+    pic = SpriteSheetPic(0, '#f0a');
+    rarityOrder = 0;
+    // Universal props
     primaryColor = '#f00';
     actionCost = 1;
     manaCost = 0;
@@ -159,7 +160,7 @@ class Card extends Sprite{
                 `Heal ${this.selfHeal}`,
 
             this.gainStrength != undefined &&
-                `Attack does +${this.gainStrength} damage`,
+                `Attacks do +${this.gainStrength} damage`,
 
             this.draw != undefined &&
                 `Draw ${this.draw}`,
@@ -198,15 +199,19 @@ class Card extends Sprite{
     }
 }
 
-class ItemCard extends Card{
-    primaryColor = '#513324';
-}
 class CommonCard extends Card{
+    rarityOrder = 1;
     primaryColor = '#554396';
 }
 class RareCard extends Card{
+    rarityOrder = 2;
     primaryColor = '#8915a0';
 }
 class LegendaryCard extends Card{
+    rarityOrder = 3;
     primaryColor = '#b66b17';
+}
+class ItemCard extends Card{
+    rarityOrder = 4;
+    primaryColor = '#513324';
 }

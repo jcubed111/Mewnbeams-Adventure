@@ -87,10 +87,19 @@ function victoryScreen() {
     );
 }
 
-function cardListViewScreen(cards) {
+function cardListViewScreen(cards, sort) {
+    const ordered = sort
+        ? cards.toSorted(
+            (a, b) =>
+                a.rarityOrder - b.rarityOrder
+                || a.name.localeCompare(b.name)
+        )
+        : cards;
     return showChoiceMenu(3,
         div('C--cardList',
-            cards.map(card => card.asStaticElement()),
+            cards.length
+                ? ordered.map(card => card.asStaticElement())
+                : ['No Cards'],
         ),
         'Back',
     );

@@ -162,11 +162,13 @@ body{
 }
 
 /* card */
+.C--card, .C--cardPile{
+    background: #123;
+    border: 5rem solid #469;
+}
 .C--card{
     width: 190rem;
     height: 285rem;
-    background: #123;
-    border: 5rem solid #469;
     // z index ranges from 11-20, 24 for hover, 25 for draw & discard
 
     &:hover, &.C--active{
@@ -196,12 +198,15 @@ body{
     }
 }
 
+    .C--cardPile,
+    .C--faceDown:before{
+        background: repeating-linear-gradient(45deg, #123 0 10rem, #246 10rem 20rem);
+    }
     .C--faceDown:before{
         content: '';
         position: absolute;
         inset: 0;
         z-index: 2;
-        background: repeating-linear-gradient(45deg, #123 0 10rem, #246 10rem 20rem);
     }
 
     .C--faceDown .C--actionPointIcon{
@@ -224,6 +229,25 @@ body{
         justify-content: center;
         text-wrap: balance;
     }
+
+.C--cardPile{
+    position: absolute;
+    width: 80rem;
+    height: 120rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 40rem;
+    cursor: pointer;
+    &:hover{
+        box-shadow: 0 0 0 4rem #e8f;
+    }
+}
+    .C--cardPileName{
+        font-size: 15rem;
+    }
+
 
 .C--actionPointIcon, .C--manaPointIcon{
     width: 35rem;

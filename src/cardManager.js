@@ -1,4 +1,5 @@
 class CardManager{
+    deck;
     drawPile = [];
     hand = [];
     pending = [];
@@ -42,6 +43,24 @@ class CardManager{
         }
     }
 
+    deckButton = new CardPile(
+        'Deck',
+        '20rem auto auto 20rem',
+        e => cardListViewScreen(this.deck),
+    );
+
+    drawButton = new CardPile(
+        'Draw',
+        'auto auto 420rem 20rem',
+        e => cardListViewScreen(this.drawPile, true),
+    );
+
+    discardButton = new CardPile(
+        'Discard',
+        'auto 20rem 420rem auto',
+        e => cardListViewScreen(this.discardPile),
+    );
+
     // Tracks activating a card to play it
     active = null;
     activationPosition = [];  // [x, y, dx, dy]
@@ -59,6 +78,10 @@ class CardManager{
 
     render() {
         this.passButton.showAndRender();
+
+        this.deckButton.showAndRender(this.deck.length);
+        this.drawButton.showAndRender(this.drawPile.length);
+        this.discardButton.showAndRender(this.discardPile.length);
 
         const [ax, ay, activeDx, activeDy] = this.activationPosition;
 
@@ -222,5 +245,29 @@ class CardManager{
         this.activationPosition = [];
         this.active = null;
         this.render();
+    }
+}
+
+class CardPile extends Sprite{
+    constructor(pileName, insetCss, onClick) {
+        super();
+        this.insetCss = insetCss;
+        this.onClick = onClick;
+        this.pileName = pileName;
+    }
+
+    _numberEl;
+    makeEl() {
+        const d = styledDiv('C--cardPile', {'inset': this.insetCss}, [
+            this._numberEl = div(),
+             div('C--cardPileName', [this.pileName]),
+        ]);
+        d.addEventListener('click', this.onClick);
+        return d;
+    }
+
+    render(numCards) {
+        this._numberEl.innerText = numCards;
+        this.el?.classList.toggle('C--cardPileEmpty', numCards == 0);
     }
 }

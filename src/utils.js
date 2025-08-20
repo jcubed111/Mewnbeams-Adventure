@@ -29,6 +29,11 @@ function styled(tagName = "div", className = "", style = {}, children = []) {
     return el;
 }
 
+function setChildren(el, children) {
+    setChildNumber(el, 0);
+    el.append(...children);
+}
+
 function range(start, end) {
     return Array(end - start).fill(0).map((_, i) => i + start);
 }

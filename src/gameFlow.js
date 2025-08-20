@@ -62,9 +62,12 @@ async function runGameRun() {
 async function runBattle(enemies) {
     enemyManager.clear();
     cardManager.resetForRound();
+
     player.manaPoints = INITIAL_MANA;
     player.actionPoints = ACTIONS_PER_ROUND;
+    player.strength = 0;
     player.render();
+
     await wait(0.1);
 
     await Promise.all([

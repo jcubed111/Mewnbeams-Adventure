@@ -19,30 +19,27 @@ class Card extends Sprite{
         return clone.el;
     }
 
+    _cardTextDiv;
     makeEl() {
         return div('C--card', [
             div('C--actionPointIcon', ['' + this.actionCost]),
             this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
-            // styledDiv('C--pic', {
-            //     backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
-            //     filter: `hue-rotate(${hueShiftDeg}deg)`,
-            // }),
             this.pic(),
             styledDiv(
                 'C--cardName',
                 {backgroundColor: this.primaryColor},
                 [this.cardName],
             ),
-            div(
-                'C--cardText',
-                this.getTextLines()
-                    .map(d => div('', [d]))
-            ),
+            this._cardTextDiv = div('C--cardText'),
         ]);
     }
 
-    render(forcePlayable) {
-        this.el.classList.toggle('C--unplayable', !(forcePlayable ?? this.playable()));
+    render(standalone) {
+        this.el.classList.toggle('C--unplayable', !(standalone ?? this.playable()));
+        setChildren(
+            this._cardTextDiv,
+            this.getTextLines(standalone).map(d => div('', [d])),
+        );
     }
 
     setHandPosition(index, outOf, activated, dx, dy) {
@@ -127,29 +124,49 @@ class Card extends Sprite{
     // SELF EFFECTS
     // gainMana?: number - gain mana
     gainMana;
-    // selfHeal ?: number - heal for this amount
+    // selfHeal?: number - heal for this amount
     selfHeal;
+    // gainStrength?: number
+    gainStrength;
     // draw?: number - draw more cards
     draw;
 
-    getTextLines() {
+    getTextLines(standalone) {
         const toAllText = this.toAll ? ' to All' : '';
         return [
-            this.damage != undefined && `Attack ${this.damage}${toAllText}`,
-            this.bleed != undefined && `Bleed ${this.bleed}${toAllText}`,
-            this.fear != undefined && `Scare ${this.fear}${toAllText}`,
+            this.damage != undefined &&
+                `Attack ${
+                    this.damage
+                    + (standalone ? 0 : player.strength)
+                }${toAllText}`,
 
-            this.gainMana != undefined && `Gain ${this.gainMana} Mana`,
-            this.selfHeal != undefined && `Heal ${this.selfHeal}`,
-            this.draw != undefined && `Draw ${this.draw}`,
+            this.bleed != undefined &&
+                `Bleed ${this.bleed}${toAllText}`,
 
-            this.exhaust && `Exhaust`,
+            this.fear != undefined &&
+                `Scare ${this.fear}${toAllText}`,
+
+
+            this.gainMana != undefined &&
+                `Gain ${this.gainMana} Mana`,
+
+            this.selfHeal != undefined &&
+                `Heal ${this.selfHeal}`,
+
+            this.gainStrength != undefined &&
+                `Attack does +${this.gainStrength} damage`,
+
+            this.draw != undefined &&
+                `Draw ${this.draw}`,
+
+            this.exhaust &&
+                `Exhaust`,
         ].filter(l => l);
     }
 
     async play(targets) {
         if(this.damage != undefined) {
-            targets.forEach(t => t.animateDamage(this.damage));
+            targets.forEach(t => t.animateDamage(this.damage + player.strength));
         }
         if(this.bleed != undefined) {
             targets.forEach(t => t.gainBleed(this.bleed));
@@ -161,6 +178,11 @@ class Card extends Sprite{
         }
         if(this.selfHeal) {
             player.heal(this.selfHeal);
+        }
+        if(this.gainStrength) {
+            player.strength += this.gainStrength;
+            player.render();
+            cardManager.render();
         }
         if(this.draw) {
             await cardManager.draw(this.draw);

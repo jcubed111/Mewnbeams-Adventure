@@ -55,6 +55,15 @@ const cardLibrary = {
         selfHeal = 1;
     },
 
+    BobaEyes: class extends RareCard{
+        cardName = 'Boba Eyes';
+        pic = SpriteSheetPic(9, '#406');
+        actionCost = 0;
+        manaCost = 2;
+
+        gainStrength = 1;
+    },
+
     // Hiss: class extends CommonCard{
     //     cardName = 'Hiss';
     //     actionCost = 1;

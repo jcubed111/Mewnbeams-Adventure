@@ -3,7 +3,7 @@ const cardManager = new CardManager([
     new cardLibrary.Paw(),
     new cardLibrary.Scratch(),
     // new cardLibrary.Claw(),
-    new cardLibrary.Meow(),
+    new cardLibrary.BobaEyes(),
     // new cardLibrary.Meow(),
     // new cardLibrary.ConveneWithSpirits(),
     // new cardLibrary.Meow(),

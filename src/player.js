@@ -5,6 +5,7 @@ class Player extends Character{
 
     actionPoints = 3;
     manaPoints = 1;
+    strength = 0;
 
     render() {
         super.render();

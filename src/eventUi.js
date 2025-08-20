@@ -89,7 +89,8 @@ function victoryScreen() {
 
 function cardListViewScreen(cards, sort) {
     const ordered = sort
-        ? cards.toSorted(
+        // google closure compiler doesn't know about toSorted lol
+        ? cards['toSorted'](
             (a, b) =>
                 a.rarityOrder - b.rarityOrder
                 || a.cardName.localeCompare(b.cardName)

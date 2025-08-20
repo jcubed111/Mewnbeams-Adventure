@@ -6,7 +6,9 @@ import string
 class_re = r'C--[a-zA-Z0-9_-]+'
 
 
-js = open('build/main-min.js').read()
+# the minifier leaves a couple newlines in we need to cut out.
+js = open('build/main-min.js').read().replace('\n', '');
+
 css = open('build/styles-min.css').read()
 html = open('build/index.html').read()
 

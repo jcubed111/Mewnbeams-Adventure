@@ -41,6 +41,7 @@ const cardLibrary = {
 
     Meow: class extends CommonCard{
         cardName = 'Meow';
+        pic = SpriteSheetPic(10, '#7fae10');
         actionCost = 1;
 
         draw = 2;

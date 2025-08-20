@@ -16,7 +16,9 @@ class Card extends Sprite{
         clone.el = clone.makeEl();
         clone.render(true);
         clone.el.style.position = 'relative';
-        clone.el.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+        clone.el.style.boxShadow = 'none';
+        // cube root here to bias away from rotate(0), which looks boring
+        clone.el.style.transform = `rotate(${4 * Math.cbrt(Math.random() - 0.5)}deg)`;
         return clone.el;
     }
 
@@ -200,18 +202,18 @@ class Card extends Sprite{
 }
 
 class CommonCard extends Card{
-    rarityOrder = 1;
+    rarityOrder = 0;
     primaryColor = '#554396';
 }
 class RareCard extends Card{
-    rarityOrder = 2;
+    rarityOrder = 1;
     primaryColor = '#8915a0';
 }
 class LegendaryCard extends Card{
-    rarityOrder = 3;
+    rarityOrder = 2;
     primaryColor = '#b66b17';
 }
 class ItemCard extends Card{
-    rarityOrder = 4;
+    rarityOrder = 3;
     primaryColor = '#513324';
 }

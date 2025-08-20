@@ -1,5 +1,15 @@
 class CardManager{
-    deck;
+    deck = [
+        // TODO: actual Starting deck
+        new cardLibrary.Claw,
+        new cardLibrary.Claw,
+        new cardLibrary.Claw,
+        new cardLibrary.Claw,
+        new cardLibrary.Scratch,
+        new cardLibrary.Scratch,
+        new cardLibrary.Swipe,
+        new cardLibrary.Swipe,
+    ];
     drawPile = [];
     hand = [];
     pending = [];
@@ -68,10 +78,6 @@ class CardManager{
     // position, whereas dx,dy is ued when dragging
     // a card.
 
-    constructor(startingDeck) {
-        this.deck = [...startingDeck];
-    }
-
     addToDeck(...cards) {
         this.deck.push(...cards);
     }
@@ -79,9 +85,11 @@ class CardManager{
     render() {
         this.passButton.showAndRender();
 
-        this.deckButton.showAndRender(this.deck.length);
         this.drawButton.showAndRender(this.drawPile.length);
         this.discardButton.showAndRender(this.discardPile.length);
+        this.deckButton.showAndRender(this.deck.length);
+        // force the deck button to show in card raward view as well
+        this.deckButton.el.style.zIndex = 60;
 
         const [ax, ay, activeDx, activeDy] = this.activationPosition;
 

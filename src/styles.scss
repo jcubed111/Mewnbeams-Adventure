@@ -64,6 +64,7 @@ body{
 }
     .C--darkBlackMenuBack{
         background: #000b;
+        z-index: 80;  // place above deck button
         // overflow: auto;
 
         .C--choiceMenu{
@@ -73,8 +74,9 @@ body{
         }
         .C--choiceMenuOptions{
             position: absolute;
-            inset: auto 100rem 100rem;
+            inset: auto auto 100rem;
             z-index: 60;
+            align-self: center;
         }
     }
 
@@ -129,7 +131,7 @@ body{
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
-        gap: 30rem;
+        gap: 39rem;
         margin: -100rem -50rem 0;
     }
 

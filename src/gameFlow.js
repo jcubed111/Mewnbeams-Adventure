@@ -1,14 +1,14 @@
 async function runMainMenu() {
     // placeholder - remove
     // await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
-    await runBattle([
-        new monsterLibrary.BasicRat(),
-        new monsterLibrary.RatGuard(),
-        new monsterLibrary.RatWizard(),
-    ]);
+    // await runBattle([
+    //     new monsterLibrary.BasicRat(),
+    //     new monsterLibrary.RatGuard(),
+    //     new monsterLibrary.RatWizard(),
+    // ]);
     //////////////
 
-    const selction = await showChoiceMenu(0,
+    const selection = await showChoiceMenu(0,
         plainElement('h1', ['Mewnbeam’s Quest']),
         'Start',
     );
@@ -19,6 +19,7 @@ async function runMainMenu() {
 }
 
 async function runGameRun() {
+    /* OPENING */
     const choice = await showChoiceMenu(1,
         fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [`take care of`])} that ${plainElement('b', [`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
         'Mrow?',
@@ -47,15 +48,69 @@ async function runGameRun() {
     );
     cardManager.addToDeck(choices[boonChoice]);
 
-    await runBattle([
-        new monsterLibrary.BasicRat(),
-        new monsterLibrary.RatGuard(),
-        new monsterLibrary.RatWizard(),
-    ]);
+    /* Floors */
+    for(let floorIndex = 0; floorIndex < NUM_FLOORS; floorIndex++) {
+        const [monsters, cardRewards] = fightGenerator(floorIndex);
 
-    // TODO: end the run
-    await deathScreen();
+        await runBattle(monsters);
+
+        /* Death :'( */
+        if(player.currentHp <= 0) {
+            await deathScreen();
+            return;
+        }
+
+        /* Card Reward */
+        if(floorIndex < NUM_FLOORS - 1) {
+            const cardChoice = await showChoiceMenu(0,
+                `Choose...`,
+                ...cardRewards.map(c => c.asStaticElement()),
+                "Pass",
+            );
+            if(cardChoice < cardRewards.length) {
+                cardManager.addToDeck(cardRewards[cardChoice]);
+            }
+        }
+    }
+
+    /* Victory! :D */
     await victoryScreen();
+}
+
+
+function fightGenerator(floorIndex) {
+    // Returns [monsters, card reward choices]
+    // Both monsters and cardRewardChoices are instance arrays, not constructor arrays.
+    // if(floorIndex == 0) return [[new monsterLibrary.BasicRat], getCardRewards(floorIndex)]
+    return [
+        [new monsterLibrary.BasicRat],
+        getCardRewards(floorIndex),
+    ];
+}
+
+function getCardRewards(floorIndex) {
+    const cardsByTier = [[], [], []];
+    [...Object.values(cardLibrary)]
+        .map(C => new C)
+        .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
+    cardsByTier.forEach(shuffleInPlace);
+
+    return range(0, 3).map(i => {
+        // This function:
+        //     floor( 2.4 * random() ^ goodness )
+        // approximates a weighted random.
+        // At goodness=1.7, it gives:
+        //     60% often => 0  (common)
+        //     30% often => 1  (rare)
+        //     10% often => 2  (legendary)
+        // At goodness=0.9, it gives:
+        //     38% often => 0  (common)
+        //     43% often => 1  (rare)
+        //     19% often => 2  (legendary)
+        const goodnessFactor = 1.7 - 0.8 * (floorIndex / (NUM_FLOORS - 1));
+        const rolledRarity = ~~(2.4 * Math.random() ** goodnessFactor);
+        return cardsByTier[rolledRarity].pop();
+    });
 }
 
 
@@ -90,7 +145,6 @@ async function runBattleMain() {
 
             const result = await getMove();
             if(result == "pass") {
-                console.log("pass");
                 break;
             }else{
                 let [card, target] = result;
@@ -103,15 +157,15 @@ async function runBattleMain() {
                     wait(0.2),
                 ]);
 
-                enemyManager.removeDead();
-                if(enemyManager.activeEnemies.length == 0) {
-                    return;
-                }
-
                 if(card.exhaust) {
                     cardManager.exhaustPending();
                 }else{
                     cardManager.discardPending();
+                }
+
+                enemyManager.removeDead();
+                if(enemyManager.activeEnemies.length == 0) {
+                    return;
                 }
             }
         }

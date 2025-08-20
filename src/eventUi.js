@@ -5,7 +5,7 @@ function showChoiceMenu(mode, mainContent, ...options) {
     // 0 - centered menu, centered row of options
     // 1 - left menu, left aligned list of options, option show delay
     // 2 - left menu, centered row of options, option show delay
-    // 3 - floating menu, dark black bg, no box
+    // 3 - floating menu, dark black bg, no box, higher z index
     const extraClasses = [
         'C--centeredMenu',
         'C--leftMenu C--colOptions',

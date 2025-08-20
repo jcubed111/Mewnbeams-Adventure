@@ -5,7 +5,7 @@ const cardLibrary = {
         cardName = 'Claw';
         primaryColor = '#822';
         actionCost = 1;
-        pic = CardPic(1, '#d0f');
+        pic = SpriteSheetPic(1, '#d0f');
 
         damage = 1;
     },
@@ -27,7 +27,7 @@ const cardLibrary = {
         cardName = 'Swipe';
         primaryColor = '#b52';
         actionCost = 1;
-        pic = CardPic(2, '#f50');
+        pic = SpriteSheetPic(2, '#f50');
 
         toAll = true;
         damage = 1;
@@ -92,7 +92,7 @@ const cardLibrary = {
         actionCost = 0;
         manaCost = 2;
 
-        pic = CardPic(3, '#0f0');
+        pic = SpriteSheetPic(3, '#0f0');
 
         getTextLines() { return ['Replay the Previous Card'] };
     },

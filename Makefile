@@ -11,6 +11,7 @@ JS_FILES := \
 	src/cardLibrary.js \
 	src/cardManager.js \
 	src/enemyManager.js \
+	src/gameFlow.js \
 	src/main.js
 
 IMAGES := $(wildcard src/*.png)
@@ -79,7 +80,7 @@ dist/index.html: build/index.html build/main-min.js build/styles-min.css combine
 out.zip: dist/index.html $(IMAGES_DIST)
 	@echo $@ "<-" $^
 	@rm -f out.zip
-	@7z a -tzip -bd -bso0 -bsp0 -mx=9 $@ $^
+	@7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $^
 
 report: out.zip
 	@echo '------------------------------------';

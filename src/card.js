@@ -1,10 +1,6 @@
-const CardPic = (index, primaryColor) => () => styledDiv('C--pic', {
-    background: `url(c.png) ${(index % 5) * 25}% ${(~~(index / 5)) * 25}%/500% ${primaryColor}`,
-});
-
 
 class Card extends Sprite{
-    pic = CardPic(0, '#f0a');
+    pic = SpriteSheetPic(0, '#f0a');
     // Universal props
     cardName = '?';
     primaryColor = '#f00';
@@ -12,18 +8,33 @@ class Card extends Sprite{
     manaCost = 0;
 
     /* Render Methods */
+    asStaticElement() {
+        // returns a view only version of this card for showing
+        // in deck/reward selection/etc.
+        const clone = new this.constructor();
+        clone.el = clone.makeEl();
+        clone.render();
+        clone.el.style.position = 'relative';
+        clone.el.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+        return clone.el;
+    }
+
     makeEl() {
-        return styledDiv('C--card', {'--color': this.primaryColor}, [
-            div('C--costA', ['' + this.actionCost]),
-            this.manaCost > 0 && div('C--costM', ['' + this.manaCost]),
+        return div('C--card', [
+            div('C--actionPointIcon', ['' + this.actionCost]),
+            this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
             // styledDiv('C--pic', {
             //     backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
             //     filter: `hue-rotate(${hueShiftDeg}deg)`,
             // }),
             this.pic(),
-            div('C--name', [this.cardName]),
+            styledDiv(
+                'C--cardName',
+                {background: this.primaryColor},
+                [this.cardName],
+            ),
             div(
-                'C--text',
+                'C--cardText',
                 this.getTextLines()
                     .map(d => div('', [d]))
             ),

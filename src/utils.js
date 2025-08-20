@@ -1,3 +1,11 @@
+function br() {
+    return plainElement('br');
+}
+
+function plainElement(tagName, children = []) {
+    return styled(tagName, '', {}, children);
+}
+
 function div(className = '', children = []) {
     return styledDiv(className, {}, children);
 }

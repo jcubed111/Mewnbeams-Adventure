@@ -23,3 +23,7 @@ class Sprite{
         await wait(0.5);
     }
 }
+
+const SpriteSheetPic = (index, primaryColor) => () => styledDiv('C--spriteSheetPic', {
+    background: `url(c.png) ${(index % 5) * 25}% ${(~~(index / 5)) * 25}%/500% ${primaryColor}`,
+});

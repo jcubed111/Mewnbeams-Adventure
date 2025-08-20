@@ -26,12 +26,12 @@ class Player extends Character{
             setChildNumber(
                 this.el.querySelector('.C--actionPointRow'),
                 actionPoints,
-                _ => div('C--costA'),
+                _ => div('C--actionPointIcon'),
             );
             setChildNumber(
                 this.el.querySelector('.C--manaRow'),
                 manaPoints,
-                _ => div('C--costM'),
+                _ => div('C--manaPointIcon'),
             );
         }
     }

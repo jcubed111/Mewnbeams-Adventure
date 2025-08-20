@@ -38,7 +38,7 @@ class CardManager{
 
     passButton = new class extends Sprite{
         makeEl() {
-            return div('C--passButton', ["End Turn"]);
+            return div('C--passButton C--disabled C--buttonLike', ["End Turn"]);
         }
     }
 
@@ -51,6 +51,10 @@ class CardManager{
 
     constructor(startingDeck) {
         this.deck = [...startingDeck];
+    }
+
+    addToDeck(...cards) {
+        this.deck.push(...cards);
     }
 
     render() {
@@ -172,8 +176,10 @@ class CardManager{
             }
 
             const pass = e => resolve(["pass", e]);
+            this.passButton.el.classList.remove('C--disabled');
             this.passButton.el.addEventListener('click', pass);
             removers.push(() => {
+                this.passButton.el.classList.add('C--disabled');
                 this.passButton.el.removeEventListener('click', pass);
             });
         });

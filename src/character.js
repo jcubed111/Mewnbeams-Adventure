@@ -1,30 +1,36 @@
 class Character extends Sprite{
     // Universal props
     characterName = '?';
-    primaryColor = '#f00';
     maxHp;
-    currentHp;
     size;  // in rem
-    block = 0;
+    pic = SpriteSheetPic(0, '#587');
 
     /* Attributes */
     // guard - this enemy must be targeted first
     guard = false;
 
-    // Methods
+    /* State, don't override */
+    currentHp;
+    block = 0;
+
+    /* Methods */
+    hpBarEl;
+    blockBarEl;
+    pendingActionEl;
     makeEl() {
         this.currentHp ??= this.maxHp;
 
+        this.hpBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
+        this.blockBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
+        this.pendingActionEl = div('C--pendingAction');
+
         // const [picIndex, hueShiftDeg] = this.pic;
-        return styledDiv('C--character', {'--color': this.primaryColor, width: `${this.size}rem`,}, [
-            div('C--name', [this.characterName]),
-            div(`C--hp ${this.size >= 200 && 'C--wide'}`),  // gets filled by render
-            div(`C--block ${this.size >= 200 && 'C--wide'}`),  // gets filled by render
-            styledDiv('C--pic', {
-                // backgroundPosition: `${(picIndex % 5) * 25}% ${(~~(picIndex / 5)) * 25}%`,
-                // filter: `hue-rotate(${hueShiftDeg}deg)`,
-            }),
-            div('C--pendingAction'),  // filled in render
+        return styledDiv('C--character', {width: `${this.size}rem`}, [
+            div('', [this.characterName]),
+            this.hpBarEl,
+            this.blockBarEl,
+            this.pic(),
+            this.pendingActionEl,
         ]);
     }
 
@@ -61,26 +67,16 @@ class Character extends Sprite{
     }
 
     render() {
-        const pendingActionEl = this.el?.querySelector('.C--pendingAction');
-        if(pendingActionEl) {
-            pendingActionEl.innerText = this.peekAction().stringify();
+        this.pendingActionEl.innerText = this.peekAction().stringify();
+
+        setChildNumber(this.hpBarEl, this.maxHp, () => div());
+        for(let i = 0; i < this.maxHp; i++) {
+            this.hpBarEl.children[i].className = i < this.currentHp
+                ? 'C--hpChunk-full'
+                : i < this._preAnimateHp ? 'C--hpChunk-pending' : 'C--hpChunk-empty';
         }
 
-        const hpEl = this.el?.querySelector('.C--hp');
-        if(hpEl) {
-            setChildNumber(hpEl, this.maxHp, () => div());
-
-            for(let i = 0; i < this.maxHp; i++) {
-                hpEl.children[i].className = i < this.currentHp
-                    ? 'C--hpChunk-full'
-                    : i < this._preAnimateHp ? 'C--hpChunk-pending' : 'C--hpChunk-empty';
-            }
-        }
-
-        const blockEl = this.el?.querySelector('.C--block');
-        if(blockEl) {
-            setChildNumber(blockEl, this.block, () => div('C--blockChunk'));
-        }
+        setChildNumber(this.blockBarEl, this.block, () => div('C--blockChunk'));
     }
 
     /* monster action sequences */

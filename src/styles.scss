@@ -1,3 +1,24 @@
+/*
+Notes on this file:
+- All class names (in css & js) get replaced in convert.py, but
+  to identify them consistently, we prefix them with `C--`.
+  This gets optimized out.
+- Since we minify all class names in convert.py, we don't need to
+  worry about making them too long. Therefore, we can get space
+  savings from writing longer class names but _not_ nesting them.
+  Ex:
+    instead of: `.character .name`
+    do: `.characterName`
+  However, this makes the code pretty unreadable, so I add extra nesting
+  sometimes just to keep things clean.
+  Ex:
+    .character{}
+      .characterName{}
+- There are also a bunch of cases where unrelated classes happen to need
+  the same properties, and it's shorter to group them rather than repeart
+  the property values in multiple places.
+*/
+
 html{
     // define the font size as 1% of the view square
     font-size: min(0.1vw, 0.1vh);
@@ -13,9 +34,9 @@ body{
     width: 1000rem;
     height: 1000rem;
     overflow: hidden;
-    font-size: 15rem;
+    font-size: 21rem;
     margin: 0;
-    text-wrap: balance;
+    text-wrap: pretty;
     position: relative;
     color: #ddd;
     user-select: none;
@@ -25,6 +46,69 @@ body{
     box-sizing: border-box;
 }
 
+/* Fullscreen ux elements */
+.C--arrowCanvas, .C--choiceMenuWrapper{
+    position: absolute;
+    inset: 0;
+}
+
+.C--arrowCanvas{
+    pointer-events: none;
+    z-index: 9;
+}
+
+.C--choiceMenuWrapper{
+    z-index: 50;
+    background: #0004;
+    backdrop-filter: blur(20rem);
+}
+    .C--choiceMenu{
+        background: #123;
+        border: 5rem solid #469;
+        position: absolute;
+        inset: 150rem 50rem;
+        padding: 50rem;
+        display: flex;
+        flex-direction: column;
+
+        i{
+            color: #8bd;
+        }
+        b{
+            color: #f0a;
+        }
+        h1{
+            font-size: 60rem;
+        }
+    }
+
+    .C--centeredMenu{
+        text-align: center;
+        align-items: center;
+    }
+    .C--leftMenu{
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .C--choiceMenuTitle{
+        margin-bottom: 50rem;
+        line-height: 1.5;
+    }
+    .C--choiceMenuOptions{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50rem;
+        align-items: flex-start;
+
+        .C--colOptions &{
+            flex-direction: column;
+        }
+    }
+
+/* card and character general props */
 .C--card, .C--character{
     text-align: center;
     display: flex;
@@ -35,9 +119,24 @@ body{
         inset 0.4s ease-in-out,
         transform 0.4s ease-in-out,
         opacity 0.4s linear,
-        margin 0.15s linear;  // used for attack animation
+        margin 0.15s linear;  // used for character attack animation
+}
+.C--card.C--active{
+    box-shadow: 0 0 0 4rem #fff;
+    // speed up the transition here
+    transition:
+        inset 0.1s linear,
+        transform 0.4s ease-out,
+        opacity 0.4s linear;
 }
 
+.C--spriteSheetPic{
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    image-rendering: pixelated;
+}
+
+/* card */
 .C--card{
     width: 190rem;
     height: 285rem;
@@ -50,20 +149,29 @@ body{
         z-index: 24!important;
     }
 
-    &.C--active{
-        box-shadow: 0 0 0 4rem #fff;
-        transition:
-            inset 0.1s linear,
-            transform 0.4s ease-out,
-            opacity 0.4s linear;
-    }
-
     &.C--unplayable{
         filter: grayscale(50%);
         border-color: #666;
     }
 
-    &.C--faceDown:before{
+    .C--actionPointIcon, .C--manaPointIcon{
+        position: absolute;
+        top: -2rem;
+        left: -2rem;
+        z-index: 1;
+    }
+
+    .C--manaPointIcon{
+        top: 38rem;
+    }
+
+    .C--spriteSheetPic{
+        // prevents rounding errors from showing the adjacent sprite at the edges
+        box-shadow: inset 0 0 0 1px #000;
+    }
+}
+
+    .C--faceDown:before{
         content: '';
         position: absolute;
         inset: 0;
@@ -71,36 +179,15 @@ body{
         background: repeating-linear-gradient(45deg, #123 0 10rem, #246 10rem 20rem);
     }
 
-    &.C--faceDown .C--costA{
+    .C--faceDown .C--actionPointIcon{
         display: none;
     }
 
-    .C--pic{
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        image-rendering: pixelated;
-        // prevents rounding errors from showing the adjacent sprite at the edges
-        box-shadow: inset 0 0 0 1px #000;
-    }
-
-    .C--costA, .C--costM{
-        position: absolute;
-        top: -2rem;
-        left: -2rem;
-        z-index: 1;
-    }
-
-    .C--costM{
-        top: 38rem;
-    }
-
-    .C--name{
-        background: var(--color);
-        font-size: 21rem;
+    .C--cardName{
         padding: 5rem;
     }
 
-    .C--text{
+    .C--cardText{
         display: flex;
         flex-direction: column;
         gap: 2rem;
@@ -109,10 +196,8 @@ body{
         font-size: 18rem;
         justify-content: center;
     }
-}
 
-.C--costA, .C--costM{
-    font-size: 21rem;
+.C--actionPointIcon, .C--manaPointIcon{
     width: 35rem;
     height: 35rem;
     font-weight: bold;
@@ -125,21 +210,21 @@ body{
     }
 }
 
-.C--costA:before{
+.C--actionPointIcon:before{
     inset: 0;
     background: #a08;
     outline: 2rem solid #804;
     transform: rotate(45deg);
-    transform-origin: center;
 }
 
-.C--costM:before{
+.C--manaPointIcon:before{
     inset: -3rem;
     background: #08a;
     outline: 2rem solid #048;
     border-radius: 50%;
 }
 
+/* characters */
 .C--character{
     align-items: center;
     gap: 5rem;
@@ -148,17 +233,15 @@ body{
         box-shadow: 0 0 15rem #fff8;
     }
 
-    .C--pic{
-        width: 100%;
-        aspect-ratio: 4 / 3;
+    // Temp until we get actual pics here
+    .C--spriteSheetPic{
         background: #fff6;
     }
+}
+    // .C--characterName{
+    // }
 
-    .C--name{
-        font-size: 21rem;
-    }
-
-    .C--hp, .C--block{
+    .C--pipBar{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -169,59 +252,64 @@ body{
             max-width: 201rem;
         }
     }
+        // hp chunks
+        .C--hpChunk-full, .C--hpChunk-empty, .C--hpChunk-pending, .C--blockChunk{
+            width: 20rem;
+            height: 20rem;
+            $outset: 25%;
+            clip-path: polygon(
+                50% 0% - $outset,
+                100% + $outset 50%,
+                50% 100% + $outset,
+                0% - $outset 50%,
+            );
+        }
+            .C--hpChunk-full{
+                background: #ef2641;
+            }
+            .C--hpChunk-pending{
+                background: #ddd;
+            }
+            .C--hpChunk-empty{
+                background: #52304f;
+                transition: background 0.4s;
+            }
+            .C--blockChunk{
+                background: #bbb;
+            }
 
     .C--pendingAction{
         font-size: 30rem;
+
+        .C--playerCharacter &{
+            display: none;
+        }
+    }
+
+
+.C--buttonLike {
+    padding: 7rem 14rem;
+    background: #123;
+    border: 5rem solid #469;
+}
+
+.C--buttonLike:not(.C--disabled),
+.C--gettingCard .C--card:not(.C--unplayable) {
+    // the "click a card/button" state
+    box-shadow: 0 0 0 4rem #8bd;
+    cursor: pointer;
+
+    &:hover{
+        box-shadow: 0 0 0 4rem #e8f;
     }
 }
 
-.C--playerCharacter .C--pendingAction{
-    display: none;
-}
-
-// hp chunks
-.C--hpChunk-full, .C--hpChunk-empty, .C--hpChunk-pending, .C--blockChunk{
-    width: 20rem;
-    height: 20rem;
-    $outset: 25%;
-    clip-path: polygon(
-        50% 0% - $outset,
-        100% + $outset 50%,
-        50% 100% + $outset,
-        0% - $outset 50%,
-    );
-}
-.C--hpChunk-full{
-    background: #ef2641;
-}
-.C--hpChunk-pending{
-    background: #ddd;
-}
-.C--hpChunk-empty{
-    background: #52304f;
-    transition: background 0.4s;
-}
-.C--blockChunk{
-    background: #bbb;
-}
-
-.C--arrowCanvas{
-    // the arrow canvas
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9;
-}
-
+/* floating ui elements */
 .C--passButton{
     position: absolute;
     right: 10rem;
     bottom: 310rem;
     z-index: 30;
-    padding: 7rem 14rem;
-    font-size: 22rem;
-    background: #123;
-    border: 5rem solid #469;
 }
 
 .C--resources{
@@ -229,6 +317,7 @@ body{
     left: 10rem;
     bottom: 310rem;
     z-index: 9;
+}
     .C--actionPointRow, .C--manaRow {
         margin-top: 15rem;
         display: flex;
@@ -239,14 +328,4 @@ body{
             box-shadow: 0 0 0 6rem #fffa;
         }
     }
-}
 
-.C--gettingCard .C--card:not(.C--unplayable), .C--gettingCard .C--passButton{
-    // the "click a card" state
-    box-shadow: 0 0 0 4rem #8bd;
-    cursor: pointer;
-
-    &:hover{
-        box-shadow: 0 0 0 4rem #e8f;
-    }
-}

@@ -92,7 +92,7 @@ function cardListViewScreen(cards, sort) {
         ? cards.toSorted(
             (a, b) =>
                 a.rarityOrder - b.rarityOrder
-                || a.name.localeCompare(b.name)
+                || a.cardName.localeCompare(b.cardName)
         )
         : cards;
     return showChoiceMenu(3,

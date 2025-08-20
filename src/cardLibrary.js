@@ -4,7 +4,6 @@ const cardLibrary = {
     Paw: class extends RareCard{
         cardName = 'Paw';
         pic = SpriteSheetPic(4, '#ff32f1');
-        actionCost = 0;
 
         damage = 0;
     },
@@ -60,7 +59,6 @@ const cardLibrary = {
     BobaEyes: class extends RareCard{
         cardName = 'Boba Eyes';
         pic = SpriteSheetPic(9, '#406');
-        actionCost = 0;
         manaCost = 2;
 
         gainStrength = 1;
@@ -91,7 +89,6 @@ const cardLibrary = {
     Channel: class extends RareCard{
         cardName = 'Channel';
         pic = SpriteSheetPic(8, '#3bf');
-        actionCost = 0;
         manaCost = 0;
 
         gainMana = 2;
@@ -106,7 +103,6 @@ const cardLibrary = {
     },
     SeeGhost: class extends RareCard{
         cardName = 'See Ghost';
-        actionCost = 0;
         manaCost = 2;
 
         pic = SpriteSheetPic(3, '#005f39');
@@ -117,7 +113,6 @@ const cardLibrary = {
     Zoomies: class extends RareCard{
         cardName = 'Zoomies';
         pic = SpriteSheetPic(13, '#496fcf');
-        actionCost = 0;
         manaCost = 1;
 
         gainActions = 2;
@@ -125,10 +120,10 @@ const cardLibrary = {
     WitchingHour: class extends LegendaryCard{
         cardName = 'WitchingHour';
         pic = SpriteSheetPic(14, '#353cfd');
-        actionCost = 0;
-        manaCost = 2;
+        // manaCost = 0;
 
-        // gainActions = 2;
+        gainActions = 2;
+        gainMana = 2;
     },
 
     // - fireball - damage 3

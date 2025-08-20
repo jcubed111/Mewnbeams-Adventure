@@ -5,7 +5,7 @@ class Card extends Sprite{
     rarityOrder = 0;
     // Universal props
     primaryColor = '#f00';
-    actionCost = 1;
+    actionCost = 0;
     manaCost = 0;
 
     /* Render Methods */

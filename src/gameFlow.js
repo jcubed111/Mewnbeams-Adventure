@@ -11,9 +11,16 @@ async function runMainMenu() {
     const selection = await showChoiceMenu(0,
         plainElement('h1', ['Mewnbeam’s Quest']),
         'Start',
+        'Library',
     );
-    // the only choice is play lol
-    await runGameRun();
+    if(selection == 0) {
+        await runGameRun();
+    }else{
+        await cardListViewScreen(
+            [...Object.values(cardLibrary)].map(C => new C),
+            true,
+        );
+    }
 
     return await runMainMenu();
 }

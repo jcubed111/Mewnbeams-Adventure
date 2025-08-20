@@ -16,8 +16,8 @@ JS_FILES := \
 	src/main.js
 
 IMAGES := $(wildcard src/*.png)
-IMAGES_DIST := $(IMAGES:src/%=dist/%)
-IMAGES_DEV := $(IMAGES:src/%=dev/%)
+IMAGES_DIST := $(IMAGES:src/%.png=dist/%.webp)
+IMAGES_DEV := $(IMAGES:src/%.png=dev/%.webp)
 
 JS_DEV := $(JS_FILES:src/%=dev/%)
 
@@ -34,7 +34,7 @@ clean:
 	rm -rf build/*
 	rm -rf build/.[!.]*
 
-dev/%.png: src/%.png
+dev/%.webp: dist/%.webp
 	cp $^ $@
 
 dev/%.js: src/%.js
@@ -69,10 +69,12 @@ build/index.html: src/index.html
 		$^
 
 
-dist/%.png: src/%.png
+# There re two compression methods here, I'm getting basically the same
+# results for each atm, but might be worth trying later too.
+dist/%.webp: src/%.png
 	@echo $@ "<-" $^
-	@cp $^ $@
-	@optipng -o7 -zm1-9 -strip all -fix -quiet $@
+	@cwebp -lossless -q 100 -m 6 -z 9 -metadata none $^ -o $@
+# 	@magick $^ -define webp:lossless=true -quality 100 -define webp:method=6 -strip $@
 
 dist/styles-min.css: build/styles-min.css
 	cp $^ $@
@@ -101,8 +103,8 @@ report: out.zip
 			MESSAGE=$$(echo "👍"); \
 		fi; \
 		echo "    $$FILE_SIZE / 13,312  =  $$PERCENT%  $$MESSAGE"
-	@FILE_SIZE=$$(stat -c%s dist/c.png 2>/dev/null || stat -f%z dist/c.png); \
+	@FILE_SIZE=$$(stat -c%s dist/c.webp 2>/dev/null || stat -f%z dist/c.webp); \
 		PERCENT=$$(awk -v f="$$FILE_SIZE" -v t="13312" 'BEGIN { printf "%.3f", (f/t)*100 }'); \
-		echo "      * c.png: $$FILE_SIZE (pre-zip)"
+		echo "      * c.webp: $$FILE_SIZE (pre-zip)"
 	@echo;
 	@echo '------------------------------------';

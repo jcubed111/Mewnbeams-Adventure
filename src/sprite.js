@@ -25,5 +25,5 @@ class Sprite{
 }
 
 const SpriteSheetPic = (index, primaryColor) => () => styledDiv('C--spriteSheetPic', {
-    background: `url(c.png) ${(index % 5) * 25}% ${(~~(index / 5)) * 10}%/500% ${primaryColor}`,
+    background: `url(c.webp) ${(index % 5) * 25}% ${(~~(index / 5)) * 10}%/500% ${primaryColor}`,
 });

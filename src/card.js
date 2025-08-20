@@ -122,6 +122,8 @@ class Card extends Sprite{
     fear;
 
     // SELF EFFECTS
+    // gainActions?: number - gain action points
+    gainActions;
     // gainMana?: number - gain mana
     gainMana;
     // selfHeal?: number - heal for this amount
@@ -146,6 +148,9 @@ class Card extends Sprite{
             this.fear != undefined &&
                 `Scare ${this.fear}${toAllText}`,
 
+
+            this.gainActions != undefined &&
+                `Gain ${this.gainActions} Actions`,
 
             this.gainMana != undefined &&
                 `Gain ${this.gainMana} Mana`,
@@ -173,6 +178,9 @@ class Card extends Sprite{
         }
         // TODO: fear
 
+        if(this.gainActions != undefined) {
+            player.pay(-this.gainActions, 0);
+        }
         if(this.gainMana != undefined) {
             player.pay(0, -this.gainMana);
         }

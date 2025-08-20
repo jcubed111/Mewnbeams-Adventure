@@ -104,15 +104,32 @@ const cardLibrary = {
 
         damage = 4;
     },
-    // SeeGhost: class extends RareCard{
-    //     cardName = 'See Ghost';
-    //     actionCost = 0;
-    //     manaCost = 2;
+    SeeGhost: class extends RareCard{
+        cardName = 'See Ghost';
+        actionCost = 0;
+        manaCost = 2;
 
-    //     pic = SpriteSheetPic(3, '#0f0');
+        pic = SpriteSheetPic(3, '#005f39');
 
-    //     getTextLines() { return ['Replay the Previous Card'] };
-    // },
+        // getTextLines() { return ['Replay the Previous Card'] };
+        getTextLines() { return ['TODO'] };
+    },
+    Zoomies: class extends RareCard{
+        cardName = 'Zoomies';
+        pic = SpriteSheetPic(13, '#496fcf');
+        actionCost = 0;
+        manaCost = 1;
+
+        gainActions = 2;
+    },
+    WitchingHour: class extends LegendaryCard{
+        cardName = 'WitchingHour';
+        pic = SpriteSheetPic(14, '#353cfd');
+        actionCost = 0;
+        manaCost = 2;
+
+        // gainActions = 2;
+    },
 
     // - fireball - damage 3
     // - see ghost - replay the previous card

@@ -56,8 +56,8 @@ function showChoiceMenu(mode, mainContent, ...options) {
 function fadeInText(textStringParts, ...els) {
     const parts = textStringParts.flatMap((part, i) => {
         return [
-            ...part.split(/( )/g).map(p => plainElement('span', [p])),
-            plainElement('span', [els[i]]),
+            ...part.split(/( )/g).map(p => span('', [p])),
+            span('', [els[i]]),
         ];
     });
     parts.forEach(async (p, i) => {

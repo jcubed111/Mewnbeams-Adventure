@@ -10,6 +10,10 @@ function div(className = '', children = []) {
     return styledDiv(className, {}, children);
 }
 
+function span(className = '', children = []) {
+    return styled('span', className, {}, children);
+}
+
 function styledDiv(className = '', style = {}, children = []) {
     return styled("div", className, style, children);
 }

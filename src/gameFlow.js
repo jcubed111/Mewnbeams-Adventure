@@ -144,7 +144,8 @@ function fightGenerator(floorIndex) {
         [
             new monsterLibrary.BasicRat,
             new monsterLibrary.RatGuard,
-            new monsterLibrary.RatWizard,
+            // new monsterLibrary.RatWizard,
+            new monsterLibrary.PoisonRat,
         ],
         getCardRewards(floorIndex),
     ];
@@ -183,6 +184,7 @@ async function runBattle(enemies) {
     player.manaPoints = INITIAL_MANA;
     player.actionPoints = ACTIONS_PER_ROUND;
     player.strength = 0;
+    player.bleed = 0;
     player.render();
 
     await wait(0.1);
@@ -259,7 +261,7 @@ async function runBattleMain() {
             // It's possible this got killed by a fellow enemy before
             // moving. If so, skip.
             if(enemy.currentHp <= 0) continue;
-            enemy.peekAction().run(enemy);
+            enemy.peekAction().run(enemy, enemyManager.activeEnemies);
             enemyManager.removeDead();
             await wait(0.1);
             enemy.clearAction();
@@ -271,6 +273,11 @@ async function runBattleMain() {
         }
 
         /* reset */
+        player.onStartOfTurn();
+        if(player.currentHp <= 0) {
+            // death by poison, probably
+            return;
+        }
         player.manaPoints += MANA_PER_ROUND;
         player.actionPoints = ACTIONS_PER_ROUND;
         player.render();

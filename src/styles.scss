@@ -332,7 +332,10 @@ body{
                 background: #ef2641;
             }
             .C--hpChunk-bleed{
-                background: linear-gradient(#ef2641 30%, #6c0210 30% 70%, #ef2641 70%);
+                background: linear-gradient(#ef2641 30%, #4a0912 30% 70%, #ef2641 70%);
+            }
+            .C--playerCharacter .C--hpChunk-bleed{
+                background: #1c0;
             }
             .C--hpChunk-pending{
                 background: #ddd;

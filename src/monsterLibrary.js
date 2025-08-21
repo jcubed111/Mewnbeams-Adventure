@@ -31,9 +31,18 @@ const monsterLibrary = {
         *getActionSequence() {
             yield* shuffleInPlace([
                 new actions.Attack(2),
-                new actions.Block(3),
+                new actions.BlockAll(2),
                 new actions.Block(5),
             ]);
+        }
+    },
+    PoisonRat: class extends Character{
+        characterName = 'Poison Rat';
+        maxHp = 2;
+        size = 110;
+
+        *getActionSequence() {
+            yield new actions.Poison(2);
         }
     },
 }

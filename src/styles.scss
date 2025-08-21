@@ -65,25 +65,32 @@ body{
     .C--darkBlackMenuBack{
         background: #000b;
         z-index: 80;  // place above deck button
-        // overflow: auto;
 
+        // Special positioning for inner and the first option button
         .C--choiceMenu{
-            padding: 200rem 100rem 250rem;
+            padding: 115rem 80rem;
             height: 100%;
             overflow: auto;
         }
-        .C--choiceMenuOptions{
+    }
+    .C--darkBgButtonTop, .C--darkBgButtonBottom{
+        // Special positioning for the first option button
+        .C--choiceMenuOptionButton:first-child{
             position: absolute;
-            inset: auto auto 100rem;
+            inset: 100rem 100rem auto auto;
             z-index: 60;
-            align-self: center;
         }
     }
+    .C--darkBgButtonBottom .C--choiceMenuOptionButton:first-child{
+        inset: auto 500rem 100rem;
+    }
 
+    // // this is the (maybe) bordered one
     .C--choiceMenu{
         padding: 50rem;
         display: flex;
         flex-direction: column;
+        align-items: stretch;
 
         i{
             color: #8bd;
@@ -95,45 +102,44 @@ body{
             font-size: 60rem;
         }
     }
-    .C--choiceMenuBordered{
-        background: #123;
-        border: 5rem solid #469;
-        position: absolute;
-        inset: 150rem 216rem;
-    }
-
-    .C--centeredMenu{
-        text-align: center;
-        align-items: center;
-    }
-    .C--leftMenu{
-        text-align: left;
-        align-items: flex-start;
-    }
+        .C--choiceMenuBordered{
+            background: #123;
+            border: 5rem solid #469;
+            position: absolute;
+            inset: 150rem 216rem;
+        }
 
     .C--choiceMenuTitle{
         margin-bottom: 50rem;
         line-height: 1.5;
     }
+        .C--centeredTitle{
+            text-align: center;
+        }
+        .C--leftTitle{
+            text-align: left;
+        }
+
     .C--choiceMenuOptions{
         display: flex;
-        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
         gap: 50rem;
-        align-items: flex-start;
-
-        .C--colOptions &{
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+        .C--colOptions{
             flex-direction: column;
+            &.C--leftOptions{
+                align-items: flex-start;
+            }
         }
-    }
-    .C--cardList{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: start;
-        gap: 39rem;
-        margin: -100rem 0 0;
-    }
+        .C--rowOptions{
+            flex-direction: row;
+            &.C--leftOptions{
+                justify-content: flex-start;
+            }
+        }
 
 /* card and character general props */
 .C--card, .C--character{
@@ -355,7 +361,8 @@ body{
 }
 
 .C--buttonLike:not(.C--disabled),
-.C--gettingCard .C--card:not(.C--unplayable) {
+.C--gettingCard .C--card:not(.C--unplayable),
+.C--cardForceClickable {
     // the "click a card/button" state
     box-shadow: 0 0 0 4rem #8bd;
     cursor: pointer;

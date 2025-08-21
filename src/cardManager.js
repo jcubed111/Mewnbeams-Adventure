@@ -80,6 +80,12 @@ class CardManager{
 
     addToDeck(...cards) {
         this.deck.push(...cards);
+        this.render();
+    }
+
+    removeDeckIndex(i) {
+        this.deck.splice(i, 1);
+        this.render();
     }
 
     render() {

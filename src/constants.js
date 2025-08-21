@@ -4,3 +4,4 @@ const INITIAL_MANA = 1;
 const MANA_PER_ROUND = 1;
 const ACTIONS_PER_ROUND = 2;
 const NUM_FLOORS = 15;
+const NAP_HEAL_AMOUNT = 5;

@@ -8,7 +8,7 @@ async function runMainMenu() {
     // ]);
     //////////////
 
-    const selection = await showChoiceMenu(0,
+    const selection = await showChoiceMenu(ChoiceMenuTitle,
         plainElement('h1', ['Mewnbeam’s Quest']),
         'Start',
         'Library',
@@ -19,6 +19,8 @@ async function runMainMenu() {
         await cardListViewScreen(
             [...Object.values(cardLibrary)].map(C => new C),
             true,
+            false,
+            'Library',
         );
     }
 
@@ -31,13 +33,13 @@ async function runGameRun() {
     cardManager.render();
 
     /* OPENING */
-    const choice = await showChoiceMenu(1,
+    const choice = await showChoiceMenu(ChoiceMenuTextEvent,
         fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [`take care of`])} that ${plainElement('b', [`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
         'Mrow?',
         'Hiiisssss!',
     );
     if(choice == 0) {
-        await showChoiceMenu(1,
+        await showChoiceMenu(ChoiceMenuTextEvent,
             fadeInText`Shouldn’t be a big deal, just run through the castle defeating his minions, then ${plainElement('b', [`take him down!`])}`,
             'Hiiisssss?'
         );
@@ -53,7 +55,7 @@ async function runGameRun() {
         'grave yard',
         'broom emporium',
     ])[0];
-    const boonChoice = await showChoiceMenu(2,
+    const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ...choices.map(c => c.asStaticElement()),
     );
@@ -64,7 +66,7 @@ async function runGameRun() {
         /* Direction Choice */
         if(floorIndex > 0) {
             const directionChoices = minimap.getAdvanceOptions();
-            const choiceIndex = await showChoiceMenu(0,
+            const choiceIndex = await showChoiceMenu(ChoiceMenuCardReward,
                 `Where to?`,
                 ...directionChoices.map(c => c[1]),
             );
@@ -74,11 +76,10 @@ async function runGameRun() {
         const chosenFloorType = minimap.getCurrentFloorType();
 
         if(chosenFloorType == RoomType.Nap) {
-            await showChoiceMenu(0, 'Nap TODO', 'Go');
+            await runNap();
 
         }else if(chosenFloorType == RoomType.Event) {
-            await showChoiceMenu(0, 'Event TODO', 'Go');
-
+            await showChoiceMenu(ChoiceMenuTextEventReward, 'Event TODO', 'Go');
             // Note: we don't check for death here because none
             // of the events can (yet) kill you.
 
@@ -94,7 +95,7 @@ async function runGameRun() {
 
             /* Card Reward */
             if(floorIndex < NUM_FLOORS - 1) {
-                const cardChoice = await showChoiceMenu(0,
+                const cardChoice = await showChoiceMenu(ChoiceMenuCardReward,
                     `Choose...`,
                     ...cardRewards.map(c => c.asStaticElement()),
                     "Pass",
@@ -110,6 +111,28 @@ async function runGameRun() {
     await victoryScreen();
 }
 
+
+async function runNap() {
+    const napChoice = await showChoiceMenu(ChoiceMenuCardReward,
+        `This looks like a cozy spot!`,
+        `Sleep (Heal ${NAP_HEAL_AMOUNT})`,
+        'Lick (Remove a Card)',
+    );
+    if(napChoice == 0) {
+        player.heal(NAP_HEAL_AMOUNT);
+
+    }else{
+        const removeIndex = await cardListViewScreen(
+            cardManager.deck,
+            false,
+            true,
+            'Remove a Card...',
+        );
+        // If we clicked back, just run the nap again
+        if(removeIndex == -1) return await runNap();
+        cardManager.removeDeckIndex(removeIndex);
+    }
+}
 
 function fightGenerator(floorIndex) {
     // Returns [monsters, card reward choices]

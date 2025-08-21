@@ -1,43 +1,76 @@
 
+
+// choice menu mode bitmap
+const Bit_darkBg = 1;
+const Bit_centeredTitle = 2;  // the title text is centered
+const Bit_colOptions = 4;
+const Bit_centeredOptions = 8;
+const Bit_delayOptionVisibility = 16;
+const Bit_unclickableCardList = 32;
+const Bit_darkBgButtonTop = 64;  // move option[0] button to the top right instead of button center
+
+
+const ChoiceMenuTitle = Bit_centeredTitle | Bit_centeredOptions;
+const ChoiceMenuTextEvent = Bit_colOptions | Bit_delayOptionVisibility;
+const ChoiceMenuTextEventReward = Bit_centeredOptions;
+const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
+const ChoiceMenuCardList = Bit_darkBg | Bit_darkBgButtonTop;
+const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_darkBgButtonTop | Bit_unclickableCardList;
+const ChoiceMenuDeathScreen = Bit_darkBg;
+
 // A big fullscreen menu element for events, card lists, etc.
-function showChoiceMenu(mode, mainContent, ...options) {
-    // Modes:
-    // 0 - centered menu, centered row of options
-    // 1 - left menu, left aligned list of options, option show delay
-    // 2 - left menu, centered row of options, option show delay
-    // 3 - floating menu, dark black bg, no box, higher z index
-    const extraClasses = [
-        'C--centeredMenu',
-        'C--leftMenu C--colOptions',
-        'C--leftMenu',
-        'C--leftMenu C--darkBlackMenuBack'
-    ][mode];
+function showChoiceMenu(modeBitmap, mainContent, ...options) {
+    const darkBg = modeBitmap & Bit_darkBg;
+    const centeredTitle = modeBitmap & Bit_centeredTitle;
+    const colOptions = modeBitmap & Bit_colOptions;
+    const centeredOptions = modeBitmap & Bit_centeredOptions;
+    const delayOptionVisibility = modeBitmap & Bit_delayOptionVisibility;
+    const unclickableCardList = modeBitmap & Bit_unclickableCardList;
+    const darkBgButtonTop = modeBitmap & Bit_darkBgButtonTop;
+
     // resolves with the index of the chosen option
     return new Promise(resolve => {
         const choiceMenuSprite = new class extends Sprite{
             makeEl() {
                 const optionDivs = options.map(
-                    optionContent =>
-                        div('C--buttonLike', [optionContent])
+                    (optionContent, i) =>
+                        div(
+                            (!darkBg || i == 0) && 'C--buttonLike C--choiceMenuOptionButton',
+                            [optionContent],
+                        )
                 );
 
-                optionDivs.forEach(
-                    (el, i) =>
+                optionDivs.forEach((el, i) => {
+                    if(i == 0 || !unclickableCardList) {
                         el.addEventListener('click', () => {
                             this.hide();
                             resolve(i);
-                        })
-                );
+                        });
+                    }
+                });
 
-                const optionsWrapper = div('C--choiceMenuOptions', optionDivs);
-                if(mode != 0 && mode != 3) {
+                const optionsWrapper = div(
+                    [
+                        'C--choiceMenuOptions',
+                        colOptions ? 'C--colOptions' : 'C--rowOptions',
+                        centeredOptions || 'C--leftOptions',
+                        darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
+                    ].join(' '),
+                    optionDivs,
+                );
+                if(delayOptionVisibility) {
                     optionsWrapper.style.visibility = 'hidden';
                     wait(0.5).then(() => optionsWrapper.style.visibility = '');
                 }
 
-                return div('C--choiceMenuWrapper ' + extraClasses, [
-                    div(mode == 3 ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered', [
-                        div('C--choiceMenuTitle', [mainContent]),
+                return div(darkBg ? 'C--choiceMenuWrapper C--darkBlackMenuBack' : 'C--choiceMenuWrapper', [
+                    div(darkBg ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered', [
+                        div(
+                            centeredTitle
+                                ? 'C--choiceMenuTitle C--centeredTitle'
+                                : 'C--choiceMenuTitle C--leftTitle',
+                            [mainContent],
+                        ),
                         styledDiv('', {flexGrow: 1}),
                         optionsWrapper,
                         styledDiv('', {flexGrow: 1}),
@@ -69,14 +102,14 @@ function fadeInText(textStringParts, ...els) {
 }
 
 function deathScreen() {
-    return showChoiceMenu(3,
+    return showChoiceMenu(ChoiceMenuDeathScreen,
         fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
         'Try Again',
     );
 }
 
 function victoryScreen() {
-    return showChoiceMenu(0,
+    return showChoiceMenu(ChoiceMenuTitle,
         div('', [
             plainElement('h1', ['Victory!']),
             styledDiv('', {textAlign: 'left'}, [
@@ -87,7 +120,7 @@ function victoryScreen() {
     );
 }
 
-function cardListViewScreen(cards, sort) {
+async function cardListViewScreen(cards, sort, allowCardClick, title='') {
     const ordered = sort
         // google closure compiler doesn't know about toSorted lol
         ? cards['toSorted'](
@@ -96,12 +129,13 @@ function cardListViewScreen(cards, sort) {
                 || a.cardName.localeCompare(b.cardName)
         )
         : cards;
-    return showChoiceMenu(3,
-        div('C--cardList',
-            cards.length
-                ? ordered.map(card => card.asStaticElement())
-                : ['No Cards'],
-        ),
+    // we subtract 1 to account for the back button and return the card index
+    return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuCardList : ChoiceMenuCardListNoClick,
+        div('', [
+            title,
+            cards.length ? 0 : 'No Cards',
+        ].filter(e => e)),
         'Back',
+        ...ordered.map(card => card.asStaticElement(allowCardClick)),
     );
 }

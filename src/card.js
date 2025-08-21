@@ -9,14 +9,18 @@ class Card extends Sprite{
     manaCost = 0;
 
     /* Render Methods */
-    asStaticElement() {
+    asStaticElement(clickable) {
         // returns a view only version of this card for showing
         // in deck/reward selection/etc.
         const clone = new this.constructor();
         clone.el = clone.makeEl();
         clone.render(true);
         clone.el.style.position = 'relative';
-        clone.el.style.boxShadow = 'none';
+        if(clickable) {
+            clone.el.classList.add('C--cardForceClickable');
+        }else{
+            clone.el.style.boxShadow = 'none';
+        }
         // cube root here to bias away from rotate(0), which looks boring
         clone.el.style.transform = `rotate(${4 * Math.cbrt(Math.random() - 0.5)}deg)`;
         return clone.el;

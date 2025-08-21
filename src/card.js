@@ -114,11 +114,13 @@ class Card extends Sprite{
     // Numbers use `undefined` so that the value `0` is
     // available, ie `Attack 0` is a valid card.
 
-    // NON-PLAY EFFECTS (not used in the play method)
+    // NON-PLAY/META EFFECTS
     // makes the card hit all enemies
     toAll = false;
     // exhaust after playing
     exhaust = false;
+    // play multiple times
+    repeatPlay = 1;
 
     // ENEMY EFFECTS
     // damage?: number
@@ -171,36 +173,41 @@ class Card extends Sprite{
             this.draw != undefined &&
                 `Draw ${this.draw}`,
 
+            this.repeatPlay != 1 &&
+                `${this.repeatPlay} Times`,
+
             this.exhaust &&
                 `Exhaust`,
         ].filter(l => l);
     }
 
     async play(targets) {
-        if(this.damage != undefined) {
-            targets.forEach(t => t.animateDamage(this.damage + player.strength));
-        }
-        if(this.bleed != undefined) {
-            targets.forEach(t => t.gainBleed(this.bleed));
-        }
-        // TODO: fear
+        for(const i of range(0, this.repeatPlay)) {
+            if(this.damage != undefined) {
+                targets.forEach(t => t.animateDamage(this.damage + player.strength));
+            }
+            if(this.bleed != undefined) {
+                targets.forEach(t => t.gainBleed(this.bleed));
+            }
+            // TODO: fear
 
-        if(this.gainActions != undefined) {
-            player.pay(-this.gainActions, 0);
-        }
-        if(this.gainMana != undefined) {
-            player.pay(0, -this.gainMana);
-        }
-        if(this.selfHeal) {
-            player.heal(this.selfHeal);
-        }
-        if(this.gainStrength) {
-            player.strength += this.gainStrength;
-            player.render();
-            cardManager.render();
-        }
-        if(this.draw) {
-            await cardManager.draw(this.draw);
+            if(this.gainActions != undefined) {
+                player.pay(-this.gainActions, 0);
+            }
+            if(this.gainMana != undefined) {
+                player.pay(0, -this.gainMana);
+            }
+            if(this.selfHeal) {
+                player.heal(this.selfHeal);
+            }
+            if(this.gainStrength) {
+                player.strength += this.gainStrength;
+                player.render();
+                cardManager.render();
+            }
+            if(this.draw) {
+                await cardManager.draw(this.draw);
+            }
         }
     }
 }

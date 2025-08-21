@@ -21,6 +21,14 @@ const cardLibrary = {
 
         damage = 3;
     },
+    BoomBopBam: class extends RareCard{
+        cardName = 'Boom Bop Bam';
+        pic = SpriteSheetPic(15, '#709a2b');
+        actionCost = 2;
+
+        damage = 1;
+        repeatPlay = 3;
+    },
 
     Swipe: class extends CommonCard{
         cardName = 'Swipe';
@@ -54,6 +62,14 @@ const cardLibrary = {
 
         damage = 1;
         selfHeal = 1;
+    },
+    TongueBath: class extends LegendaryCard{
+        cardName = 'Tongue Bath';
+        pic = SpriteSheetPic(16, '#436');
+        actionCost = 1;
+
+        selfHeal = 4;
+        exhaust = true;
     },
 
     BobaEyes: class extends RareCard{

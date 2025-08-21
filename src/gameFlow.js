@@ -144,7 +144,7 @@ function fightGenerator(floorIndex) {
         [
             new monsterLibrary.BasicRat,
             new monsterLibrary.RatGuard,
-            // new monsterLibrary.RatWizard,
+            new monsterLibrary.RatWizard,
             new monsterLibrary.PoisonRat,
         ],
         getCardRewards(floorIndex),
@@ -261,7 +261,7 @@ async function runBattleMain() {
             // It's possible this got killed by a fellow enemy before
             // moving. If so, skip.
             if(enemy.currentHp <= 0) continue;
-            enemy.peekAction().run(enemy, enemyManager.activeEnemies);
+            enemy.peekAction()[1](enemy, enemyManager.activeEnemies);
             enemyManager.removeDead();
             await wait(0.1);
             enemy.clearAction();

@@ -83,7 +83,7 @@ class Character extends Sprite{
     }
 
     render() {
-        this.pendingActionEl.innerText = this.peekAction().displayString();
+        this.pendingActionEl.innerText = this.peekAction()[0];
 
         setChildNumber(this.hpBarEl, this.maxHp, () => div());
         for(let i = 0; i < this.maxHp; i++) {
@@ -105,7 +105,7 @@ class Character extends Sprite{
     *getActionSequence() {
         // can last forever, or can be a finite list that will
         // be repeated by getActionsForever
-        yield new actions.Pass;
+        yield actions.Pass;
     }
 
     *getActionsForever() {
@@ -127,7 +127,7 @@ class Character extends Sprite{
     // we can show no action till the next round starts.
     // This is also used by the stun effect
     clearAction() {
-        this._pendingAction = new actions.None;
+        this._pendingAction = actions.None;
         this.render();
     }
 

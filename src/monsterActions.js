@@ -1,71 +1,45 @@
 const actions = {
-    Pass: class{
-        displayString() {
-            return 'zZzZ';
-        }
-        run() {}
-    },
+    // All actions are: (...props) => [displayString: string, run: (monster, allMonsters) => void]
+    // Except the basic ones which are just static values
+    Pass: [
+        'zZzZ',
+        m => 0,
+    ],
 
-    None: class{
-        displayString() {
-            return '\xA0';  // nbsp
-        }
-        run() {}
-    },
+    None: [
+        '\xA0',  // nbsp
+        m => 0,
+    ],
 
-    Attack: class{
-        damage = 0;
-        constructor(damage) {
-            this.damage = damage;
-        }
-        displayString() {
-            return `🗡️ ${this.damage}`;
-        }
-        run(monster) {
+    Attack: damage => [
+        `🗡️ ${damage}`,
+        monster => {
             monster.animateAttack();
-            player.animateDamage(this.damage);
-        }
-    },
+            player.animateDamage(damage);
+        },
+    ],
 
-    Poison: class{
-        damage = 0;
-        constructor(damage) {
-            this.damage = damage;
-        }
-        displayString() {
-            return `🧪 ${this.damage}`;
-        }
-        run(monster) {
+    Poison: damage => [
+        `🧪 ${damage}`,
+        monster => {
             monster.animateAttack();
-            player.gainBleed(this.damage);
-        }
-    },
+            player.gainBleed(damage);
+        },
+    ],
 
-    Block: class{
-        block = 0;
-        constructor(block) {
-            this.block = block;
-        }
-        displayString() {
-            return `🛡️ ${this.block}`;
-        }
-        run(monster) {
+    Block: block => [
+        `🛡️ ${block}`,
+        monster => {
             monster.animateAttack(-0.5);
-            monster.gainBlock(this.block);
-        }
-    },
+            monster.gainBlock(block);
+        },
+    ],
 
-    BlockAll: class{
-        block = 0;
-        constructor(block) {
-            this.block = block;
-        }
-        displayString() {
-            return `🛡️ ${this.block} All`;
-        }
-        run(monster, allMonsters) {
+    BlockAll: block => [
+        `🛡️ ${block} All`,
+        (monster, allMonsters) => {
             monster.animateAttack(-0.5);
-            allMonsters.forEach(m => m.gainBlock(this.block));
-        }
-    },
+            allMonsters.forEach(m => m.gainBlock(block));
+        },
+    ],
 };

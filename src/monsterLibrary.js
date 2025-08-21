@@ -6,9 +6,9 @@ const monsterLibrary = {
 
         *getActionSequence() {
             yield* shuffleInPlace([
-                new actions.Block(2),
-                new actions.Attack(1),
-                new actions.Attack(2),
+                actions.Block(2),
+                actions.Attack(1),
+                actions.Attack(2),
             ]);
         }
     },
@@ -18,8 +18,8 @@ const monsterLibrary = {
         size = 110;
 
         *getActionSequence() {
-            yield new actions.Pass;
-            yield new actions.Attack(4);
+            yield actions.Pass;
+            yield actions.Attack(4);
         }
     },
     RatGuard: class extends Character{
@@ -30,9 +30,9 @@ const monsterLibrary = {
 
         *getActionSequence() {
             yield* shuffleInPlace([
-                new actions.Attack(2),
-                new actions.BlockAll(2),
-                new actions.Block(5),
+                actions.Attack(2),
+                actions.BlockAll(2),
+                actions.Block(5),
             ]);
         }
     },
@@ -42,7 +42,7 @@ const monsterLibrary = {
         size = 110;
 
         *getActionSequence() {
-            yield new actions.Poison(2);
+            yield actions.Poison(2);
         }
     },
 }

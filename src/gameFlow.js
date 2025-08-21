@@ -66,10 +66,12 @@ async function runGameRun() {
         /* Direction Choice */
         if(floorIndex > 0) {
             const directionChoices = minimap.getAdvanceOptions();
-            const choiceIndex = await showChoiceMenu(ChoiceMenuCardReward,
-                `Where to?`,
-                ...directionChoices.map(c => c[1]),
-            );
+            const choiceIndex = directionChoices.length > 1
+                ? await showChoiceMenu(ChoiceMenuCardReward,
+                    `Where to?`,
+                    ...directionChoices.map(c => c[1]),
+                )
+                : 0;
             minimap.advance(directionChoices[choiceIndex][0]);
         }
 

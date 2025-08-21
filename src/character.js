@@ -125,6 +125,7 @@ class Character extends Sprite{
 
     // replaces action with a blank instead of `null` so that
     // we can show no action till the next round starts.
+    // This is also used by the stun effect
     clearAction() {
         this._pendingAction = new actions.None;
         this.render();

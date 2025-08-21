@@ -109,6 +109,13 @@ const cardLibrary = {
 
         gainMana = 2;
     },
+    Stomp: class extends RareCard{
+        cardName = 'Stomp';
+        pic = SpriteSheetPic(20, '#e8961b');
+        manaCost = 2;
+
+        stun = 1;
+    },
     Fireball: class extends CommonCard{
         cardName = 'Fireball';
         pic = SpriteSheetPic(12, '#f61');

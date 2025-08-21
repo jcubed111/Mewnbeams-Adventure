@@ -6,9 +6,8 @@ class CardManager{
         new cardLibrary.Claw,
         new cardLibrary.Claw,
         new cardLibrary.Scratch,
-        new cardLibrary.Scratch,
         new cardLibrary.Swipe,
-        new cardLibrary.Swipe,
+        new cardLibrary.Stomp,
     ];
     drawPile = [];
     hand = [];

@@ -40,21 +40,21 @@ async function runGameRun() {
     );
     if(choice == 0) {
         await showChoiceMenu(ChoiceMenuTextEvent,
-            fadeInText`Shouldn’t be a big deal, just run through the castle defeating his minions, then ${plainElement('b', [`take him down!`])}`,
+            fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', [`Mana`])} carries over, but ${plainElement('b', [`actions`])} reset every round.`,
             'Hiiisssss?'
         );
     }
-    const choices = [
-        new cardLibrary.Spellbook(),
-        new cardLibrary.Spellbookmark(),
-        new cardLibrary.YarnBall(),
-    ];
     const flavorTextStore = shuffleInPlace([
         'potion shop',
         'apothecary',
         'grave yard',
         'broom emporium',
     ])[0];
+    const choices = [
+        new cardLibrary.Fireball(),
+        new cardLibrary.Spellbookmark(),
+        new cardLibrary.YarnBall(),
+    ];
     const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ...choices.map(c => c.asStaticElement()),
@@ -141,7 +141,11 @@ function fightGenerator(floorIndex) {
     // Both monsters and cardRewardChoices are instance arrays, not constructor arrays.
     // if(floorIndex == 0) return [[new monsterLibrary.BasicRat], getCardRewards(floorIndex)]
     return [
-        [new monsterLibrary.BasicRat],
+        [
+            new monsterLibrary.BasicRat,
+            new monsterLibrary.RatGuard,
+            new monsterLibrary.RatWizard,
+        ],
         getCardRewards(floorIndex),
     ];
 }

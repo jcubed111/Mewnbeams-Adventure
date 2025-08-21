@@ -8,7 +8,7 @@ const actions = {
 
     None: class{
         displayString() {
-            return '\xA0';
+            return '\xA0';  // nbsp
         }
         run() {}
     },

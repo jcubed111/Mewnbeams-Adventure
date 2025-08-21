@@ -1,7 +1,7 @@
 const monsterLibrary = {
     BasicRat: class extends Character{
         characterName = 'Rat';
-        maxHp = 1;
+        maxHp = 4;
         size = 110;
 
         *getActionSequence() {

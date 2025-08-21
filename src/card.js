@@ -108,6 +108,8 @@ class Card extends Sprite{
         // Whether this card targets a specific enemy
         return !this.targetMode && (
             this.damage != undefined
+            || this.splashDamage != undefined
+            || this.stun != undefined
             || this.bleed != undefined
             || this.fear != undefined
         );
@@ -146,6 +148,8 @@ class Card extends Sprite{
     bleed;
     // fear?: number - reduces next attack by X, decay all
     fear;
+    // stun?: 0 | 1 - cancels the enemy's action this turn
+    stun;
 
     // SELF EFFECTS
     // gainActions?: number - gain action points
@@ -160,7 +164,7 @@ class Card extends Sprite{
     draw;
 
     getTextLines(standalone) {
-        const targetModeText = ['', ' to ALL', ' to the left enemy'][this.targetMode];
+        const targetModeText = ['', ' to all', ' to the left enemy'][this.targetMode];
         return [
             this.cantrip &&
                 `Cantrip:`,
@@ -182,6 +186,9 @@ class Card extends Sprite{
 
             this.fear != undefined &&
                 `Scare ${this.fear}${targetModeText}`,
+
+            this.stun &&
+                `Stun${targetModeText}`,
 
 
             this.gainActions != undefined &&
@@ -237,6 +244,9 @@ class Card extends Sprite{
                     target.gainBleed(this.bleed);
                 }
                 // TODO: fear
+                if(this.stun != undefined) {
+                    target.clearAction();
+                }
             });
 
             if(this.gainActions != undefined) {

@@ -50,7 +50,14 @@ dev/index.html: build/index.html $(IMAGES_DEV) $(JS_DEV) combine-dev.py dev/styl
 build/main-min.js: $(JS_FILES)
 	@echo $@ "<-" $^
 	@cat $^ > build/main-max.js
-	npx google-closure-compiler --js=build/main-max.js --js_output_file=$@ --compilation_level=ADVANCED
+	npx google-closure-compiler --js=build/main-max.js --js_output_file=build/main-min-1.js --compilation_level=ADVANCED
+	npx uglifyjs build/main-min-1.js -c -m --mangle-props --toplevel > $@
+# 	npx uglifyjs build/main-min-1.js \
+# 	    --compress \
+# 	        arrows=true,booleans=true,collapse_vars=true,comparisons=true,dead_code=true,drop_console=true,drop_debugger=true,hoist_funs=true,hoist_props=true,hoist_vars=true,if_return=true,inline=3,join_vars=true,keep_fargs=false,keep_infinity=false,loops=true,module=true,negate_iife=true,properties=true,pure_getters=true,reduce_funcs=true,reduce_vars=true,sequences=true,side_effects=true,strings=true,switches=true,templates=true,top_retain=false,toplevel=true,typeofs=true,unsafe=true,unsafe_comps=true,unsafe_Function=true,unsafe_math=true,unsafe_proto=true,unsafe_regexp=true,unsafe_undefined=true,unused=true \
+# 	    --mangle \
+# 	    --toplevel \
+# 	    --output $@
 
 build/styles-min.css: src/styles.scss
 	@echo $@ "<-" $^

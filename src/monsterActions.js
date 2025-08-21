@@ -1,13 +1,13 @@
 const actions = {
     Pass: class{
-        stringify() {
+        displayString() {
             return 'zZzZ';
         }
         run() {}
     },
 
     None: class{
-        stringify() {
+        displayString() {
             return '\xA0';
         }
         run() {}
@@ -18,7 +18,7 @@ const actions = {
         constructor(damage) {
             this.damage = damage;
         }
-        stringify() {
+        displayString() {
             return `🗡️ ${this.damage}`;
         }
         run(monster) {
@@ -32,7 +32,7 @@ const actions = {
         constructor(block) {
             this.block = block;
         }
-        stringify() {
+        displayString() {
             return `🛡️ ${this.block}`;
         }
         run(monster) {

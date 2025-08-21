@@ -83,7 +83,7 @@ class Character extends Sprite{
     }
 
     render() {
-        this.pendingActionEl.innerText = this.peekAction().stringify();
+        this.pendingActionEl.innerText = this.peekAction().displayString();
 
         setChildNumber(this.hpBarEl, this.maxHp, () => div());
         for(let i = 0; i < this.maxHp; i++) {

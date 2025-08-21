@@ -26,6 +26,10 @@ async function runMainMenu() {
 }
 
 async function runGameRun() {
+    player.showAndRender();
+    minimap.showAndRender();
+    cardManager.render();
+
     /* OPENING */
     const choice = await showChoiceMenu(1,
         fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [`take care of`])} that ${plainElement('b', [`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
@@ -57,25 +61,47 @@ async function runGameRun() {
 
     /* Floors */
     for(let floorIndex = 0; floorIndex < NUM_FLOORS; floorIndex++) {
-        const [monsters, cardRewards] = fightGenerator(floorIndex);
-
-        await runBattle(monsters);
-
-        /* Death :'( */
-        if(player.currentHp <= 0) {
-            await deathScreen();
-            return;
+        /* Direction Choice */
+        if(floorIndex > 0) {
+            const directionChoices = minimap.getAdvanceOptions();
+            const choiceIndex = await showChoiceMenu(0,
+                `Where to?`,
+                ...directionChoices.map(c => c[1]),
+            );
+            minimap.advance(directionChoices[choiceIndex][0]);
         }
 
-        /* Card Reward */
-        if(floorIndex < NUM_FLOORS - 1) {
-            const cardChoice = await showChoiceMenu(0,
-                `Choose...`,
-                ...cardRewards.map(c => c.asStaticElement()),
-                "Pass",
-            );
-            if(cardChoice < cardRewards.length) {
-                cardManager.addToDeck(cardRewards[cardChoice]);
+        const chosenFloorType = minimap.getCurrentFloorType();
+
+        if(chosenFloorType == RoomType.Nap) {
+            await showChoiceMenu(0, 'Nap TODO', 'Go');
+
+        }else if(chosenFloorType == RoomType.Event) {
+            await showChoiceMenu(0, 'Event TODO', 'Go');
+
+            // Note: we don't check for death here because none
+            // of the events can (yet) kill you.
+
+        }else{  // Fight or Boss
+            const [monsters, cardRewards] = fightGenerator(floorIndex);
+            await runBattle(monsters);
+
+            /* Death :'( */
+            if(player.currentHp <= 0) {
+                await deathScreen();
+                return;
+            }
+
+            /* Card Reward */
+            if(floorIndex < NUM_FLOORS - 1) {
+                const cardChoice = await showChoiceMenu(0,
+                    `Choose...`,
+                    ...cardRewards.map(c => c.asStaticElement()),
+                    "Pass",
+                );
+                if(cardChoice < cardRewards.length) {
+                    cardManager.addToDeck(cardRewards[cardChoice]);
+                }
             }
         }
     }

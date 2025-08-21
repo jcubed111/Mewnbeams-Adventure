@@ -1,3 +1,4 @@
+
 const RoomType = {
     Fight: 0,
     Boss: 1,
@@ -18,6 +19,10 @@ const roomGen = function* getRandomRoom() {
 }();
 
 class Minimap extends Sprite{
+    // Apologies to anyone reading this class, it's a complete mess. I tried
+    // to use a bunch of fancy bitmapping to make the code short but idek if
+    // it helped lol.
+
     roomTypesByFloor;
     nextAvailableDirectionsByFloorByRoom;
 
@@ -88,7 +93,7 @@ class Minimap extends Sprite{
             range(0, NUM_FLOORS).flatMap(fi => [
                 this.drawFloorRow(fi),
                 this.drawFloorTransition(fi),
-            ]).map(r => div('.C--minimapRow', r)),
+            ]).map(r => div('.C--minimapRow', r)).slice(0, -1),
         );
     }
 
@@ -103,16 +108,75 @@ class Minimap extends Sprite{
 
     drawFloorTransition(fi) {
         return this.roomTypesByFloor[fi].flatMap((_, ri) => {
-            return [' ', ...range(0, 3).map(optIndex => {
-                const optBitmapValue = 1 << optIndex;
-                const available = this.nextAvailableDirectionsByFloorByRoom[fi][ri] & optBitmapValue;
-                const done = this.chosenDirectionByFloorByRoom[fi][ri] & optBitmapValue;
+            return [' ', ...this.getAvailableDirections(fi, ri).map(([available, wasChosen], optIndex) => {
                 if(!available) return ' ';
                 return span(
-                    done && 'C--visitedPath',
+                    wasChosen && 'C--visitedPath',
                     ['\\|/'[optIndex]]
                 );
             })];
         }).slice(1);
+    }
+
+    getAvailableDirections(fi, ri) {
+        // returns [
+        //     [canGoLeft, didGoLeft, indexDelta],
+        //     [canGoStraight, didGoStraight, indexDelta],
+        //     [canGoRight, didGoRight, indexDelta]
+        // ];
+        // indexDelta is the change in roomIndex if that path is chosen
+        const currentRoomCount = this.roomTypesByFloor[fi].length;
+        const nextRoomCount = this.roomTypesByFloor[fi + 1]?.length ?? 2;
+
+        const indexDeltas = [
+            // left is -1 if there are fewer rooms on the next floor
+            nextRoomCount < currentRoomCount ? -1 : 0,
+            // straight is always 0
+            0,
+            // right is 1 if there are more rooms on the next floor
+            nextRoomCount > currentRoomCount ? 1 : 0,
+        ];
+
+        return indexDeltas.map((indexDelta, optIndex) => {
+            const optBitmapValue = 1 << optIndex;
+            const available = this.nextAvailableDirectionsByFloorByRoom[fi][ri] & optBitmapValue;
+            const wasChosen = this.chosenDirectionByFloorByRoom[fi][ri] & optBitmapValue;
+            return [available, wasChosen, indexDelta];
+        });
+    }
+
+    getAdvanceOptions() {
+        // returns [[optBitmapValue, deltaIndex], directionChoiceLabel][]
+        const dirs = this.getAvailableDirections(this.currentFloor, this.currentRoomIndex);
+        return dirs.map(([available, _, deltaIndex], optIndex) => {
+            if(!available) return null;
+            const optBitmapValue = 1 << optIndex;
+
+            const directionLabel = ['Left', 'Straight', 'Right'][optIndex];
+            const toRoomType = this.roomTypesByFloor[this.currentFloor + 1][this.currentRoomIndex + deltaIndex];
+            const roomKindLabel = ['Fight', 'The Rat King', 'Event', 'Nap'][toRoomType];
+
+            return [
+                [optBitmapValue, deltaIndex],
+                div('', [
+                    div('C--directionChoiceLabel', [directionLabel]),
+                    roomKindLabel,
+                ]),
+            ];
+        }).filter(_=>_);
+    }
+
+    // the argument to this is the first part of the option tuple from `getAdvanceOptions`
+    advance([optBitmapValue, deltaIndex]) {
+        // returns to room type
+        this.chosenDirectionByFloorByRoom[this.currentFloor][this.currentRoomIndex] = optBitmapValue;
+        this.currentRoomIndex += deltaIndex;
+        this.currentFloor += 1;
+        this.visitedRoomIndexByFloor[this.currentFloor] = this.currentRoomIndex;
+        this.render();
+    }
+
+    getCurrentFloorType() {
+        return this.roomTypesByFloor[this.currentFloor][this.currentRoomIndex];
     }
 }

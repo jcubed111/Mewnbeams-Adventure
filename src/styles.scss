@@ -396,11 +396,22 @@ body{
     flex-direction: column-reverse;
     align-items: center;
     position: absolute;
-    inset: 100rem 0rem auto auto;
+    inset: 40rem 20rem auto auto;
     font-family: monospace;
     white-space: pre;
     font-size: 15rem;
+    color: #fff9;
+    z-index: 55;
 }
     .C--minimapRow{
         white-space: nowrap;
     }
+    .C--visitedPath{
+        color: #f0a;
+    }
+
+.C--directionChoiceLabel{
+    font-size: 75%;
+    margin-bottom: 10rem;
+    width: 150rem;
+}

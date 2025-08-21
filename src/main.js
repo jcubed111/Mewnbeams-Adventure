@@ -22,11 +22,6 @@ async function main() {
     // keep this here so it doesn't get optimized out
     zzfx(...[,,925,.04,.3,.6,1,.3,,6.27,-184,.09,.17]); // Game Over
 
-    console.log([...Object.values(cardLibrary)]);
-
-    player.showAndRender();
-    minimap.showAndRender();
-
     await runMainMenu();
 
     // await runBattle([

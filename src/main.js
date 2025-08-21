@@ -15,6 +15,7 @@ const cardManager = new CardManager([
     new cardLibrary.Channel(),
 ]);
 const player = new Player();
+const minimap = new Minimap();
 
 
 async function main() {
@@ -24,6 +25,7 @@ async function main() {
     console.log([...Object.values(cardLibrary)]);
 
     player.showAndRender();
+    minimap.showAndRender();
 
     await runMainMenu();
 

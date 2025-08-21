@@ -35,7 +35,7 @@ const cardLibrary = {
         pic = SpriteSheetPic(2, '#f50');
         actionCost = 1;
 
-        toAll = true;
+        targetMode = TARGET_TO_ALL;
         damage = 1;
         exhaust = true;
     },
@@ -116,6 +116,7 @@ const cardLibrary = {
         manaCost = 2;
 
         damage = 4;
+        splashDamage = 2;
     },
     SeeGhost: class extends RareCard{
         cardName = 'See Ghost';
@@ -141,8 +142,36 @@ const cardLibrary = {
         gainActions = 2;
         gainMana = 2;
     },
+    YarnBall: class extends ItemCard{
+        cardName = 'Yarn Ball';
+        pic = SpriteSheetPic(17, '#8453ff');
+        manaCost = 0;
 
-    // - fireball - damage 3
+        causesPass = CAUSES_PASS_RETAIN_VALUE;
+        // exhaust = true;
+    },
+
+    Spellbook: class extends ItemCard{
+        cardName = 'Spellbook';
+        pic = SpriteSheetPic(18, '#7d2300');
+        manaCost = 1;
+        getTextLines = () => ['Draw your entire Draw Pile'];
+        draw = 7;
+        render(standalone) {
+            super.render(standalone);
+            this.draw = cardManager.drawPile.length;
+        }
+    },
+
+    Spellbookmark: class extends ItemCard{
+        cardName = 'Spellbookmark';
+        pic = SpriteSheetPic(19, '#1e44ae');
+
+        cantrip = 1;
+        damage = 2;
+        targetMode = AT_LEFT_ENEMY;
+    },
+
     // - see ghost - replay the previous card
     // - 9 lives
 };

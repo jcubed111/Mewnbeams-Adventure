@@ -163,31 +163,38 @@ class CardManager{
         ].forEach(c => c.hide());
     }
 
-    async drawOne(instant = false) {
+    async drawOne() {
         if(this.drawPile.length == 0) {
             if(this.discardPile.length == 0) return;  // can't draw
             this.reshuffle();
             this.render();
-            if(!instant) {
-                await wait(0.4);
-            }
-        }
-        // If your hand is full, your draws go to the discard pile
-        const dest = this.hand.length < MAX_HAND_SIZE
-            ? this.hand
-            : this.discardPile;
-        dest.unshift(this.drawPile.pop());
-
-        this.render();
-        if(!instant) {
             await wait(0.4);
         }
+        // If your hand is full, your draws go to the discard pile
+        const card = this.drawPile.pop();
+        const dest =
+            card.cantrip
+            ? this.pending
+            : this.hand.length < MAX_HAND_SIZE
+                ? this.hand
+                : this.discardPile;
+        dest.unshift(card);
+
+        this.render();
+
+        if(card.cantrip) {
+            card.setCantripPosition(this.pending.length);
+            await wait(0.4);
+            await card.play(enemyManager.activeEnemies);
+        }
+
+        await wait(0.4);
     }
 
-    async draw(num, instant = false) {
+    async draw(num) {
         for(let i = 0; i < num; i++) {
             if(!this.canDraw()) return;
-            await this.drawOne(instant);
+            await this.drawOne();
         }
     }
 
@@ -236,12 +243,6 @@ class CardManager{
         this.render();
     }
 
-    discardPending() {
-        this.discardPile.push(...this.pending);
-        this.pending = [];
-        this.render();
-    }
-
     async discardHand(instant = false) {
         this.discardPile.push(...this.hand);
         this.hand = [];
@@ -249,8 +250,9 @@ class CardManager{
         if(!instant) await wait(0.4);
     }
 
-    exhaustPending() {
-        this.exhaustPile.push(...this.pending);
+    resolvePending() {
+        this.discardPile.push(...this.pending.filter(c => !c.exhaust));
+        this.exhaustPile.push(...this.pending.filter(c => c.exhaust));
         this.pending = [];
         this.render();
     }

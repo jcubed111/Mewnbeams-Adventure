@@ -77,6 +77,15 @@ class Card extends Sprite{
         this.el.classList.add('C--faceDown');
     }
 
+    setCantripPosition(numPending) {
+        this.el.style.zIndex = 25 + numPending;
+        this.el.style.transform = `rotate(0deg)`;
+        this.el.style.left = '576rem';
+        this.el.style.bottom = '320rem';
+        this.el.classList.add('C--active');
+        this.el.classList.remove('C--faceDown');
+    }
+
     // pick a static (but random) discard spot so we don't change it
     // every render.
     _discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
@@ -97,7 +106,7 @@ class Card extends Sprite{
     /* Game Methods */
     isTargeted() {
         // Whether this card targets a specific enemy
-        return !this.toAll && (
+        return !this.targetMode && (
             this.damage != undefined
             || this.bleed != undefined
             || this.fear != undefined
@@ -116,15 +125,23 @@ class Card extends Sprite{
 
     // NON-PLAY/META EFFECTS
     // makes the card hit all enemies
-    toAll = false;
+    // supports TARGET_TO_ALL, AT_LEFT_ENEMY to hit the left enemy
+    targetMode = 0;
+    // plays on draw
+    cantrip;
     // exhaust after playing
-    exhaust = false;
+    exhaust;
+    // ends the player's turn after playing
+    // also supports CAUSES_PASS_RETAIN_VALUE which does the same thing but you don't discard you hand
+    causesPass;
     // play multiple times
     repeatPlay = 1;
 
     // ENEMY EFFECTS
     // damage?: number
     damage;
+    // splashDamage?: number
+    splashDamage;
     // bleed?: number - damage per turn, decay 1 per turn
     bleed;
     // fear?: number - reduces next attack by X, decay all
@@ -143,19 +160,28 @@ class Card extends Sprite{
     draw;
 
     getTextLines(standalone) {
-        const toAllText = this.toAll ? ' to All' : '';
+        const targetModeText = ['', ' to ALL', ' to the left enemy'][this.targetMode];
         return [
+            this.cantrip &&
+                `Cantrip:`,
+
             this.damage != undefined &&
                 `Attack ${
                     this.damage
                     + (standalone ? 0 : player.strength)
-                }${toAllText}`,
+                }${targetModeText}`,
+
+            this.splashDamage != undefined &&
+                `Splash Attack ${
+                    this.splashDamage
+                    + (standalone ? 0 : player.strength)
+                }${targetModeText}`,
 
             this.bleed != undefined &&
-                `Bleed ${this.bleed}${toAllText}`,
+                `Bleed ${this.bleed}${targetModeText}`,
 
             this.fear != undefined &&
-                `Scare ${this.fear}${toAllText}`,
+                `Scare ${this.fear}${targetModeText}`,
 
 
             this.gainActions != undefined &&
@@ -176,20 +202,42 @@ class Card extends Sprite{
             this.repeatPlay != 1 &&
                 `${this.repeatPlay} Times`,
 
+            this.causesPass &&
+                `Pass`,
+
+            this.causesPass == CAUSES_PASS_RETAIN_VALUE &&
+                `Retain Your Hand`,
+
             this.exhaust &&
                 `Exhaust`,
         ].filter(l => l);
     }
 
     async play(targets) {
+        if(this.targetMode === AT_LEFT_ENEMY) {
+            targets = targets.slice(0, 1);
+        }
         for(const i of range(0, this.repeatPlay)) {
-            if(this.damage != undefined) {
-                targets.forEach(t => t.animateDamage(this.damage + player.strength));
-            }
-            if(this.bleed != undefined) {
-                targets.forEach(t => t.gainBleed(this.bleed));
-            }
-            // TODO: fear
+            targets.forEach(target => {
+                if(this.damage != undefined) {
+                    target.animateDamage(this.damage + player.strength);
+                }
+                if(this.splashDamage != undefined) {
+                    enemyManager.activeEnemies
+                        .forEach((adjacent, i, arr) => {
+                            if(
+                                arr[i - 1] == target
+                                || arr[i + 1] == target
+                            ) {
+                                adjacent.animateDamage(this.splashDamage + player.strength)
+                            }
+                        });
+                }
+                if(this.bleed != undefined) {
+                    target.gainBleed(this.bleed);
+                }
+                // TODO: fear
+            });
 
             if(this.gainActions != undefined) {
                 player.pay(-this.gainActions, 0);
@@ -226,5 +274,5 @@ class LegendaryCard extends Card{
 }
 class ItemCard extends Card{
     rarityOrder = 3;
-    primaryColor = '#513324';
+    primaryColor = '#923303';
 }

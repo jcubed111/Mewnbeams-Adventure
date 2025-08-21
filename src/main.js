@@ -1,19 +1,5 @@
 const enemyManager = new EnemyManager();
-const cardManager = new CardManager([
-    new cardLibrary.Paw(),
-    new cardLibrary.Scratch(),
-    // new cardLibrary.Claw(),
-    new cardLibrary.BobaEyes(),
-    // new cardLibrary.Meow(),
-    // new cardLibrary.ConveneWithSpirits(),
-    // new cardLibrary.Meow(),
-    // new cardLibrary.Meow(),
-    // new cardLibrary.Meow(),
-    // new cardLibrary.Swipe(),
-    // new cardLibrary.Swipe(),
-    // new cardLibrary.SeeGhost(),
-    new cardLibrary.Channel(),
-]);
+const cardManager = new CardManager();
 const player = new Player();
 const minimap = new Minimap();
 

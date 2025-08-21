@@ -45,9 +45,9 @@ async function runGameRun() {
         );
     }
     const choices = [
-        new cardLibrary.Swipe(),
-        new cardLibrary.ConveneWithSpirits(),
-        new cardLibrary.Meow(),
+        new cardLibrary.Spellbook(),
+        new cardLibrary.Spellbookmark(),
+        new cardLibrary.YarnBall(),
     ];
     const flavorTextStore = shuffleInPlace([
         'potion shop',
@@ -183,10 +183,7 @@ async function runBattle(enemies) {
 
     await wait(0.1);
 
-    await Promise.all([
-        enemyManager.animateIn(enemies),
-        cardManager.draw(TURN_START_HAND_SIZE),
-    ]);
+    await enemyManager.animateIn(enemies);
 
     await runBattleMain();
 
@@ -195,7 +192,16 @@ async function runBattle(enemies) {
 }
 
 async function runBattleMain() {
+    let retainOneTurn = false;
     while(true) {
+        await cardManager.draw(TURN_START_HAND_SIZE);
+        // we may have drawn cantrips
+        cardManager.resolvePending();
+        enemyManager.removeDead();
+        if(enemyManager.activeEnemies.length == 0) {
+            return;
+        }
+
         /* player turn */
         while(true) {
             // update enemy actions
@@ -215,20 +221,24 @@ async function runBattleMain() {
                     wait(0.2),
                 ]);
 
-                if(card.exhaust) {
-                    cardManager.exhaustPending();
-                }else{
-                    cardManager.discardPending();
-                }
+                cardManager.resolvePending();
 
                 enemyManager.removeDead();
                 if(enemyManager.activeEnemies.length == 0) {
                     return;
                 }
+
+                if(card.causesPass) {
+                    retainOneTurn = card.causesPass == CAUSES_PASS_RETAIN_VALUE;
+                    break;
+                }
             }
         }
 
-        await cardManager.discardHand();
+        if(!retainOneTurn) {
+            await cardManager.discardHand();
+        }
+        retainOneTurn = false;
 
         /* monster turn */
         for(const e of enemyManager.activeEnemies) {
@@ -262,8 +272,6 @@ async function runBattleMain() {
         player.render();
 
         enemyManager.activeEnemies.forEach(enemy => enemy.resetAction());
-
-        await cardManager.draw(TURN_START_HAND_SIZE);
     }
 }
 

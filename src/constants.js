@@ -5,3 +5,8 @@ const MANA_PER_ROUND = 1;
 const ACTIONS_PER_ROUND = 2;
 const NUM_FLOORS = 15;
 const NAP_HEAL_AMOUNT = 5;
+
+
+const CAUSES_PASS_RETAIN_VALUE = 2;
+const TARGET_TO_ALL = 1;
+const AT_LEFT_ENEMY = 2;

@@ -61,13 +61,13 @@ class CardManager{
 
     drawButton = new CardPile(
         'Draw',
-        'auto auto 420rem 20rem',
+        'auto auto 20rem 20rem',
         e => cardListViewScreen(this.drawPile, true),
     );
 
     discardButton = new CardPile(
         'Discard',
-        'auto 20rem 420rem auto',
+        'auto 20rem 20rem auto',
         e => cardListViewScreen(this.discardPile),
     );
 

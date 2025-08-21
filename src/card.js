@@ -51,10 +51,10 @@ class Card extends Sprite{
 
         const bottomRem = (activated ? 55 : 5) - 20 * rotateNormalized ** 2;
         const leftRem = outOf <= 5
-            // gap between cards is 10rem, with 5rem on each side at limit
-            ? 505 + 200 * (index - outOf / 2)
+            // gap between cards is 10rem, with 166+5rem on each side at limit
+            ? 166 + 505 + 200 * (index - outOf / 2)
             // 5rem on each side
-            : 5 + (800 / (outOf - 1)) * index;
+            : 166 + 5 + (800 / (outOf - 1)) * index;
 
         this.el.style.zIndex = activated ? 25 : (10 + index);
         this.el.style.transform = `rotate(${5 * rotateNormalized}deg)`;
@@ -80,7 +80,7 @@ class Card extends Sprite{
         const [dx, dy] = this._discardSpot;
         this.el.style.zIndex = 25;
         this.el.style.transform = `rotate(0deg)`;
-        this.el.style.left = `${dx + 1100}rem`;
+        this.el.style.left = `${dx + 1433}rem`;
         this.el.style.bottom = `${dy - 100}rem`;
         this.el.classList.remove('C--active');
         this.el.classList.remove('C--faceDown');

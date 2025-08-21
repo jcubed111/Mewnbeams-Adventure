@@ -21,7 +21,7 @@ Notes on this file:
 
 html{
     // define the font size as 1% of the view square
-    font-size: min(0.1vw, 0.1vh);
+    font-size: min(0.075vw, 0.1vh);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@ html{
 body{
     background: #102;
     font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
-    width: 1000rem;
+    width: 1333rem;
     height: 1000rem;
     overflow: hidden;
     font-size: 21rem;
@@ -99,7 +99,7 @@ body{
         background: #123;
         border: 5rem solid #469;
         position: absolute;
-        inset: 150rem 50rem;
+        inset: 150rem 216rem;
     }
 
     .C--centeredMenu{
@@ -132,7 +132,7 @@ body{
         flex-wrap: wrap;
         justify-content: start;
         gap: 39rem;
-        margin: -100rem -50rem 0;
+        margin: -100rem 0 0;
     }
 
 /* card and character general props */

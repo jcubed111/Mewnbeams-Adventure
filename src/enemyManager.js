@@ -8,7 +8,7 @@ class EnemyManager{
             .reduce((a, b) => a + b, 0)
             + SPACING * (this.activeEnemies.length - 1);
 
-        let x = 500 - totalWidth / 2;
+        let x = 666 - totalWidth / 2;
         for(const enemy of this.activeEnemies) {
             enemy.showAndRender();
             enemy.el.style.bottom = (

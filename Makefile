@@ -48,9 +48,9 @@ dev/index.html: build/index.html $(IMAGES_DEV) $(JS_DEV) combine-dev.py dev/styl
 	python3 combine-dev.py $(JS_DEV) > $@
 
 
-build/main-max.js: $(JS_FILES)
+build/main-max.js: $(JS_FILES) rewriteMainMax.js
 	@echo $@ "<-" $^
-	@cat $^ > build/main-max.js
+	@cat $(JS_FILES) | node rewriteMainMax.js > build/main-max.js
 build/main-min.js: build/main-max.js
 	npx google-closure-compiler --js=build/main-max.js --js_output_file=build/main-min-1.js --compilation_level=ADVANCED_OPTIMIZATIONS
 	npx uglifyjs build/main-min-1.js -c -m --mangle-props --toplevel > $@

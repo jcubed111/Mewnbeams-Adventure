@@ -390,3 +390,17 @@ body{
         }
     }
 
+
+.C--minimap{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    position: absolute;
+    inset: 100rem 0rem auto auto;
+    font-family: monospace;
+    white-space: pre;
+    font-size: 15rem;
+}
+    .C--minimapRow{
+        white-space: nowrap;
+    }

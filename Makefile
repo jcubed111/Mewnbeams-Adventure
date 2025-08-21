@@ -47,10 +47,11 @@ dev/index.html: build/index.html $(IMAGES_DEV) $(JS_DEV) combine-dev.py dev/styl
 	python3 combine-dev.py $(JS_DEV) > $@
 
 
-build/main-min.js: $(JS_FILES)
+build/main-max.js: $(JS_FILES)
 	@echo $@ "<-" $^
 	@cat $^ > build/main-max.js
-	npx google-closure-compiler --js=build/main-max.js --js_output_file=build/main-min-1.js --compilation_level=ADVANCED
+build/main-min.js: build/main-max.js
+	npx google-closure-compiler --js=build/main-max.js --js_output_file=build/main-min-1.js --compilation_level=ADVANCED_OPTIMIZATIONS
 	npx uglifyjs build/main-min-1.js -c -m --mangle-props --toplevel > $@
 # 	npx uglifyjs build/main-min-1.js \
 # 	    --compress \

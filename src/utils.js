@@ -1,24 +1,24 @@
-function br() {
+const br = () => {
     return plainElement('br');
 }
 
-function plainElement(tagName, children = []) {
+const plainElement = (tagName, children = []) => {
     return styled(tagName, '', {}, children);
 }
 
-function div(className = '', children = []) {
+const div = (className = '', children = []) => {
     return styledDiv(className, {}, children);
 }
 
-function span(className = '', children = []) {
+const span = (className = '', children = []) => {
     return styled('span', className, {}, children);
 }
 
-function styledDiv(className = '', style = {}, children = []) {
+const styledDiv = (className = '', style = {}, children = []) => {
     return styled("div", className, style, children);
 }
 
-function styled(tagName = "div", className = "", style = {}, children = []) {
+const styled = (tagName = "div", className = "", style = {}, children = []) => {
     const el = document.createElement(tagName);
     el.className = className;
 
@@ -33,16 +33,16 @@ function styled(tagName = "div", className = "", style = {}, children = []) {
     return el;
 }
 
-function setChildren(el, children) {
+const setChildren = (el, children) => {
     setChildNumber(el, 0);
     el.append(...children);
 }
 
-function range(start, end) {
+const range = (start, end) => {
     return Array(end - start).fill(0).map((_, i) => i + start);
 }
 
-function shuffleInPlace(arr) {
+const shuffleInPlace = (arr) => {
     for(let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -50,11 +50,11 @@ function shuffleInPlace(arr) {
     return arr;
 }
 
-function wait(tSec) {
+const wait = (tSec) => {
     return new Promise(resolve => setTimeout(resolve, tSec * 1000));
 }
 
-function setChildNumber(parentEl, numChildren, makeChild) {
+const setChildNumber = (parentEl, numChildren, makeChild) => {
     // adds/removes children from parentEl to ensure there
     // are exactly numChildren present.
     // Uses the `makeChild` callback to generate new children.

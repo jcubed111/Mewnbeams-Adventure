@@ -61,9 +61,10 @@ build/main-min.js: build/main-max.js
 # 	    --toplevel \
 # 	    --output $@
 
-build/styles-min.css: src/styles.scss
-	@echo $@ "<-" $^
-	@npx sass $^ $@ --style=compressed --no-source-map
+build/styles-min.css: src/styles.scss optimize-css.js
+	@echo $@ "<-" $<
+	@npx sass $< $@-1 --style=compressed --no-source-map
+	@cat $@-1 | node optimize-css.js > $@
 
 build/index.html: src/index.html
 	@echo $@ "<-" $^

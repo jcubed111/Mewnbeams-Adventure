@@ -51,9 +51,12 @@ async function runGameRun() {
         'broom emporium',
     ])[0];
     const choices = [
-        new cardLibrary.Fireball(),
-        new cardLibrary.Spellbookmark(),
-        new cardLibrary.YarnBall(),
+        // new cardLibrary.Fireball(),
+        // new cardLibrary.Spellbookmark(),
+        // new cardLibrary.YarnBall(),
+        new cardLibrary.RabbitsFoot(),
+        new cardLibrary.WayOfTheWeasel(),
+        new cardLibrary.Dam(),
     ];
     const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
@@ -62,6 +65,7 @@ async function runGameRun() {
     cardManager.addToDeck(choices[boonChoice]);
 
     /* Floors */
+    const fightGenerator = getFightGenerator();
     for(let floorIndex = 0; floorIndex < NUM_FLOORS; floorIndex++) {
         /* Direction Choice */
         if(floorIndex > 0) {
@@ -135,47 +139,6 @@ async function runNap() {
         cardManager.removeDeckIndex(removeIndex);
     }
 }
-
-function fightGenerator(floorIndex) {
-    // Returns [monsters, card reward choices]
-    // Both monsters and cardRewardChoices are instance arrays, not constructor arrays.
-    // if(floorIndex == 0) return [[new monsterLibrary.BasicRat], getCardRewards(floorIndex)]
-    return [
-        [
-            new monsterLibrary.BasicRat,
-            new monsterLibrary.RatGuard,
-            new monsterLibrary.RatWizard,
-            new monsterLibrary.PoisonRat,
-        ],
-        getCardRewards(floorIndex),
-    ];
-}
-
-function getCardRewards(floorIndex) {
-    const cardsByTier = [[], [], []];
-    [...Object.values(cardLibrary)]
-        .map(C => new C)
-        .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
-    cardsByTier.forEach(shuffleInPlace);
-
-    return range(0, 3).map(i => {
-        // This function:
-        //     floor( 2.4 * random() ^ goodness )
-        // approximates a weighted random.
-        // At goodness=1.7, it gives:
-        //     60% often => 0  (common)
-        //     30% often => 1  (rare)
-        //     10% often => 2  (legendary)
-        // At goodness=0.9, it gives:
-        //     38% often => 0  (common)
-        //     43% often => 1  (rare)
-        //     19% often => 2  (legendary)
-        const goodnessFactor = 1.7 - 0.8 * (floorIndex / (NUM_FLOORS - 1));
-        const rolledRarity = ~~(2.4 * Math.random() ** goodnessFactor);
-        return cardsByTier[rolledRarity].pop();
-    });
-}
-
 
 async function runBattle(enemies) {
     enemyManager.clear();
@@ -261,7 +224,7 @@ async function runBattleMain() {
             // It's possible this got killed by a fellow enemy before
             // moving. If so, skip.
             if(enemy.currentHp <= 0) continue;
-            enemy.peekAction()[1](enemy, enemyManager.activeEnemies);
+            await enemy.peekAction()[1](enemy, enemyManager.activeEnemies);
             enemyManager.removeDead();
             await wait(0.1);
             enemy.clearAction();

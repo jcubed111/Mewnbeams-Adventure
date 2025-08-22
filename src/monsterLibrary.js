@@ -1,4 +1,5 @@
 const monsterLibrary = {
+    /* Intro fight monsters */
     BasicRat: class extends Character{
         characterName = 'Rat';
         maxHp = 4;
@@ -22,6 +23,78 @@ const monsterLibrary = {
             yield actions.Attack(4);
         }
     },
+    PoisonRat: class extends Character{
+        characterName = 'Poison Rat';
+        maxHp = 3;
+        size = 110;
+
+        *getActionSequence() {
+            yield actions.Poison(2);
+        }
+    },
+
+    /* Midgame mini bosses */
+    Weasel: class extends Character{
+        characterName = 'Weasel';
+        maxHp = 15;
+        size = 150;
+
+        *getActionSequence() {
+            yield* shuffleInPlace([
+                actions.Attack(2),
+                actions.Attack(3),
+                actions.Attack(4),
+            ]);
+        }
+
+        afterUnblockedDamage() {
+            this.dodge = 3;
+        }
+    },
+    Rabbit: class extends Character{
+        characterName = 'Rabbit';
+        maxHp = 7;
+        size = 110;
+
+        // The first rabbit starts with a `summon` step, but new
+        // rabbits summoned via rabbit have a two turn delay
+        // before they summon.
+        constructor(isNotFirst) {
+            super();
+            this.forceSummonAction = !isNotFirst;
+        }
+
+        *getActionSequence() {
+            if(this.forceSummonAction) {
+                yield actions.Summon(0, new monsterLibrary.Rabbit(true));
+                this.forceSummonAction = false;
+            }
+            yield actions.Attack(2);
+            yield actions.Attack(2);
+        }
+    },
+    Beaver: class extends Character{
+        characterName = 'Beaver';
+        maxHp = 15;
+        size = 150;
+
+        *getActionSequence() {
+            yield actions.Summon(new monsterLibrary.Dam, new monsterLibrary.Dam);
+            yield actions.Attack(3);
+        }
+    },
+    Dam: class extends Character{
+        characterName = 'Dam';
+        maxHp = 1;
+        size = 110;
+        guard = true;
+
+        *getActionSequence() {
+            yield actions.None;
+        }
+    },
+
+    /* Other assorted enemies */
     RatGuard: class extends Character{
         characterName = 'Rat Guard';
         maxHp = 8;
@@ -36,13 +109,19 @@ const monsterLibrary = {
             ]);
         }
     },
-    PoisonRat: class extends Character{
-        characterName = 'Poison Rat';
-        maxHp = 2;
-        size = 110;
+
+    /* Rat King */
+    RatKing: class extends Character{
+        characterName = 'Rat King';
+        maxHp = 25;
+        size = 250;
 
         *getActionSequence() {
-            yield actions.Poison(2);
+            yield* shuffleInPlace([
+                actions.Attack(7),
+                actions.Block(7),
+                // actions.Attack(2),
+            ]);
         }
     },
 }

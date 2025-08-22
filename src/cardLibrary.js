@@ -148,6 +148,7 @@ const cardLibrary = {
 
         gainActions = 2;
         gainMana = 2;
+        exhaust = 1;
     },
     YarnBall: class extends ItemCard{
         cardName = 'Yarn Ball';
@@ -177,6 +178,37 @@ const cardLibrary = {
         cantrip = 1;
         damage = 2;
         targetMode = AT_LEFT_ENEMY;
+    },
+
+    RabbitsFoot: class extends ItemCard{
+        cardName = 'Rabbit’s Foot';
+        // pic = SpriteSheetPic(19, '#1e44ae');
+        manaCost = 1;
+        getTextLines = () => ['Redraw Your Hand'];
+
+        draw = TURN_START_HAND_SIZE;
+        async play(...args) {
+            await cardManager.discardHand();
+            await super.play(...args);
+        }
+    },
+
+    WayOfTheWeasel: class extends LegendaryCard{
+        cardName = 'Way of the Weasel';
+        // pic = SpriteSheetPic(19, '#1e44ae');
+        manaCost = 2;
+
+        dodge = 5;
+        exhaust = 1;
+    },
+
+    Dam: class extends ItemCard{
+        cardName = 'Dam';
+        // TODO: reuse art from the Dam monster
+        // pic = SpriteSheetPic(19, '#1e44ae');
+        actionCost = 1;
+
+        dodge = 1;
     },
 
     // - see ghost - replay the previous card

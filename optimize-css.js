@@ -8,7 +8,7 @@ const transformed = stdin.replace(/(rgb[a]?\([^)]+\)|hsl[a]?\([^)]+\))/gi, match
     const c = colord(match);
     if(c.isValid()) {
         let hex = c.toHex().toLowerCase();
-        if(hex[7] == '0' && hex[8] == '0') {
+        if(hex[7] == 'f' && hex[8] == 'f') {
             hex = hex.slice(0, -2);
         }
         if(

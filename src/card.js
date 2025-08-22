@@ -162,6 +162,8 @@ class Card extends Sprite{
     gainStrength;
     // draw?: number - draw more cards
     draw;
+    // dodge?: number - dodge the next {n} attack(s)
+    dodge;
 
     getTextLines(standalone) {
         const targetModeText = ['', ' to all', ' to the left enemy'][this.targetMode];
@@ -201,11 +203,15 @@ class Card extends Sprite{
                 `Heal ${this.selfHeal}`,
 
             this.gainStrength != undefined &&
-                `Attacks do +${this.gainStrength} damage`,
+                `Attacks do +${this.gainStrength} damage this fight`,
 
             this.draw != undefined &&
                 `Draw ${this.draw}`,
 
+            this.dodge &&
+                `Dodge ${this.dodge} this turn`,
+
+            // End of play effects
             this.repeatPlay != 1 &&
                 `${this.repeatPlay} Times`,
 
@@ -265,6 +271,10 @@ class Card extends Sprite{
             }
             if(this.draw) {
                 await cardManager.draw(this.draw);
+            }
+            if(this.dodge) {
+                player.dodge += this.dodge;
+                player.render();
             }
         }
     }

@@ -4,7 +4,6 @@ class CardManager{
         new cardLibrary.Claw,
         new cardLibrary.Claw,
         new cardLibrary.Claw,
-        new cardLibrary.Claw,
         new cardLibrary.Scratch,
         new cardLibrary.Swipe,
         new cardLibrary.Stomp,
@@ -242,11 +241,11 @@ class CardManager{
         this.render();
     }
 
-    async discardHand(instant = false) {
+    async discardHand() {
         this.discardPile.push(...this.hand);
         this.hand = [];
         this.render();
-        if(!instant) await wait(0.4);
+        await wait(0.4);
     }
 
     resolvePending() {

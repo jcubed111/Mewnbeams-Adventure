@@ -13,6 +13,7 @@ JS_FILES := \
 	src/cardManager.js \
 	src/enemyManager.js \
 	src/eventUi.js \
+	src/fightGenerator.js \
 	src/gameFlow.js \
 	src/main.js
 

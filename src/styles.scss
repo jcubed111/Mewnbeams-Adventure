@@ -317,6 +317,7 @@ body{
         .C--hpChunk-bleed,
         .C--hpChunk-empty,
         .C--hpChunk-pending,
+        .C--dodgeChunk,
         .C--blockChunk{
             width: 20rem;
             height: 20rem;
@@ -346,6 +347,9 @@ body{
             }
             .C--blockChunk{
                 background: #4c8ac0;
+            }
+            .C--dodgeChunk{
+                background: linear-gradient(90deg, #4c8ac0 30%, #fff 30% 70%, #4c8ac0 70%);
             }
 
     .C--pendingAction{

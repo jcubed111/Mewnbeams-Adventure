@@ -2,7 +2,7 @@ const actions = {
     // All actions are: (...props) => [displayString: string, run: (monster, allMonsters) => void]
     // Except the basic ones which are just static values
     Pass: [
-        'zZzZ',
+        '-',
         m => 0,
     ],
 
@@ -40,6 +40,25 @@ const actions = {
         (monster, allMonsters) => {
             monster.animateAttack(-0.5);
             allMonsters.forEach(m => m.gainBlock(block));
+        },
+    ],
+
+    Summon: (left, right) => [
+        `Summon`,
+        async (monster) => {
+            const i = enemyManager.activeEnemies.indexOf(monster);
+            if(right) {
+                // we need to clear the action first so we don't waste part of
+                // the action sequence on the intro animation
+                right.clearAction();
+                await enemyManager.animateIn([right], i + 1);
+            }
+            if(left) {
+                // we need to clear the action first so we don't waste part of
+                // the action sequence on the intro animation
+                left.clearAction();
+                await enemyManager.animateIn([left], i);
+            }
         },
     ],
 };

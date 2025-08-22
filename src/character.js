@@ -13,6 +13,7 @@ class Character extends Sprite{
     currentHp;
     block = 0;
     bleed = 0;
+    dodge = 0;  // dodge an attack
 
     /* Methods */
     hpBarEl;
@@ -21,12 +22,14 @@ class Character extends Sprite{
     makeEl() {
         this.currentHp ??= this.maxHp;
 
-        this.hpBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
+        this.specialBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
         this.blockBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
+        this.hpBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
         this.pendingActionEl = div('C--pendingAction');
 
         // const [picIndex, hueShiftDeg] = this.pic;
         return styledDiv('C--character', {width: `${this.size}rem`}, [
+            this.specialBarEl,
             this.blockBarEl,
             this.hpBarEl,
             this.pic(),
@@ -35,17 +38,33 @@ class Character extends Sprite{
         ]);
     }
 
-    animateDamage(damage, durationSec = 1) {
+    // hook called after you take unblocked damange
+    afterUnblockedDamage(){}
+
+    animateDamage(damage) {
+        if(this.dodge) {
+            this.dodge--;
+            this.render();
+            return;
+        }
+
         this._preAnimateHp ??= this.currentHp;
+
         const blocked = damage > 0 ? Math.min(this.block, damage) : 0;
         this.block -= blocked;
+        const netDamage = (damage - blocked);
         this.currentHp -= damage - blocked;
+
+        if(netDamage && this.currentHp > 0) {
+            this.afterUnblockedDamage();
+        }
+
         this.render();
         clearTimeout(this._animateDamageTimeout);
         this._animateDamageTimeout = setTimeout(() => {
             this._preAnimateHp = undefined;
             this.render();
-        }, durationSec * 1000);
+        }, 1000);
     }
 
     heal(hp) {
@@ -64,11 +83,16 @@ class Character extends Sprite{
         this.render();
     }
 
-    async onStartOfTurn(block) {
+    async onStartOfTurn() {
         this.block = 0;
+        this.dodge = 0;
         this.render();
         if(this.bleed > 0) {
             this.animateDamage(this.bleed--);
+            // Disallow bleed triggering dodge gain on weasel
+            this.dodge = 0;
+            this.render();
+
             await wait(0.3);
         }
     }
@@ -83,6 +107,8 @@ class Character extends Sprite{
     }
 
     render() {
+        if(!this.el) return;
+
         this.pendingActionEl.innerText = this.peekAction()[0];
 
         setChildNumber(this.hpBarEl, this.maxHp, () => div());
@@ -98,6 +124,10 @@ class Character extends Sprite{
         }
 
         setChildNumber(this.blockBarEl, this.block, () => div('C--blockChunk'));
+
+        setChildren(this.specialBarEl,
+            range(0, this.dodge).map(_ => div('C--dodgeChunk')),
+        );
     }
 
     /* monster action sequences */

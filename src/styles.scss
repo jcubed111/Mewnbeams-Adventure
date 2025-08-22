@@ -172,7 +172,7 @@ body{
 /* card */
 .C--card, .C--cardPile{
     background: #123;
-    border: 5rem solid #469;
+    border: 5rem solid color-mix(in srgb, var(--c, #48f), #333);
 }
 .C--card{
     width: 190rem;
@@ -224,7 +224,10 @@ body{
     .C--cardName{
         padding: 5rem;
         color: #fff;
-        background: linear-gradient(45deg, #123 5%, #0000 5%), linear-gradient(315deg, #123 5%, #0000 5%);
+        background:
+            linear-gradient(45deg, #123 5%, #0000 5%),
+            linear-gradient(315deg, #123 5%, #0000 5%)
+            var(--c);
     }
 
     .C--cardText{

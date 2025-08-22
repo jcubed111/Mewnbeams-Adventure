@@ -28,13 +28,12 @@ class Card extends Sprite{
 
     _cardTextDiv;
     makeEl() {
-        return div('C--card', [
+        return styledDiv('C--card', {'--c': this.primaryColor}, [
             div('C--actionPointIcon', ['' + this.actionCost]),
             this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
             this.pic(),
-            styledDiv(
+            div(
                 'C--cardName',
-                {backgroundColor: this.primaryColor},
                 [this.cardName],
             ),
             this._cardTextDiv = div('C--cardText'),

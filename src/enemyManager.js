@@ -29,8 +29,13 @@ class EnemyManager{
         await wait(0.4);
     }
 
-    getElMap() {  // -> Array<[Element, Enemy]>
-        return this.activeEnemies.map(e => [e.el, e]);
+    getTargetableEnemies() {
+        const guarded = this.activeEnemies.some(e => e.guard);
+        return this.activeEnemies.filter(e => e.guard == guarded);
+    }
+
+    getTargetableElMap() {  // -> Array<[Element, Enemy]>
+        return this.getTargetableEnemies().map(e => [e.el, e]);
     }
 
     clear() {
@@ -47,5 +52,17 @@ class EnemyManager{
         });
         await wait(0.4);
         this.render();
+    }
+
+    highlightTargetable() {
+        this.getTargetableEnemies().forEach(
+            e => e.el?.classList.add('C--characterTargetable')
+        );
+    }
+
+    unhighlightTargetable() {
+        this.activeEnemies.forEach(
+            e => e.el?.classList.remove('C--characterTargetable')
+        );
     }
 }

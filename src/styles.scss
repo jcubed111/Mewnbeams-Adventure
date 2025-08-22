@@ -288,18 +288,15 @@ body{
 .C--character{
     align-items: center;
     gap: 5rem;
-
-    .C--gettingMonsterTarget &:hover:not(.C--playerCharacter){
-        box-shadow: 0 0 15rem #fff8;
-    }
-
-    // Temp until we get actual pics here
-    .C--spriteSheetPic{
-        background: #fff6;
-    }
 }
-    // .C--characterName{
-    // }
+
+    .C--characterTargetable{
+        box-shadow: 0 0 15rem #fff8;
+        cursor: pointer;
+        &:hover{
+            box-shadow: 0 0 15rem #fff;
+        }
+    }
 
     .C--pipBar{
         display: flex;

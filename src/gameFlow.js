@@ -264,7 +264,7 @@ async function getMove() {
     const result = await new Promise(resolve => {
         function onEnd(e) {
             if(activeCard.isTargeted()) {
-                for(const [el, monster] of enemyManager.getElMap()) {
+                for(const [el, monster] of enemyManager.getTargetableElMap()) {
                     if(el.contains(e.target)) {
                         return resolve([activeCard, monster]);
                     }
@@ -303,6 +303,7 @@ async function getMove() {
 
         if(activeCard.isTargeted()) {
             document.body.classList.add('C--gettingMonsterTarget');
+            enemyManager.highlightTargetable();
         }
         window.addEventListener('mouseup', onMouseUp, {'once': true});
         window.addEventListener('mousemove', onMouseMove);
@@ -313,6 +314,7 @@ async function getMove() {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('keydown', onKeyDown);
             document.body.classList.remove('C--gettingMonsterTarget');
+            enemyManager.unhighlightTargetable();
         };
     });
 

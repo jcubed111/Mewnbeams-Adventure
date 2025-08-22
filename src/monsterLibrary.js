@@ -38,6 +38,7 @@ const monsterLibrary = {
         characterName = 'Weasel';
         maxHp = 15;
         size = 150;
+        pic = SpriteSheetPic(50, '#c76d24');
 
         *getActionSequence() {
             yield* shuffleInPlace([

@@ -142,7 +142,7 @@ const cardLibrary = {
         gainActions = 2;
     },
     WitchingHour: class extends LegendaryCard{
-        cardName = 'WitchingHour';
+        cardName = 'Witching Hour';
         pic = SpriteSheetPic(14, '#353cfd');
         // manaCost = 0;
 
@@ -182,7 +182,7 @@ const cardLibrary = {
 
     RabbitsFoot: class extends ItemCard{
         cardName = 'Rabbit’s Foot';
-        // pic = SpriteSheetPic(19, '#1e44ae');
+        pic = SpriteSheetPic(21, '#f02');
         manaCost = 1;
         getTextLines = () => ['Redraw Your Hand'];
 
@@ -195,7 +195,7 @@ const cardLibrary = {
 
     WayOfTheWeasel: class extends LegendaryCard{
         cardName = 'Way of the Weasel';
-        // pic = SpriteSheetPic(19, '#1e44ae');
+        pic = SpriteSheetPic(50, '#c76d24');
         manaCost = 2;
 
         dodge = 5;

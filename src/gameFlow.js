@@ -55,8 +55,8 @@ async function runGameRun() {
         // new cardLibrary.Spellbookmark(),
         // new cardLibrary.YarnBall(),
         new cardLibrary.RabbitsFoot(),
-        new cardLibrary.WayOfTheWeasel(),
-        new cardLibrary.Dam(),
+        new cardLibrary.Spellbookmark(),
+        new cardLibrary.BoomBopBam(),
     ];
     const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,

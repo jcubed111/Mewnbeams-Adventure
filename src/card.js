@@ -231,6 +231,9 @@ class Card extends Sprite{
             targets = targets.slice(0, 1);
         }
         for(const i of range(0, this.repeatPlay)) {
+            // add a wait to make the repeat more obvious
+            if(i > 0) await wait(0.2);
+
             targets.forEach(target => {
                 if(this.damage != undefined) {
                     target.animateDamage(this.damage + player.strength);

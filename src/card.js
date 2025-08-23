@@ -79,8 +79,8 @@ class Card extends Sprite{
     setCantripPosition(numPending) {
         this.el.style.zIndex = 25 + numPending;
         this.el.style.transform = `rotate(0deg)`;
-        this.el.style.left = '576rem';
-        this.el.style.bottom = '320rem';
+        this.el.style.left = `${556 + 40 * Math.random()}rem`;
+        this.el.style.bottom = `${300 + 40 * Math.random()}rem`;
         this.el.classList.add('C--active');
         this.el.classList.remove('C--faceDown');
     }
@@ -127,6 +127,10 @@ class Card extends Sprite{
     // Numbers use `undefined` so that the value `0` is
     // available, ie `Attack 0` is a valid card.
 
+    // shows before the rest of the card text. To replace all card text,
+    // override the getTextLines method.
+    extraCardText;
+
     // NON-PLAY/META EFFECTS
     // makes the card hit all enemies
     // supports TARGET_TO_ALL, AT_LEFT_ENEMY to hit the left enemy
@@ -149,7 +153,7 @@ class Card extends Sprite{
     // bleed?: number - damage per turn, decay 1 per turn
     bleed;
     // fear?: number - reduces next attack by X, decay all
-    fear;
+    // fear;
     // stun?: 0 | 1 - cancels the enemy's action this turn
     stun;
 
@@ -170,8 +174,10 @@ class Card extends Sprite{
     getTextLines(standalone) {
         const targetModeText = ['', ' to all', ' to the left enemy'][this.targetMode];
         return [
+            this.extraCardText,
+
             this.cantrip &&
-                `Cantrip:`,
+                `Cantrip`,
 
             this.damage != undefined &&
                 `Attack ${
@@ -188,8 +194,8 @@ class Card extends Sprite{
             this.bleed != undefined &&
                 `Bleed ${this.bleed}${targetModeText}`,
 
-            this.fear != undefined &&
-                `Scare ${this.fear}${targetModeText}`,
+            // this.fear != undefined &&
+            //     `Scare ${this.fear}${targetModeText}`,
 
             this.stun &&
                 `Stun${targetModeText}`,
@@ -203,6 +209,9 @@ class Card extends Sprite{
 
             this.selfHeal != undefined &&
                 `Heal ${this.selfHeal}`,
+
+            this.selfDamage != undefined &&
+                `Damage Self ${this.selfDamage}`,
 
             this.gainStrength != undefined &&
                 `Attacks do +${this.gainStrength} damage this fight`,
@@ -232,7 +241,7 @@ class Card extends Sprite{
         if(this.targetMode === AT_LEFT_ENEMY) {
             targets = targets.slice(0, 1);
         }
-        for(const i of range(0, this.repeatPlay)) {
+        for(const i of range(this.repeatPlay)) {
             // add a wait to make the repeat more obvious
             if(i > 0) await wait(0.2);
 
@@ -269,6 +278,9 @@ class Card extends Sprite{
             if(this.selfHeal) {
                 player.heal(this.selfHeal);
             }
+            if(this.selfDamage) {
+                player.animateDamage(this.selfDamage);
+            }
             if(this.gainStrength) {
                 player.strength += this.gainStrength;
                 player.render();
@@ -303,6 +315,9 @@ class TrinketCard extends Card{
 }
 class ItemCard extends Card{
     rarityOrder = 4;
-    // primaryColor = '#923303';
     primaryColor = 'linear-gradient(90deg, #b66b17, #923303, #8915a0)';
+}
+class CurseCard extends Card{
+    rarityOrder = 6;
+    primaryColor = '#289876';
 }

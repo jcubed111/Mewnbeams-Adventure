@@ -27,7 +27,7 @@ class Minimap extends Sprite{
     nextAvailableDirectionsByFloorByRoom;
 
     visitedRoomIndexByFloor = [0];
-    chosenDirectionByFloorByRoom = range(0, NUM_FLOORS).map(_ => [0, 0, 0]);
+    chosenDirectionByFloorByRoom = range(NUM_FLOORS).map(_ => [0, 0, 0]);
 
     currentFloor = 0;
     currentRoomIndex = 0;
@@ -38,7 +38,7 @@ class Minimap extends Sprite{
         for(let floorIndex = 1; floorIndex < NUM_FLOORS; floorIndex++) {
             const previousNum = this.roomTypesByFloor[floorIndex - 1].length;
             const nextNum = shuffleInPlace([,[2], [1, 2, 3, 3], [2, 2, 3]][previousNum])[0];
-            this.roomTypesByFloor[floorIndex] = range(0, nextNum).map(() => roomGen.next().value);
+            this.roomTypesByFloor[floorIndex] = range(nextNum).map(() => roomGen.next().value);
         }
         this.roomTypesByFloor[NUM_FLOORS - 1] = [RoomType.Boss];
         this.roomTypesByFloor[NUM_FLOORS - 2] = shuffleInPlace([RoomType.Fight, RoomType.Nap]);
@@ -90,7 +90,7 @@ class Minimap extends Sprite{
 
     render() {
         setChildren(this.el,
-            range(0, NUM_FLOORS).flatMap(fi => [
+            range(NUM_FLOORS).flatMap(fi => [
                 this.drawFloorRow(fi),
                 this.drawFloorTransition(fi),
             ]).map(r => div('.C--minimapRow', r)).slice(0, -1),

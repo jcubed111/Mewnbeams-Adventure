@@ -38,9 +38,7 @@ const setChildren = (el, children) => {
     el.append(...children);
 }
 
-const range = (start, end) => {
-    return Array(end - start).fill(0).map((_, i) => i + start);
-}
+const range = end => [...Array(end).keys()];
 
 const shuffleInPlace = (arr) => {
     for(let i = arr.length - 1; i > 0; i--) {

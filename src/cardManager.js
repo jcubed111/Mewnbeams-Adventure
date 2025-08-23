@@ -131,6 +131,14 @@ class CardManager{
         }
     }
 
+    cardsInPlay() {
+        return this.drawPile.concat(
+            this.pending,
+            this.hand,
+            this.discardPile,
+        );
+    }
+
     canDraw() {
         return this.drawPile.length > 0 || this.discardPile.length > 0;
     }

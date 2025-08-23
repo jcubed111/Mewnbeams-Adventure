@@ -128,7 +128,7 @@ class Character extends Sprite{
         setChildNumber(this.blockBarEl, this.block, () => div('C--blockChunk'));
 
         setChildren(this.specialBarEl,
-            range(0, this.dodge).map(_ => div('C--dodgeChunk')),
+            range(this.dodge).map(_ => div('C--dodgeChunk')),
         );
     }
 

@@ -44,22 +44,9 @@ async function runGameRun() {
             'Hiiisssss?'
         );
     }
-    const flavorTextStore = shuffleInPlace([
-        'potion shop',
-        'apothecary',
-        'grave yard',
-        'broom emporium',
-    ])[0];
-    const choices = [
-        // new cardLibrary.Fireball(),
-        // new cardLibrary.Spellbookmark(),
-        // new cardLibrary.YarnBall(),
-        new cardLibrary.RabbitsFoot(),
-        new cardLibrary.Spellbookmark(),
-        new cardLibrary.BoomBopBam(),
-    ];
+    const choices = getThreeRandomTrinkets();
     const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
-        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the ${flavorTextStore}, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
+        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the potion shop, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ...choices.map(c => c.asStaticElement()),
     );
     cardManager.addToDeck(choices[boonChoice]);

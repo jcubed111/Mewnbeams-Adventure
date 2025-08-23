@@ -93,20 +93,68 @@ const cardLibrary = {
         pic = SpriteSheetPic(22, '#71b6cb');
         manaCost = 1;
         targetMode = TARGET_TO_ALL;
-        getTextLines = () => ['Reverse Enemy Order'];
+        extraCardText = 'Reverse Enemy Order';
         play = () => enemyManager.activeEnemies.reverse();
     },
 
     PrepareSpell: class extends CommonCard{
         cardName = 'Prepare Spell';
-        pic = SpriteSheetPic(0, '#71b6cb');
+        pic = SpriteSheetPic(23, '#ca8f5f');
         actionCost = 1;
 
-        getTextLines = () => ['Add a Fireball to your Discard'];
+        extraCardText = 'Add a Fireball to your Discard';
         play = () => cardManager.animateInto(
             ANIMATE_INTO_TARGET_DISCARD,
             new cardLibrary.Fireball,
         );
+    },
+
+    Knapsack: class extends ItemCard{
+        cardName = 'Knapsack';
+        pic = SpriteSheetPic(24, '#923303');
+        manaCost = 1;
+
+        extraCardText = 'Make a Random Trinket';
+        play = () => cardManager.animateInto(
+            ANIMATE_INTO_TARGET_HAND,
+            getThreeRandomTrinkets()[0],
+        );
+    },
+
+    DarkBargain: class extends LegendaryCard{
+        cardName = 'DarkBargain';
+        pic = SpriteSheetPic(25, '#f20');
+        manaCost = 1;
+
+        render(standalone) {
+            super.render(standalone);
+            this.damage = cardManager.cardsInPlay().filter(c => c.cardName == 'Curse').length;
+        }
+
+        async play(targets) {
+            await cardManager.animateInto(
+                ANIMATE_INTO_TARGET_DRAW,
+                new cardLibrary.Curse,
+            );
+            super.play(targets);
+        }
+
+        getTextLines = () => ['Make a Curse', 'Attack 1 per Curse in Play'];
+    },
+
+    Curse: class extends CurseCard{
+        cardName = 'Curse';
+        pic = SpriteSheetPic(26, '#289876');
+        cantrip = 1;
+    },
+
+    BloodRitual: class extends RareCard{
+        cardName = 'Blood Ritual';
+        pic = SpriteSheetPic(27, '#f02');
+        manaCost = 1;
+
+        selfDamage = 2;
+        gainStrength = 2;
     },
 
     // Hiss: class extends CommonCard{
@@ -160,7 +208,7 @@ const cardLibrary = {
 
         pic = SpriteSheetPic(3, '#005f39');
 
-        getTextLines = () => ['Copy a Discarded Card'];
+        extraCardText = 'Copy a Discarded Card';
         playable() {
             return super.playable() && cardManager.discardPile.length;
         }
@@ -229,9 +277,9 @@ const cardLibrary = {
         getTextLines = () => ['Redraw Your Hand'];
 
         draw = TURN_START_HAND_SIZE;
-        async play(...args) {
+        async play(targets) {
             await cardManager.discardHand();
-            await super.play(...args);
+            await super.play(targets);
         }
     },
 

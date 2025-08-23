@@ -96,7 +96,7 @@ function getCardRewards(floorIndex, numberOfRewards = 3) {
         .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
     cardsByTier.forEach(shuffleInPlace);
 
-    return range(0, numberOfRewards).map(i => {
+    return range(numberOfRewards).map(i => {
         // This function:
         //     floor( 2.4 * random() ^ goodness )
         // approximates a weighted random.
@@ -113,3 +113,9 @@ function getCardRewards(floorIndex, numberOfRewards = 3) {
         return cardsByTier[rolledRarity].pop();
     });
 }
+
+const getThreeRandomTrinkets = () => shuffleInPlace(
+    [...Object.values(cardLibrary)]
+        .map(C => new C)
+        .filter(c => c instanceof TrinketCard)
+).slice(0, 3);

@@ -20,12 +20,12 @@ Notes on this file:
   the property values in multiple places.
 */
 
-$grey-1: #ffffff;
-$grey-2: #d9d8da;
-$grey-3: #acaaad;
-$grey-4: #817e84;
-$grey-5: #56515a;
-$grey-6: #292330;
+// $grey-1: #ffffff;
+// $grey-2: #d9d8da;
+// $grey-3: #acaaad;
+// $grey-4: #817e84;
+$grey-5: #301b45;
+$grey-6: #20122e;
 $grey-7: #150e1d;
 
 
@@ -139,8 +139,8 @@ body{
         }
     }
         .C--choiceMenuBordered{
-            background: #123;
-            border: 5rem solid #469;
+            background: $grey-7;
+            border: 5rem solid $grey-5;
             position: absolute;
             inset: 150rem 216rem;
         }
@@ -177,6 +177,18 @@ body{
             }
         }
 
+    .C--eventTextWithPic{
+        display: flex;
+        gap: 100rem;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .C--choiceMenuTitle .C--spriteSheetPic{
+        flex: 0 0 250rem;
+        width: 250rem;
+        align-self: center;
+    }
+
 /* card and character general props */
 .C--card, .C--character{
     text-align: center;
@@ -202,6 +214,10 @@ body{
 .C--spriteSheetPic{
     width: 100%;
     aspect-ratio: 4 / 3;
+    display: inline-block;
+}
+.C--doubleHeightSprite{
+    aspect-ratio: 4 / 6;
 }
 
 /* card */
@@ -322,13 +338,15 @@ body{
     align-items: center;
     gap: 5rem;
     z-index: $z-character;
+    padding: 10rem;
+    border-radius: 40rem;
 }
 
     .C--characterTargetable{
-        box-shadow: 0 0 15rem #fff8;
+        outline: 5rem dotted #fff4;
         cursor: pointer;
         &:hover{
-            box-shadow: 0 0 15rem #fff;
+            outline: 5rem solid #fff8;
         }
     }
 
@@ -384,7 +402,7 @@ body{
             }
 
     .C--pendingAction{
-        font-size: 30rem;
+        font-size: 26rem;
 
         .C--playerCharacter &{
             display: none;

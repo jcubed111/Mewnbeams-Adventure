@@ -24,9 +24,9 @@ class Sprite{
     }
 }
 
-const SpriteSheetPic = (index, primaryColor) => () => styledDiv('C--spriteSheetPic', {
+const SpriteSheetPic = (index, primaryColor, isTwo) => () => styledDiv(`C--spriteSheetPic ${isTwo && 'C--doubleHeightSprite'}`, {
     // The numbers here are higher than "perfect" so that we trim off a tiny border from each
     // side of the image. This prevents adjacent sprites from bleeding through when
     // the sprite undergoes transforms.
-    background: `url(c.webp) ${0.1 + (index % 5) * 24.95}% ${0.1 + 9.98 * (~~(index / 5))}%/506% ${primaryColor}`,
+    background: `url(c.webp) ${0.1 + (index % 5) * 24.95}% ${0.1 + (isTwo ? 11.088 : 9.98) * (~~(index / 5))}%/506% ${primaryColor}`,
 });

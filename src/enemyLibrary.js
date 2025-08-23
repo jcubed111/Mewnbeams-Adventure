@@ -4,7 +4,8 @@ const enemyLibrary = {
     BasicRat: class extends Character{
         characterName = 'Rat';
         maxHp = 4;
-        size = 110;
+        size = 130;
+        pic = SpriteSheetPic(46, '#e11');
 
         *getActionSequence() {
             yield* shuffleInPlace([
@@ -17,7 +18,8 @@ const enemyLibrary = {
     RatWizard: class extends Character{
         characterName = 'Rat Wizard';
         maxHp = 3;
-        size = 110;
+        size = 130;
+        pic = SpriteSheetPic(46, '#1ee');
 
         *getActionSequence() {
             yield actions.Pass;
@@ -27,7 +29,8 @@ const enemyLibrary = {
     PoisonRat: class extends Character{
         characterName = 'Poison Rat';
         maxHp = 3;
-        size = 110;
+        size = 130;
+        pic = SpriteSheetPic(46, '#1e1');
 
         *getActionSequence() {
             yield actions.Poison(2);
@@ -38,7 +41,7 @@ const enemyLibrary = {
     Weasel: class extends Character{
         characterName = 'Weasel';
         maxHp = 15;
-        size = 150;
+        size = 170;
         pic = SpriteSheetPic(50, '#c76d24');
 
         *getActionSequence() {
@@ -56,7 +59,7 @@ const enemyLibrary = {
     Rabbit: class extends Character{
         characterName = 'Rabbit';
         maxHp = 8;
-        size = 110;
+        size = 130;
         pic = SpriteSheetPic(51, '#f20');
 
         // The first rabbit starts with a `summon` step, but new
@@ -82,7 +85,7 @@ const enemyLibrary = {
     Beaver: class extends Character{
         characterName = 'Beaver';
         maxHp = 15;
-        size = 150;
+        size = 170;
 
         *getActionSequence() {
             yield actions.Summon('🪵🪵', new enemyLibrary.Dam, new enemyLibrary.Dam);
@@ -92,7 +95,7 @@ const enemyLibrary = {
     Dam: class extends Character{
         characterName = 'Dam';
         maxHp = 1;
-        size = 110;
+        size = 130;
         guard = true;
 
         *getActionSequence() {
@@ -104,7 +107,7 @@ const enemyLibrary = {
     RatGuard: class extends Character{
         characterName = 'Rat Guard';
         maxHp = 8;
-        size = 150;
+        size = 170;
         guard = true;
 
         *getActionSequence() {
@@ -119,7 +122,8 @@ const enemyLibrary = {
     Mouse: class extends Character{
         characterName = 'Mouse';
         maxHp = 7;
-        size = 110;
+        size = 130;
+        pic = SpriteSheetPic(45, '#e11');
 
         *getActionSequence() {
             yield* shuffleInPlace([
@@ -134,7 +138,7 @@ const enemyLibrary = {
     RatKing: class extends Character{
         characterName = 'Rat King';
         maxHp = 25;
-        size = 250;
+        size = 270;
 
         *getActionSequence() {
             yield* shuffleInPlace([

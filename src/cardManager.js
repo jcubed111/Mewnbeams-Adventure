@@ -308,7 +308,7 @@ class CardPile extends Sprite{
     makeEl() {
         const d = styledDiv('C--cardPile', {'inset': this.insetCss},
             this._numberEl = div(),
-             div('C--cardPileName', this.pileName),
+            div('C--cardPileName', this.pileName),
         );
         d.addEventListener('click', this.onClick);
         return d;
@@ -316,6 +316,6 @@ class CardPile extends Sprite{
 
     render(numCards) {
         this._numberEl.innerText = numCards;
-        this.el?.classList.toggle('C--cardPileEmpty', numCards == 0);
+        // this.el?.classList.toggle('C--cardPileEmpty', numCards == 0);
     }
 }

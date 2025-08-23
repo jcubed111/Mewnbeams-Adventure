@@ -93,7 +93,7 @@ class Minimap extends Sprite{
             range(NUM_FLOORS).flatMap(fi => [
                 this.drawFloorRow(fi),
                 this.drawFloorTransition(fi),
-            ]).map(r => div('.C--minimapRow', ...r)).slice(0, -1),
+            ]).map(r => div('.C--minimapRow', r)).slice(0, -1),
         );
     }
 

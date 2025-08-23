@@ -19,7 +19,7 @@ const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_darkBgButtonTop | Bit_unclick
 const ChoiceMenuDeathScreen = Bit_darkBg;
 
 // A big fullscreen menu element for events, card lists, etc.
-function showChoiceMenu(modeBitmap, mainContent, ...options) {
+function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
     // ~2.5%
     const darkBg = modeBitmap & Bit_darkBg;
     const centeredTitle = modeBitmap & Bit_centeredTitle;
@@ -57,7 +57,7 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
                         centeredOptions || 'C--leftOptions',
                         darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
                     ].join(' '),
-                    ...optionDivs,
+                    optionDivs,
                 );
                 if(delayOptionVisibility) {
                     optionsWrapper.style.visibility = 'hidden';
@@ -70,7 +70,12 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
                             centeredTitle
                                 ? 'C--choiceMenuTitle C--centeredTitle'
                                 : 'C--choiceMenuTitle C--leftTitle',
-                            mainContent,
+                            heroPic
+                                ? div('C--eventTextWithPic',
+                                    textContent,
+                                    heroPic,
+                                )
+                                : textContent,
                         ),
                         styledDiv('', {flexGrow: 1}),
                         optionsWrapper,
@@ -80,7 +85,7 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
             }
         }
 
-        choiceMenuSprite.showAndRender(resolve, mainContent, options);
+        choiceMenuSprite.showAndRender();
     });
 }
 
@@ -99,12 +104,15 @@ function fadeInText(textStringParts, ...els) {
         await wait(i * 0.02);
         p.style.opacity = 1;
     });
-    return plainElement('span', ...parts);
+    return plainElement('span', parts);
 }
+
+const witchPic = SpriteSheetPic(44, '#f40', 1);
 
 function deathScreen() {
     return showChoiceMenu(ChoiceMenuDeathScreen,
         fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
+        witchPic(),
         'Try Again',
     );
 }
@@ -114,9 +122,10 @@ function victoryScreen() {
         div('',
             plainElement('h1', 'Victory!'),
             styledDiv('', {textAlign: 'left'},
-                fadeInText`Mewnbeam, I'm back! How was killing the ${plainElement('b', [`Rat King`])}? Tasty?${br()}${br()}I got you a treat for all your hard work!`,
+                fadeInText`Mewnbeam, I'm back! How was killing the ${plainElement('b', `Rat King`)}? Tasty?${br()}${br()}I got you a treat for all your hard work!`,
             ),
         ),
+        witchPic(),
         'Continue',
     );
 }
@@ -136,6 +145,7 @@ async function cardListViewScreen(cards, sort, allowCardClick, title='') {
             title,
             cards.length ? 0 : 'No Cards',
         ),
+        0,
         'Back',
         ...ordered.map(card => card.asStaticElement(allowCardClick)),
     );

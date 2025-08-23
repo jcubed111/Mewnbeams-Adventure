@@ -1,6 +1,6 @@
 const enemyManager = new EnemyManager();
 const cardManager = new CardManager();
-let player, minimap;
+let player = new Player(), minimap;
 const resetGameState = () => {
     player?.hide();
     minimap?.hide();
@@ -14,6 +14,7 @@ const resetGameState = () => {
 async function runMainMenu() {
     resetGameState();
     // placeholder - remove
+    // await runNap();
     // await cardListViewScreen(cardLibrary.map(C => new C));
     // await runBattle([
     //     new enemyLibrary.Rabbit(),
@@ -23,7 +24,11 @@ async function runMainMenu() {
     //////////////
 
     const selection = await showChoiceMenu(ChoiceMenuTitle,
-        plainElement('h1', 'Mewnbeam’s Quest'),
+        [
+            plainElement('h1', 'Mewnbeam’s Quest'),
+            player.pic(),
+        ],
+        0,
         'Start',
         'Library',
     );
@@ -49,18 +54,21 @@ async function runGameRun() {
     /* OPENING */
     const choice = await showChoiceMenu(ChoiceMenuTextEvent,
         fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', `take care of`)} that ${plainElement('b', `Rat King`)} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
+        witchPic(),
         'Mrow?',
         'Hiiisssss!',
     );
     if(choice == 0) {
         await showChoiceMenu(ChoiceMenuTextEvent,
             fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', `Mana`)} carries over, but ${plainElement('b', `actions`)} reset every round.`,
+            witchPic(),
             'Hiiisssss?'
         );
     }
     const choices = getThreeRandomTrinkets();
     const boonChoice = await showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the potion shop, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
+        0,
         ...choices.map(c => c.asStaticElement()),
     );
     cardManager.addToDeck(choices[boonChoice]);
@@ -74,6 +82,7 @@ async function runGameRun() {
             const choiceIndex = directionChoices.length > 1
                 ? await showChoiceMenu(ChoiceMenuCardReward,
                     `Where to?`,
+                    0,
                     ...directionChoices.map(c => c[1]),
                 )
                 : 0;
@@ -88,7 +97,7 @@ async function runGameRun() {
             await runNap();
 
         }else if(chosenFloorType == RoomType.Event) {
-            await showChoiceMenu(ChoiceMenuTextEventReward, 'Event TODO', 'Go');
+            await showChoiceMenu(ChoiceMenuTextEventReward, 'Event TODO', witchPic(), 'Go');
             // Note: we don't check for death here because none
             // of the events can (yet) kill you.
 
@@ -106,6 +115,7 @@ async function runGameRun() {
             if(floorIndex < NUM_FLOORS - 1) {
                 const cardChoice = await showChoiceMenu(ChoiceMenuCardReward,
                     `Choose...`,
+                    0,
                     ...cardRewards.map(c => c.asStaticElement()),
                     "Pass",
                 );
@@ -123,7 +133,13 @@ async function runGameRun() {
 
 async function runNap() {
     const napChoice = await showChoiceMenu(ChoiceMenuCardReward,
-        `This looks like a cozy spot!`,
+        [
+            styledDiv('', {height: '60rem'}),
+            player.pic(),
+            styledDiv('', {height: '60rem'}),
+            `This looks like a cozy spot for a nap...`,
+        ],
+        0,
         `Sleep (Heal ${NAP_HEAL_AMOUNT})`,
         'Lick (Remove a Card)',
     );

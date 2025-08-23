@@ -29,7 +29,7 @@ const styled = (tagName = "div", className = "", style = {}, ...children) => {
     // This works for all other properties
     Object.assign(el.style, style);
 
-    el.append(...children.filter(c => c));
+    el.append(...children.flat().filter(c => c));
     return el;
 }
 

@@ -3,9 +3,17 @@ class Player extends Character{
     size = 210;
     maxHp = 40;
 
-    actionPoints = 3;
-    manaPoints = 1;
-    strength = 0;
+    actionPoints;
+    manaPoints;
+    strength;
+
+    reset() {
+        player.manaPoints = INITIAL_MANA;
+        player.actionPoints = ACTIONS_PER_ROUND;
+        player.strength = 0;
+        player.bleed = 0;
+        this.render();
+    }
 
     render() {
         super.render();
@@ -14,6 +22,11 @@ class Player extends Character{
         this.el.classList.add('C--playerCharacter');
 
         this.resourceSprite.showAndRender(this.actionPoints, this.manaPoints);
+    }
+
+    hide() {
+        this.resourceSprite.hide();
+        super.hide();
     }
 
     resourceSprite = new class extends Sprite{

@@ -1,17 +1,23 @@
 class CardManager{
-    deck = [
-        new cardLibrary.Claw,
-        new cardLibrary.Claw,
-        new cardLibrary.Claw,
-        new cardLibrary.Scratch,
-        new cardLibrary.Swipe,
-        new cardLibrary.Stomp,
-    ];
+    deck = [];
     drawPile = [];
     hand = [];
     pending = [];
     discardPile = [];
     exhaustPile = [];
+
+    reset() {
+        this.deck = [
+            new cardLibrary.Claw,
+            new cardLibrary.Claw,
+            new cardLibrary.Claw,
+            new cardLibrary.Scratch,
+            new cardLibrary.Swipe,
+            new cardLibrary.Stomp,
+        ];
+        this.render();
+    }
+
     targetArrow = new class extends Sprite{
         // ~1.5%
         makeEl() {

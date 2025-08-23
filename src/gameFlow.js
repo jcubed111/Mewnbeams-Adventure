@@ -1,4 +1,19 @@
+const enemyManager = new EnemyManager();
+const cardManager = new CardManager();
+let player, minimap;
+const resetGameState = () => {
+    player?.hide();
+    minimap?.hide();
+    enemyManager.clear();
+    cardManager.reset();
+
+    player = new Player();
+    minimap = new Minimap();
+    player.showAndRender();
+};
+
 async function runMainMenu() {
+    resetGameState();
     // placeholder - remove
     // await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
     // await runBattle([
@@ -28,7 +43,7 @@ async function runMainMenu() {
 }
 
 async function runGameRun() {
-    player.showAndRender();
+    resetGameState();
     minimap.showAndRender();
     cardManager.render();
 
@@ -133,11 +148,7 @@ async function runBattle(enemies) {
     enemyManager.clear();
     cardManager.resetForRound();
 
-    player.manaPoints = INITIAL_MANA;
-    player.actionPoints = ACTIONS_PER_ROUND;
-    player.strength = 0;
-    player.bleed = 0;
-    player.render();
+    player.reset();
 
     await wait(0.1);
 
@@ -146,8 +157,7 @@ async function runBattle(enemies) {
     await runBattleMain();
 
     // cleanup
-    player.bleed = 0;
-    player.render();
+    player.reset();
     await cardManager.discardHand();
 }
 

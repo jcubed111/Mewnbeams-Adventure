@@ -38,7 +38,7 @@ const actions = {
     ],
 
     BlockAll: block => [
-        `◄ 🛡️ ${block} ►`,
+        `◄🛡️ ${block}►`,
         (monster, allMonsters) => {
             monster.animateAttack(-0.5);
             allMonsters.forEach(m => m.gainBlock(block));
@@ -46,7 +46,7 @@ const actions = {
     ],
 
     HealAll: heal => [
-        `◄ 💖 ${heal} ►`,
+        `◄💖 ${heal}►`,
         (monster, allMonsters) => {
             monster.animateAttack(-0.5);
             allMonsters.forEach(m => m.heal(heal));

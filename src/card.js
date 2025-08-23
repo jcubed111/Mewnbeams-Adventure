@@ -1,3 +1,4 @@
+// ~11.5%
 
 class Card extends Sprite{
     cardName = '?';
@@ -10,6 +11,7 @@ class Card extends Sprite{
 
     /* Render Methods */
     asStaticElement(clickable) {
+        // ~0.5%
         // returns a view only version of this card for showing
         // in deck/reward selection/etc.
         const clone = new this.constructor();
@@ -28,6 +30,7 @@ class Card extends Sprite{
 
     _cardTextDiv;
     makeEl() {
+        // ~0.5%
         return styledDiv('C--card', {'background': this.primaryColor}, [
             div('C--actionPointIcon', ['' + this.actionCost]),
             this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
@@ -48,6 +51,7 @@ class Card extends Sprite{
         );
     }
 
+    // All set__Positions together are ~1%
     setHandPosition(index, outOf, activated, dx, dy) {
         // card width is 200rem, view is 1000rem wide.
         const rotateNormalized = outOf == 1 ? 0 : -1 + 2 * (index / (outOf - 1));
@@ -113,7 +117,6 @@ class Card extends Sprite{
             || this.splashDamage != undefined
             || this.stun != undefined
             || this.bleed != undefined
-            || this.fear != undefined
         );
     }
 
@@ -172,6 +175,7 @@ class Card extends Sprite{
     dodge;
 
     getTextLines(standalone) {
+        // ~2%
         const targetModeText = ['', ' to all', ' to the left enemy'][this.targetMode];
         return [
             this.extraCardText,
@@ -238,6 +242,7 @@ class Card extends Sprite{
     }
 
     async play(targets) {
+        // ~1.2%
         if(this.targetMode === AT_LEFT_ENEMY) {
             targets = targets.slice(0, 1);
         }

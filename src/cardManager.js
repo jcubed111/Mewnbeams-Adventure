@@ -1,6 +1,5 @@
 class CardManager{
     deck = [
-        // TODO: actual Starting deck
         new cardLibrary.Claw,
         new cardLibrary.Claw,
         new cardLibrary.Claw,
@@ -14,6 +13,7 @@ class CardManager{
     discardPile = [];
     exhaustPile = [];
     targetArrow = new class extends Sprite{
+        // ~1.5%
         makeEl() {
             return styled('canvas', 'C--arrowCanvas');
         }
@@ -87,6 +87,7 @@ class CardManager{
     }
 
     render() {
+        // ~5%
         this.passButton.showAndRender();
 
         this.drawButton.showAndRender(this.drawPile.length);
@@ -211,6 +212,7 @@ class CardManager{
     }
 
     async getCardActivateOrPass() {
+        // ~1%
         // Adds listeners to wait for a card activate event
         // returns the card the gets activated and the event,
         // then removes listeners.

@@ -1,3 +1,5 @@
+// ~2.5%
+
 const actions = {
     // All actions are: (...props) => [displayString: string, run: (monster, allMonsters) => void]
     // Except the basic ones which are just static values

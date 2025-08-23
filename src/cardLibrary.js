@@ -1,3 +1,5 @@
+// ~15%, which is 0.48%/card
+// card art file is ~25.5%, which is 0.45%/card
 const cardLibrary = {
     // Each (standard) card definition takes up about 22bytes zipped.
 

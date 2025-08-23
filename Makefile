@@ -97,7 +97,7 @@ dist/index.html: build/index.html build/main-min.js build/styles-min.css combine
 
 out.zip: dist/index.html $(IMAGES_DIST)
 	@echo $@ "<-" $^
-	@rm -f $@
+	@rm -f $@ dist/@
 	@cd dist && 7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $($^:dist/%=%)
 	@mv dist/$@ $@
 	@npx advzip --recompress --shrink-insane -q -i250 $@

@@ -1,3 +1,4 @@
+// ~4%
 const monsterLibrary = {
     /* Intro fight monsters */
     BasicRat: class extends Character{

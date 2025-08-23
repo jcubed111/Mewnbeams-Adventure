@@ -20,6 +20,7 @@ class Character extends Sprite{
     blockBarEl;
     pendingActionEl;
     makeEl() {
+        // ~1%
         this.currentHp ??= this.maxHp;
 
         this.specialBarEl = div(`C--pipBar ${this.size >= 200 && 'C--wide'}`);
@@ -42,6 +43,7 @@ class Character extends Sprite{
     afterUnblockedDamage(){}
 
     animateDamage(damage) {
+        // ~1%
         if(this.dodge) {
             this.dodge--;
             this.render();

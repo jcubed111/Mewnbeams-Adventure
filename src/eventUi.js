@@ -20,6 +20,7 @@ const ChoiceMenuDeathScreen = Bit_darkBg;
 
 // A big fullscreen menu element for events, card lists, etc.
 function showChoiceMenu(modeBitmap, mainContent, ...options) {
+    // ~2.5%
     const darkBg = modeBitmap & Bit_darkBg;
     const centeredTitle = modeBitmap & Bit_centeredTitle;
     const colOptions = modeBitmap & Bit_colOptions;

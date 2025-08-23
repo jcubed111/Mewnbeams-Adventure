@@ -1,4 +1,4 @@
-
+// ~4%
 const RoomType = {
     Fight: 0,
     Boss: 1,

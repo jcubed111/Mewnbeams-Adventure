@@ -1,3 +1,4 @@
+// ~2%
 class EnemyManager{
     activeEnemies = [];
 

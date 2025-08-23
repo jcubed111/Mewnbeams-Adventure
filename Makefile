@@ -1,5 +1,5 @@
+# 	src/zzfx.js
 JS_FILES := \
-	src/zzfx.js \
 	src/constants.js \
 	src/utils.js \
 	src/monsterActions.js \

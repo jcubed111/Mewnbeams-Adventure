@@ -1,6 +1,6 @@
 // ~4%
-const monsterLibrary = {
-    /* Intro fight monsters */
+const enemyLibrary = {
+    /* Intro fight enemies */
     BasicRat: class extends Character{
         characterName = 'Rat';
         maxHp = 4;
@@ -69,7 +69,7 @@ const monsterLibrary = {
 
         *getActionSequence() {
             if(this.summonThisCycle) {
-                yield actions.Summon('🐇', 0, new monsterLibrary.Rabbit(true));
+                yield actions.Summon('🐇', 0, new enemyLibrary.Rabbit(true));
             }
             this.summonThisCycle = true;
             yield actions.Attack(2);
@@ -85,7 +85,7 @@ const monsterLibrary = {
         size = 150;
 
         *getActionSequence() {
-            yield actions.Summon('🪵🪵', new monsterLibrary.Dam, new monsterLibrary.Dam);
+            yield actions.Summon('🪵🪵', new enemyLibrary.Dam, new enemyLibrary.Dam);
             yield actions.Attack(3);
         }
     },

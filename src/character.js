@@ -134,7 +134,7 @@ class Character extends Sprite{
         );
     }
 
-    /* monster action sequences */
+    /* enemy action sequences */
 
     *getActionSequence() {
         // can last forever, or can be a finite list that will

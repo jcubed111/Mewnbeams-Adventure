@@ -2,14 +2,14 @@
 JS_FILES := \
 	src/constants.js \
 	src/utils.js \
-	src/monsterActions.js \
+	src/enemyActions.js \
 	src/sprite.js \
 	src/bodyBg.js \
 	src/minimap.js \
 	src/character.js \
 	src/card.js \
 	src/player.js \
-	src/monsterLibrary.js \
+	src/enemyLibrary.js \
 	src/cardLibrary.js \
 	src/cardManager.js \
 	src/enemyManager.js \

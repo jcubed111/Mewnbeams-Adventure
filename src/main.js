@@ -6,9 +6,9 @@ async function main() {
     await runMainMenu();
 
     // await runBattle([
-    //     new monsterLibrary.BasicRat(),
-    //     new monsterLibrary.RatGuard(),
-    //     new monsterLibrary.RatWizard(),
+    //     new enemyLibrary.BasicRat(),
+    //     new enemyLibrary.RatGuard(),
+    //     new enemyLibrary.RatWizard(),
     // ]);
 }
 window.addEventListener('load', main);

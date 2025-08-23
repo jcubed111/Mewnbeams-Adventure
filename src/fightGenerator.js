@@ -1,8 +1,8 @@
 function getFightGenerator() {
-    const introMonsterChoices = shuffleInPlace([
-        new monsterLibrary.BasicRat,
-        new monsterLibrary.PoisonRat,
-        new monsterLibrary.RatWizard,
+    const introEnemyChoices = shuffleInPlace([
+        new enemyLibrary.BasicRat,
+        new enemyLibrary.PoisonRat,
+        new enemyLibrary.RatWizard,
     ]);
 
     // The first fight after the intro fights, we run
@@ -10,15 +10,15 @@ function getFightGenerator() {
     let hasFoughtMiniBoss1 = false;
 
     return floorIndex => {
-        // Returns [monsters, card reward choices]
-        // Both monsters and cardRewardChoices are instance arrays, not constructor arrays.
+        // Returns [enemies, card reward choices]
+        // Both enemies and cardRewardChoices are instance arrays, not constructor arrays.
 
         /* test fight */
         // return [
         //     [
         //         // one basic rat and one random easy enemy
-        //         // new monsterLibrary.Rabbit,
-        //         new monsterLibrary.Beaver,
+        //         // new enemyLibrary.Rabbit,
+        //         new enemyLibrary.Beaver,
         //     ],
         //     getCardRewards(floorIndex),
         // ];
@@ -29,8 +29,8 @@ function getFightGenerator() {
             return [
                 [
                     // one basic rat and one random easy enemy
-                    new monsterLibrary.BasicRat,
-                    introMonsterChoices.pop(),
+                    new enemyLibrary.BasicRat,
+                    introEnemyChoices.pop(),
                 ],
                 getCardRewards(floorIndex),
             ]
@@ -43,19 +43,19 @@ function getFightGenerator() {
             return [
                 [
                     [
-                        new monsterLibrary.Weasel,
+                        new enemyLibrary.Weasel,
                     ],
                     [cards[0], new cardLibrary.WayOfTheWeasel, cards[1]],
                 ],
                 [
                     [
-                        new monsterLibrary.Rabbit,
+                        new enemyLibrary.Rabbit,
                     ],
                     [cards[0], new cardLibrary.RabbitsFoot, cards[1]],
                 ],
                 [
                     [
-                        new monsterLibrary.Beaver,
+                        new enemyLibrary.Beaver,
                     ],
                     [cards[0], new cardLibrary.Dam, cards[1]],
                 ],
@@ -67,10 +67,10 @@ function getFightGenerator() {
             return [
                 [
                     // one basic rat and one random easy enemy
-                    new monsterLibrary.RatGuard,
-                    new monsterLibrary.RatKing,
-                    new monsterLibrary.Mouse,
-                    new monsterLibrary.RatGuard,
+                    new enemyLibrary.RatGuard,
+                    new enemyLibrary.RatKing,
+                    new enemyLibrary.Mouse,
+                    new enemyLibrary.RatGuard,
                 ],
                 [],
             ];
@@ -78,11 +78,11 @@ function getFightGenerator() {
 
         return [
             [
-                new monsterLibrary.BasicRat,
-                new monsterLibrary.RatGuard,
-                new monsterLibrary.RatWizard,
-                new monsterLibrary.Mouse,
-                new monsterLibrary.PoisonRat,
+                new enemyLibrary.BasicRat,
+                new enemyLibrary.RatGuard,
+                new enemyLibrary.RatWizard,
+                new enemyLibrary.Mouse,
+                new enemyLibrary.PoisonRat,
             ],
             getCardRewards(floorIndex),
         ];

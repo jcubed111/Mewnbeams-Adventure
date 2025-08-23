@@ -17,9 +17,9 @@ async function runMainMenu() {
     // placeholder - remove
     // await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
     // await runBattle([
-    //     new monsterLibrary.Rabbit(),
-    //     new monsterLibrary.RatGuard(),
-    //     new monsterLibrary.RatWizard(),
+    //     new enemyLibrary.Rabbit(),
+    //     new enemyLibrary.RatGuard(),
+    //     new enemyLibrary.RatWizard(),
     // ]);
     //////////////
 
@@ -94,8 +94,8 @@ async function runGameRun() {
             // of the events can (yet) kill you.
 
         }else{  // Fight or Boss
-            const [monsters, cardRewards] = fightGenerator(floorIndex);
-            await runBattle(monsters);
+            const [enemies, cardRewards] = fightGenerator(floorIndex);
+            await runBattle(enemies);
 
             /* Death :'( */
             if(player.currentHp <= 0) {
@@ -210,7 +210,7 @@ async function runBattleMain() {
         }
         retainOneTurn = false;
 
-        /* monster turn */
+        /* enemy turn */
         for(const e of enemyManager.activeEnemies) {
             await e.onStartOfTurn();
 
@@ -265,9 +265,9 @@ async function getMove() {
     const result = await new Promise(resolve => {
         function onEnd(e) {
             if(activeCard.isTargeted()) {
-                for(const [el, monster] of enemyManager.getTargetableElMap()) {
+                for(const [el, enemy] of enemyManager.getTargetableElMap()) {
                     if(el.contains(e.target)) {
-                        return resolve([activeCard, monster]);
+                        return resolve([activeCard, enemy]);
                     }
                 }
             }else if(inAoeBounds(e)) {

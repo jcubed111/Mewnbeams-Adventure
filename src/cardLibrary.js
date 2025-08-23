@@ -97,6 +97,21 @@ const cardLibrary = {
         play = () => enemyManager.activeEnemies.reverse();
     },
 
+    Swat: class extends CommonCard{
+        cardName = 'Swat';
+        pic = SpriteSheetPic(28, '#a18600');
+        actionCost = 1;
+
+        damage = 1;
+        extraCardText = 'Move Right';
+        play([target]) {
+            const i = enemyManager.activeEnemies.indexOf(target);
+            enemyManager.activeEnemies.splice(i, 1);
+            enemyManager.activeEnemies.splice(i + 1, 0, target);
+            return super.play([target]);
+        }
+    },
+
     PrepareSpell: class extends CommonCard{
         cardName = 'Prepare Spell';
         pic = SpriteSheetPic(23, '#ca8f5f');
@@ -151,6 +166,7 @@ const cardLibrary = {
     BloodRitual: class extends RareCard{
         cardName = 'Blood Ritual';
         pic = SpriteSheetPic(27, '#f02');
+        actionCost = 1;
         manaCost = 1;
 
         selfDamage = 2;
@@ -166,9 +182,6 @@ const cardLibrary = {
 
     // - dodge - next attack misses
     // - swat - move enemy left 1 spot
-    // - stomp - stun 1 turn
-    // - swipe - damage 1 to ALL
-
 
     ConveneWithSpirits: class extends LegendaryCard{
         cardName = 'Convene with Spirits';

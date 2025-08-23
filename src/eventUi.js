@@ -4,13 +4,12 @@
 const Bit_darkBg = 1;
 const Bit_centeredTitle = 2;  // the title text is centered
 const Bit_centeredOptions = 8;
-const Bit_delayOptionVisibility = 16;
 const Bit_unclickableCardList = 32;
 const Bit_darkBgButtonTop = 64;  // move option[0] button to the top right instead of button center
 
 
 const ChoiceMenuTitle = Bit_centeredTitle | Bit_centeredOptions;
-const ChoiceMenuTextEvent = Bit_delayOptionVisibility;
+const ChoiceMenuTextEvent = 0;
 const ChoiceMenuTextEventReward = Bit_centeredOptions;
 const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
 const ChoiceMenuCardList = Bit_darkBg | Bit_darkBgButtonTop;
@@ -22,7 +21,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
     const darkBg = modeBitmap & Bit_darkBg;
     const centeredTitle = modeBitmap & Bit_centeredTitle;
     const centeredOptions = modeBitmap & Bit_centeredOptions;
-    const delayOptionVisibility = modeBitmap & Bit_delayOptionVisibility;
     const unclickableCardList = modeBitmap & Bit_unclickableCardList;
     const darkBgButtonTop = modeBitmap & Bit_darkBgButtonTop;
 
@@ -47,18 +45,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                     }
                 });
 
-                const optionsWrapper = div(
-                    [
-                        'C--choiceMenuOptions',
-                        centeredOptions || 'C--leftOptions',
-                        darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
-                    ].join(' '),
-                    optionDivs,
-                );
-                if(delayOptionVisibility) {
-                    optionsWrapper.style.visibility = 'hidden';
-                    wait(0.5).then(() => optionsWrapper.style.visibility = '');
-                }
 
                 return div(darkBg ? 'C--choiceMenuWrapper C--darkBlackMenuBack' : 'C--choiceMenuWrapper',
                     div(darkBg ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered',
@@ -74,7 +60,14 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                                 : textContent,
                         ),
                         styledDiv('', {flexGrow: 1}),
-                        optionsWrapper,
+                        div(
+                            [
+                                'C--choiceMenuOptions',
+                                centeredOptions || 'C--leftOptions',
+                                darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
+                            ].join(' '),
+                            optionDivs,
+                        ),
                         styledDiv('', {flexGrow: 1}),
                     )
                 );

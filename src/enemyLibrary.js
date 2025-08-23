@@ -19,7 +19,7 @@ const enemyLibrary = {
         characterName = 'Rat Wizard';
         maxHp = 3;
         size = 130;
-        pic = SpriteSheetPic(46, '#1ee');
+        pic = SpriteSheetPic(46, '#5af');
 
         *getActionSequence() {
             yield actions.Pass;

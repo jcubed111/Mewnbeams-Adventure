@@ -296,7 +296,7 @@ async function getMove() {
 
         async function onMouseUp(e) {
             const [dx, dy] = getTravelDelta(activateEvent, e);
-            if(dx ** 2 + dy ** 2 < 100) {
+            if(dx ** 2 + dy ** 2 < 15 ** 2) {
                 // treat this as a click event to start activation, then listen
                 // for a future click event to end.
                 await wait(0.05);

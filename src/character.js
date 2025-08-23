@@ -70,12 +70,18 @@ class Character extends Sprite{
     }
 
     heal(hp) {
-        this.currentHp += hp;
+        this.currentHp = Math.min(this.maxHp, this.currentHp + hp);
         this._preAnimateHp = undefined;
         this.render();
     }
 
     gainBleed(bleed) {
+        // repeated verbatium from above to hopefully get optimized
+        if(this.dodge) {
+            this.dodge--;
+            this.render();
+            return;
+        }
         this.bleed += bleed;
         this.render();
     }

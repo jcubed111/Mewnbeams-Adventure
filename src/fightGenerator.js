@@ -1,14 +1,49 @@
 function getFightGenerator() {
+    // floors 1 - 4
     const introEnemyChoices = shuffleInPlace([
+        // need at least 4 of these
         new enemyLibrary.BasicRat,
         new enemyLibrary.PoisonRat,
         new enemyLibrary.RatWizard,
         new enemyLibrary.Mouse,
     ]);
 
-    // The first fight after the intro fights, we run
-    // a mini boss to get players into something interesting.
+    // A mini boss will fill the first fight after floor 4 (likely floor 5)
     let hasFoughtMiniBoss1 = false;
+
+    // floors 6 - 10
+    // need at least 5 of these
+    const midTierGroupEnemyFights = shuffleInPlace([
+        [new enemyLibrary.RatGuard, new enemyLibrary.Mouse],
+        [new enemyLibrary.RatGuard, new enemyLibrary.PoisonRat],
+        [new enemyLibrary.PoisonRat, new enemyLibrary.PoisonRat, new enemyLibrary.RatWizard],
+        [new enemyLibrary.RatGuard, new enemyLibrary.RatWizard, new enemyLibrary.RatGuard],
+        [new enemyLibrary.Mouse, new enemyLibrary.Mouse, new enemyLibrary.Mouse],
+    ]);
+
+    // Floors 11 - 14
+    // need at least 4 of these
+    const lateGameFights = shuffleInPlace([
+        [  // mini menagerie
+            new enemyLibrary.BasicRat,
+            new enemyLibrary.RatGuard,
+            new enemyLibrary.RatWizard,
+            new enemyLibrary.Mouse,
+            new enemyLibrary.PoisonRat,
+        ],
+        [   // rabits with healing
+            new enemyLibrary.Rabbit,
+            new enemyLibrary.Rabbit,
+            new enemyLibrary.Mouse,
+        ],
+        [   // weasel with healing
+            new enemyLibrary.Weasel,
+            new enemyLibrary.Mouse,
+        ],
+        [
+            new enemyLibrary.Snake,
+        ],
+    ]);
 
     return floorIndex => {
         // Returns [enemies, card reward choices]
@@ -37,6 +72,8 @@ function getFightGenerator() {
             ]
         }
 
+        // The first fight after the intro fights, we run
+        // a mini boss to get players into something interesting.
         if(floorIndex < 7 && !hasFoughtMiniBoss1) {
             hasFoughtMiniBoss1 = true;
             const cards = getCardRewards(floorIndex);
@@ -56,30 +93,42 @@ function getFightGenerator() {
             ])[0];
         }
 
-        // Final boss
-        if(floorIndex == NUM_FLOORS - 1) {
+        if(floorIndex < 10) {
             return [
-                [
-                    // one basic rat and one random easy enemy
-                    new enemyLibrary.RatGuard,
-                    new enemyLibrary.RatKing,
-                    new enemyLibrary.Mouse,
-                    new enemyLibrary.RatGuard,
-                ],
-                [],
+                midTierGroupEnemyFights.pop(),
+                getCardRewards(floorIndex),
             ];
         }
 
+        if(floorIndex < NUM_FLOORS - 1) {
+            return [
+                lateGameFights.pop(),
+                getCardRewards(floorIndex),
+            ];
+        }
+
+        // Final boss
         return [
             [
-                new enemyLibrary.BasicRat,
+                // one basic rat and one random easy enemy
                 new enemyLibrary.RatGuard,
-                new enemyLibrary.RatWizard,
+                new enemyLibrary.RatKing,
                 new enemyLibrary.Mouse,
-                new enemyLibrary.PoisonRat,
+                new enemyLibrary.RatGuard,
             ],
-            getCardRewards(floorIndex),
+            [],
         ];
+
+        // return [
+        //     [
+        //         new enemyLibrary.BasicRat,
+        //         new enemyLibrary.RatGuard,
+        //         new enemyLibrary.RatWizard,
+        //         new enemyLibrary.Mouse,
+        //         new enemyLibrary.PoisonRat,
+        //     ],
+        //     getCardRewards(floorIndex),
+        // ];
     }
 }
 

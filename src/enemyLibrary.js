@@ -118,10 +118,9 @@ const enemyLibrary = {
             ]);
         }
     },
-
     Mouse: class extends Character{
         characterName = 'Mouse';
-        maxHp = 7;
+        maxHp = 5;
         size = 130;
         pic = SpriteSheetPic(45, '#e11');
 
@@ -134,6 +133,30 @@ const enemyLibrary = {
         }
     },
 
+    /* Late game unique enemies */
+    Snake: class extends Character{
+        characterName = 'Snake';
+        maxHp = 15;
+        size = 170;
+        guard = true;
+
+        async onStartOfTurn() {
+            await super.onStartOfTurn();
+            this.dodge += 1;
+            this.render();
+        }
+
+        *getActionSequence() {
+            for(let i = 0; true; i++) {
+                yield actions.Poison(3);
+                if(i == 0) {
+                    yield actions.Summon('🐁', 0, new enemyLibrary.Mouse);
+                }
+                yield actions.Attack(shuffleInPlace([2, 3, 4])[0]);
+            }
+        }
+    },
+
     /* Rat King */
     RatKing: class extends Character{
         characterName = 'Rat King';
@@ -141,11 +164,12 @@ const enemyLibrary = {
         size = 270;
 
         *getActionSequence() {
-            yield* shuffleInPlace([
-                actions.Attack(7),
-                actions.Block(7),
-                // actions.Attack(2),
-            ]);
+            yield actions.Summon('🐀🐀', new enemyLibrary.BasicRat, new enemyLibrary.BasicRat);
+            for(let i = 0; true; i++) {
+                yield actions.Attack(5 + i);
+                yield actions.HealAll(2);
+                yield actions.Summon('🐀', new enemyLibrary.BasicRat, 0);
+            }
         }
     },
 }

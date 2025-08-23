@@ -98,7 +98,8 @@ const cardLibrary = [
         pic = SpriteSheetPic(5, '#f80');
         actionCost = 2;
 
-        damage = 3;
+        damage = 2;
+        bleed = 2;
     },
     class extends RareCard{
         cardName = 'Boom Bop Bam';

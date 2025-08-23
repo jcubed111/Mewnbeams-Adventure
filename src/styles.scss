@@ -19,13 +19,33 @@ Notes on this file:
   the property values in multiple places.
 */
 
-$primary-1: #ffffff;
-$primary-2: #d9d8da;
-$primary-3: #acaaad;
-$primary-4: #817e84;
-$primary-5: #56515a;
-$primary-6: #292330;
-$primary-7: #150e1d;
+$grey-1: #ffffff;
+$grey-2: #d9d8da;
+$grey-3: #acaaad;
+$grey-4: #817e84;
+$grey-5: #56515a;
+$grey-6: #292330;
+$grey-7: #150e1d;
+
+
+$z-body-bg: 0;
+$z-character: 5;
+$z-fight-resources: 7;
+$z-card-pile: 7;
+$z-fight-ui-pass-button: 8;
+$z-arrow-canvas: 9;
+
+// card zs assigned 11+handIndex for hand
+$z-card-hover: 24;
+// card z assigned 25+pendingIndex for active
+    $z-card-local-cost-icons: 1;
+    $z-card-local-card-back: 2;
+
+$z-minimap: 55;
+$z-choice-menu-wrapper: 50;
+$z-choice-menu-wrapper-black: 80;
+    // local to choice menu, but shared with cards
+    $z-choice-menu-wrapper-black-button: 60;
 
 html{
     // define the font size as 1% of the view square
@@ -38,7 +58,7 @@ html{
 }
 
 body{
-    background: $primary-7;
+    background: $grey-7;
     font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
     width: 1333rem;
     height: 1000rem;
@@ -56,24 +76,30 @@ body{
 }
 
 /* Fullscreen ux elements */
-.C--arrowCanvas, .C--choiceMenuWrapper{
+.C--arrowCanvas, .C--choiceMenuWrapper, .C--bodyBgWrapper{
     position: absolute;
     inset: 0;
 }
 
+.C--bodyBgWrapper{
+    z-index: $z-body-bg;
+    top: auto;
+    transition: inset 0.75s ease-in-out;
+}
+
 .C--arrowCanvas{
     pointer-events: none;
-    z-index: 9;
+    z-index: $z-arrow-canvas;
 }
 
 .C--choiceMenuWrapper{
-    z-index: 50;
+    z-index: $z-choice-menu-wrapper;
     background: #0004;
     backdrop-filter: blur(20rem);
 }
     .C--darkBlackMenuBack{
         background: #000b;
-        z-index: 80;  // place above deck button
+        z-index: $z-choice-menu-wrapper-black;  // place above deck button
 
         // Special positioning for inner and the first option button
         .C--choiceMenu{
@@ -87,7 +113,7 @@ body{
         .C--choiceMenuOptionButton:first-child{
             position: absolute;
             inset: 100rem 100rem auto auto;
-            z-index: 60;
+            z-index: $z-choice-menu-wrapper-black-button;
         }
     }
     .C--darkBgButtonBottom .C--choiceMenuOptionButton:first-child{
@@ -189,7 +215,7 @@ body{
 
     &:hover, &.C--active{
         transform: rotate(0deg)!important;
-        z-index: 24!important;
+        z-index: $z-card-hover!important;
     }
 
     &.C--unplayable{
@@ -201,7 +227,7 @@ body{
         position: absolute;
         top: -2rem;
         left: -2rem;
-        z-index: 1;
+        z-index: $z-card-local-cost-icons;
     }
 
     .C--manaPointIcon{
@@ -217,7 +243,7 @@ body{
         content: '';
         position: absolute;
         inset: 0;
-        z-index: 2;
+        z-index: $z-card-local-card-back;
     }
 
     .C--faceDown .C--actionPointIcon{
@@ -254,6 +280,7 @@ body{
     justify-content: center;
     font-size: 40rem;
     cursor: pointer;
+    z-index: $z-card-pile;
     &:hover{
         box-shadow: 0 0 0 4rem #e8f;
     }
@@ -294,6 +321,7 @@ body{
 .C--character{
     align-items: center;
     gap: 5rem;
+    z-index: $z-character;
 }
 
     .C--characterTargetable{
@@ -387,14 +415,14 @@ body{
     position: absolute;
     right: 10rem;
     bottom: 310rem;
-    z-index: 30;
+    z-index: $z-fight-ui-pass-button;
 }
 
 .C--resources{
     position: absolute;
-    left: 10rem;
+    left: 27rem;
     bottom: 310rem;
-    z-index: 9;
+    z-index: $z-fight-resources;
 }
     .C--actionPointRow, .C--manaRow {
         margin-top: 15rem;
@@ -418,7 +446,7 @@ body{
     white-space: pre;
     font-size: 15rem;
     color: #fff9;
-    z-index: 55;
+    z-index: $z-minimap;
 }
     .C--minimapRow{
         white-space: nowrap;

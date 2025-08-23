@@ -79,6 +79,8 @@ async function runGameRun() {
             minimap.advance(directionChoices[choiceIndex][0]);
         }
 
+        await bodyBg.slideNext();
+
         const chosenFloorType = minimap.getCurrentFloorType();
 
         if(chosenFloorType == RoomType.Nap) {

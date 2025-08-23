@@ -54,7 +54,7 @@ const monsterLibrary = {
     },
     Rabbit: class extends Character{
         characterName = 'Rabbit';
-        maxHp = 7;
+        maxHp = 8;
         size = 110;
 
         // The first rabbit starts with a `summon` step, but new
@@ -62,16 +62,19 @@ const monsterLibrary = {
         // before they summon.
         constructor(isNotFirst) {
             super();
-            this.forceSummonAction = !isNotFirst;
+            this.summonThisCycle = !isNotFirst;
         }
 
         *getActionSequence() {
-            if(this.forceSummonAction) {
+            if(this.summonThisCycle) {
                 yield actions.Summon(0, new monsterLibrary.Rabbit(true));
-                this.forceSummonAction = false;
+                this.summonThisCycle = true;
             }
             yield actions.Attack(2);
             yield actions.Attack(2);
+            if(Math.random() < 0.5) {
+                yield actions.Attack(2);
+            }
         }
     },
     Beaver: class extends Character{

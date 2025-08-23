@@ -24,8 +24,9 @@ class Sprite{
     }
 }
 
-const spriteBgForIndex = index => `url(c.webp) ${(index % 5) * 25}% ${(~~(index / 5)) * 10}%/501% `;
-
 const SpriteSheetPic = (index, primaryColor) => () => styledDiv('C--spriteSheetPic', {
-    background: spriteBgForIndex(index) + primaryColor,
+    // The numbers here are higher than "perfect" so that we trim off a tiny border from each
+    // side of the image. This prevents adjacent sprites from bleeding through when
+    // the sprite undergoes transforms.
+    background: `url(c.webp) ${0.1 + (index % 5) * 24.95}% ${0.1 + 9.98 * (~~(index / 5))}%/506% ${primaryColor}`,
 });

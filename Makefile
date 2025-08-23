@@ -4,6 +4,7 @@ JS_FILES := \
 	src/utils.js \
 	src/monsterActions.js \
 	src/sprite.js \
+	src/bodyBg.js \
 	src/minimap.js \
 	src/character.js \
 	src/card.js \

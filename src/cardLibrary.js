@@ -94,9 +94,19 @@ const cardLibrary = {
         manaCost = 1;
         targetMode = TARGET_TO_ALL;
         getTextLines = () => ['Reverse Enemy Order'];
-        play() {
-            enemyManager.activeEnemies.reverse();
-        }
+        play = () => enemyManager.activeEnemies.reverse();
+    },
+
+    PrepareSpell: class extends CommonCard{
+        cardName = 'Prepare Spell';
+        pic = SpriteSheetPic(0, '#71b6cb');
+        actionCost = 1;
+
+        getTextLines = () => ['Add a Fireball to your Discard'];
+        play = () => cardManager.animateInto(
+            ANIMATE_INTO_TARGET_DISCARD,
+            new cardLibrary.Fireball,
+        );
     },
 
     // Hiss: class extends CommonCard{
@@ -150,8 +160,21 @@ const cardLibrary = {
 
         pic = SpriteSheetPic(3, '#005f39');
 
-        // getTextLines() { return ['Replay the Previous Card'] };
-        getTextLines() { return ['TODO'] };
+        getTextLines = () => ['Copy a Discarded Card'];
+        playable() {
+            return super.playable() && cardManager.discardPile.length;
+        }
+        async play() {
+            const discard = cardManager.discardPile;
+            const chosenIndex = await cardListViewScreen(discard, 0, 1)
+            if(chosenIndex == -1) {
+                return await this.play();
+            }
+            await cardManager.animateInto(
+                ANIMATE_INTO_TARGET_HAND,
+                new discard[chosenIndex].constructor,
+            );
+        }
     },
     Zoomies: class extends RareCard{
         cardName = 'Zoomies';

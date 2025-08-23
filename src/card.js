@@ -87,13 +87,16 @@ class Card extends Sprite{
 
     // pick a static (but random) discard spot so we don't change it
     // every render.
-    _discardSpot = range(0, 2).map(_ => Math.random() * 150 - 75);
+    _discardSpot = [
+        Math.random() * 150 - 75 + 1433,
+        Math.random() * 150 - 75 - 100,
+    ];
     setDiscardPosition() {
         const [dx, dy] = this._discardSpot;
         this.el.style.zIndex = 25;
         this.el.style.transform = `rotate(0deg)`;
-        this.el.style.left = `${dx + 1433}rem`;
-        this.el.style.bottom = `${dy - 100}rem`;
+        this.el.style.left = `${dx}rem`;
+        this.el.style.bottom = `${dy}rem`;
         this.el.classList.remove('C--active');
         this.el.classList.remove('C--faceDown');
     }

@@ -33,7 +33,7 @@ class CardManager{
             ctx.setLineDash([30]);
             ctx.beginPath();
             ctx.moveTo(endX, endY);
-            ctx.lineTo(startX, startY);
+            ctx.lineTo(startX, startY - 0.05 * height);
 
             ctx.strokeStyle = '#ddd';
             ctx.lineWidth = 28;
@@ -259,6 +259,24 @@ class CardManager{
         this.activationPosition = [];
         this.active = null;
         this.render();
+    }
+
+    // target is one of:
+    //   ANIMATE_INTO_TARGET_DRAW = 0
+    //   ANIMATE_INTO_TARGET_HAND = 1
+    //   ANIMATE_INTO_TARGET_DISCARD = 2
+    async animateInto(target, card) {
+        card.showAndRender();
+        card.setCantripPosition(-1);
+        await wait(0.2);
+        [
+            this.drawPile,
+            this.hand,
+            this.discardPile,
+        ][target].push(card);
+        shuffleInPlace(this.drawPile);
+        this.render();
+        await wait(0.2);
     }
 }
 

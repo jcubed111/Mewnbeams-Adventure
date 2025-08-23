@@ -306,7 +306,6 @@ async function getMove() {
         }
 
         if(activeCard.isTargeted()) {
-            document.body.classList.add('C--gettingMonsterTarget');
             enemyManager.highlightTargetable();
         }
         window.addEventListener('mouseup', onMouseUp, {'once': true});
@@ -317,7 +316,6 @@ async function getMove() {
             window.removeEventListener('click', onEnd);
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('keydown', onKeyDown);
-            document.body.classList.remove('C--gettingMonsterTarget');
             enemyManager.unhighlightTargetable();
         };
     });

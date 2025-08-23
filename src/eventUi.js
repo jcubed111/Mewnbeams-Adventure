@@ -16,7 +16,6 @@ const ChoiceMenuTextEventReward = Bit_centeredOptions;
 const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
 const ChoiceMenuCardList = Bit_darkBg | Bit_darkBgButtonTop;
 const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_darkBgButtonTop | Bit_unclickableCardList;
-const ChoiceMenuDeathScreen = Bit_darkBg;
 
 // A big fullscreen menu element for events, card lists, etc.
 function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
@@ -110,7 +109,7 @@ function fadeInText(textStringParts, ...els) {
 const witchPic = SpriteSheetPic(44, '#f40', 1);
 
 function deathScreen() {
-    return showChoiceMenu(ChoiceMenuDeathScreen,
+    return showChoiceMenu(ChoiceMenuTextEventReward,
         fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
         witchPic(),
         'Try Again',

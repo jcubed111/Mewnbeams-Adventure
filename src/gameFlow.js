@@ -15,6 +15,8 @@ async function runMainMenu() {
     resetGameState();
     // placeholder - remove
     // await runNap();
+    // await deathScreen();
+    // await victoryScreen();
     // await cardListViewScreen(cardLibrary.map(C => new C));
     // await runBattle([
     //     new enemyLibrary.Rabbit(),

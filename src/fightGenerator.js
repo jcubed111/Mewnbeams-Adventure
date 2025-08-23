@@ -43,15 +43,15 @@ function getFightGenerator() {
             return shuffleInPlace([
                 [
                     [new enemyLibrary.Weasel],
-                    [cards[0], new cardLibrary.WayOfTheWeasel, cards[1]],
+                    [cards[0], new CARD_WAY_OF_THE_WEASEL, cards[1]],
                 ],
                 [
                     [new enemyLibrary.Rabbit],
-                    [cards[0], new cardLibrary.RabbitsFoot, cards[1]],
+                    [cards[0], new CARD_RABBITS_FOOT, cards[1]],
                 ],
                 [
                     [new enemyLibrary.Beaver],
-                    [cards[0], new cardLibrary.Dam, cards[1]],
+                    [cards[0], new CARD_DAM, cards[1]],
                 ],
             ])[0];
         }
@@ -85,7 +85,7 @@ function getFightGenerator() {
 
 function getCardRewards(floorIndex) {
     const cardsByTier = [[], [], []];
-    [...Object.values(cardLibrary)]
+    cardLibrary
         .map(C => new C)
         .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
     cardsByTier.forEach(shuffleInPlace);
@@ -109,7 +109,7 @@ function getCardRewards(floorIndex) {
 }
 
 const getThreeRandomTrinkets = () => shuffleInPlace(
-    [...Object.values(cardLibrary)]
+    cardLibrary
         .map(C => new C)
         .filter(c => c instanceof TrinketCard)
 ).slice(0, 3);

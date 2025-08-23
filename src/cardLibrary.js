@@ -1,38 +1,27 @@
 // ~15%, which is 0.48%/card
 // card art file is ~25.5%, which is 0.45%/card
-const cardLibrary = {
+const cardLibrary = [
     // Each (standard) card definition takes up about 22bytes zipped.
 
-    Paw: class extends RareCard{
-        cardName = 'Paw';
-        pic = SpriteSheetPic(4, '#ff32f1');
-
-        damage = 0;
-    },
-    Claw: class extends CommonCard{
+    /* Special Cards come first, so we can easily index into them */
+    // 0
+    class extends CommonCard{
         cardName = 'Claw';
         pic = SpriteSheetPic(1, '#d0f');
         actionCost = 1;
 
         damage = 1;
     },
-    Maul: class extends CommonCard{
-        cardName = 'Maul';
-        pic = SpriteSheetPic(5, '#f80');
-        actionCost = 2;
+    // 1
+    class extends CommonCard{
+        cardName = 'Scratch';
+        actionCost = 1;
+        pic = SpriteSheetPic(11, '#f00');
 
-        damage = 3;
+        bleed = 2;
     },
-    BoomBopBam: class extends RareCard{
-        cardName = 'Boom Bop Bam';
-        pic = SpriteSheetPic(15, '#709a2b');
-        actionCost = 2;
-
-        damage = 1;
-        repeatPlay = 3;
-    },
-
-    Swipe: class extends CommonCard{
+    // 2
+    class extends CommonCard{
         cardName = 'Swipe';
         pic = SpriteSheetPic(2, '#f50');
         actionCost = 1;
@@ -41,14 +30,86 @@ const cardLibrary = {
         damage = 1;
         exhaust = true;
     },
-    Scratch: class extends CommonCard{
-        cardName = 'Scratch';
-        actionCost = 1;
-        pic = SpriteSheetPic(11, '#f00');
+    // 3
+    class extends RareCard{
+        cardName = 'Stomp';
+        pic = SpriteSheetPic(20, '#e8961b');
+        manaCost = 2;
 
-        bleed = 2;
+        stun = 1;
     },
-    SpiritScratch: class extends RareCard{
+    // 4
+    class extends CurseCard{
+        cardName = 'Curse';
+        pic = SpriteSheetPic(26, '#289876');
+        cantrip = 1;
+    },
+    // 5
+    class extends ItemCard{
+        cardName = 'Rabbit’s Foot';
+        pic = SpriteSheetPic(21, '#f02');
+        manaCost = 1;
+        getTextLines = () => ['Redraw Your Hand'];
+
+        draw = TURN_START_HAND_SIZE;
+        async play(targets) {
+            await cardManager.discardHand();
+            await super.play(targets);
+        }
+    },
+    // 6
+    class extends LegendaryCard{
+        cardName = 'Way of the Weasel';
+        pic = SpriteSheetPic(50, '#c76d24');
+        manaCost = 2;
+
+        dodge = 5;
+        exhaust = 1;
+    },
+    // 7
+    class extends TrinketCard{
+        cardName = 'Dam';
+        // TODO: reuse art from the Dam monster
+        // pic = SpriteSheetPic(19, '#1e44ae');
+        actionCost = 1;
+
+        dodge = 1;
+    },
+    // 8
+    class extends CommonCard{
+        cardName = 'Fireball';
+        pic = SpriteSheetPic(12, '#f61');
+        actionCost = 1;
+        manaCost = 2;
+
+        damage = 4;
+        splashDamage = 2;
+    },
+
+
+    class extends RareCard{
+        cardName = 'Paw';
+        pic = SpriteSheetPic(4, '#ff32f1');
+
+        damage = 0;
+    },
+    class extends CommonCard{
+        cardName = 'Maul';
+        pic = SpriteSheetPic(5, '#f80');
+        actionCost = 2;
+
+        damage = 3;
+    },
+    class extends RareCard{
+        cardName = 'Boom Bop Bam';
+        pic = SpriteSheetPic(15, '#709a2b');
+        actionCost = 2;
+
+        damage = 1;
+        repeatPlay = 3;
+    },
+
+    class extends RareCard{
         cardName = 'Spirit Scratch';
         pic = SpriteSheetPic(2, '#ccf');
 
@@ -57,7 +118,7 @@ const cardLibrary = {
         bleed = 1;
     },
 
-    Meow: class extends CommonCard{
+    class extends CommonCard{
         cardName = 'Meow';
         pic = SpriteSheetPic(10, '#7fae10');
         actionCost = 1;
@@ -65,7 +126,7 @@ const cardLibrary = {
         draw = 2;
     },
 
-    Bite: class extends RareCard{
+    class extends RareCard{
         cardName = 'Bite';
         pic = SpriteSheetPic(6, '#f00');
         actionCost = 1;
@@ -73,7 +134,7 @@ const cardLibrary = {
         damage = 1;
         selfHeal = 1;
     },
-    TongueBath: class extends LegendaryCard{
+    class extends LegendaryCard{
         cardName = 'Tongue Bath';
         pic = SpriteSheetPic(16, '#436');
         actionCost = 1;
@@ -82,7 +143,7 @@ const cardLibrary = {
         exhaust = true;
     },
 
-    BobaEyes: class extends RareCard{
+    class extends RareCard{
         cardName = 'Boba Eyes';
         pic = SpriteSheetPic(9, '#406');
         manaCost = 2;
@@ -90,7 +151,7 @@ const cardLibrary = {
         gainStrength = 1;
     },
 
-    Boop: class extends RareCard{
+    class extends RareCard{
         cardName = 'Boop';
         pic = SpriteSheetPic(22, '#71b6cb');
         manaCost = 1;
@@ -99,7 +160,7 @@ const cardLibrary = {
         play = () => enemyManager.activeEnemies.reverse();
     },
 
-    Swat: class extends CommonCard{
+    class extends CommonCard{
         cardName = 'Swat';
         pic = SpriteSheetPic(28, '#a18600');
         actionCost = 1;
@@ -114,7 +175,7 @@ const cardLibrary = {
         }
     },
 
-    PrepareSpell: class extends CommonCard{
+    class extends CommonCard{
         cardName = 'Prepare Spell';
         pic = SpriteSheetPic(23, '#ca8f5f');
         actionCost = 1;
@@ -122,11 +183,11 @@ const cardLibrary = {
         extraCardText = 'Add a Fireball to your Discard';
         play = () => cardManager.animateInto(
             ANIMATE_INTO_TARGET_DISCARD,
-            new cardLibrary.Fireball,
+            new CARD_FIREBALL,
         );
     },
 
-    Knapsack: class extends ItemCard{
+    class extends ItemCard{
         cardName = 'Knapsack';
         pic = SpriteSheetPic(24, '#923303');
         manaCost = 1;
@@ -138,7 +199,7 @@ const cardLibrary = {
         );
     },
 
-    DarkBargain: class extends LegendaryCard{
+    class extends LegendaryCard{
         cardName = 'DarkBargain';
         pic = SpriteSheetPic(25, '#f20');
         manaCost = 1;
@@ -151,7 +212,7 @@ const cardLibrary = {
         async play(targets) {
             await cardManager.animateInto(
                 ANIMATE_INTO_TARGET_DRAW,
-                new cardLibrary.Curse,
+                new CARD_CURSE,
             );
             super.play(targets);
         }
@@ -159,13 +220,8 @@ const cardLibrary = {
         getTextLines = () => ['Make a Curse', 'Attack 1 per Curse in Play'];
     },
 
-    Curse: class extends CurseCard{
-        cardName = 'Curse';
-        pic = SpriteSheetPic(26, '#289876');
-        cantrip = 1;
-    },
 
-    BloodRitual: class extends RareCard{
+    class extends RareCard{
         cardName = 'Blood Ritual';
         pic = SpriteSheetPic(27, '#f02');
         actionCost = 1;
@@ -175,7 +231,7 @@ const cardLibrary = {
         gainStrength = 2;
     },
 
-    // Hiss: class extends CommonCard{
+    // class extends CommonCard{
     //     cardName = 'Hiss';
     //     actionCost = 1;
 
@@ -185,7 +241,7 @@ const cardLibrary = {
     // - dodge - next attack misses
     // - swat - move enemy left 1 spot
 
-    ConveneWithSpirits: class extends LegendaryCard{
+    class extends LegendaryCard{
         cardName = 'Convene with Spirits';
         pic = SpriteSheetPic(7, '#0f7');
         // actionCost = 1;
@@ -194,30 +250,14 @@ const cardLibrary = {
         draw = 4;
         exhaust = true;
     },
-    Channel: class extends RareCard{
+    class extends RareCard{
         cardName = 'Channel';
         pic = SpriteSheetPic(8, '#3bf');
         manaCost = 0;
 
         gainMana = 2;
     },
-    Stomp: class extends RareCard{
-        cardName = 'Stomp';
-        pic = SpriteSheetPic(20, '#e8961b');
-        manaCost = 2;
-
-        stun = 1;
-    },
-    Fireball: class extends CommonCard{
-        cardName = 'Fireball';
-        pic = SpriteSheetPic(12, '#f61');
-        actionCost = 1;
-        manaCost = 2;
-
-        damage = 4;
-        splashDamage = 2;
-    },
-    SeeGhost: class extends RareCard{
+    class extends RareCard{
         cardName = 'See Ghost';
         manaCost = 2;
 
@@ -239,14 +279,14 @@ const cardLibrary = {
             );
         }
     },
-    Zoomies: class extends RareCard{
+    class extends RareCard{
         cardName = 'Zoomies';
         pic = SpriteSheetPic(13, '#496fcf');
         manaCost = 1;
 
         gainActions = 2;
     },
-    WitchingHour: class extends LegendaryCard{
+    class extends LegendaryCard{
         cardName = 'Witching Hour';
         pic = SpriteSheetPic(14, '#353cfd');
         // manaCost = 0;
@@ -255,7 +295,7 @@ const cardLibrary = {
         gainMana = 2;
         exhaust = 1;
     },
-    YarnBall: class extends TrinketCard{
+    class extends TrinketCard{
         cardName = 'Yarn Ball';
         pic = SpriteSheetPic(17, '#8453ff');
         manaCost = 0;
@@ -264,7 +304,7 @@ const cardLibrary = {
         // exhaust = true;
     },
 
-    Spellbook: class extends ItemCard{
+    class extends ItemCard{
         cardName = 'Spellbook';
         pic = SpriteSheetPic(18, '#7d2300');
         manaCost = 1;
@@ -276,7 +316,7 @@ const cardLibrary = {
         }
     },
 
-    Spellbookmark: class extends TrinketCard{
+    class extends TrinketCard{
         cardName = 'Spellbookmark';
         pic = SpriteSheetPic(19, '#1e44ae');
 
@@ -285,37 +325,16 @@ const cardLibrary = {
         targetMode = AT_LEFT_ENEMY;
     },
 
-    RabbitsFoot: class extends ItemCard{
-        cardName = 'Rabbit’s Foot';
-        pic = SpriteSheetPic(21, '#f02');
-        manaCost = 1;
-        getTextLines = () => ['Redraw Your Hand'];
-
-        draw = TURN_START_HAND_SIZE;
-        async play(targets) {
-            await cardManager.discardHand();
-            await super.play(targets);
-        }
-    },
-
-    WayOfTheWeasel: class extends LegendaryCard{
-        cardName = 'Way of the Weasel';
-        pic = SpriteSheetPic(50, '#c76d24');
-        manaCost = 2;
-
-        dodge = 5;
-        exhaust = 1;
-    },
-
-    Dam: class extends TrinketCard{
-        cardName = 'Dam';
-        // TODO: reuse art from the Dam monster
-        // pic = SpriteSheetPic(19, '#1e44ae');
-        actionCost = 1;
-
-        dodge = 1;
-    },
-
     // - see ghost - replay the previous card
     // - 9 lives
-};
+];
+
+const CARD_CLAW = cardLibrary[0];
+const CARD_SCRATCH = cardLibrary[1];
+const CARD_SWIPE = cardLibrary[2];
+const CARD_STOMP = cardLibrary[3];
+const CARD_CURSE = cardLibrary[4];
+const CARD_RABBITS_FOOT = cardLibrary[5];
+const CARD_WAY_OF_THE_WEASEL = cardLibrary[6];
+const CARD_DAM = cardLibrary[7];
+const CARD_FIREBALL = cardLibrary[8];

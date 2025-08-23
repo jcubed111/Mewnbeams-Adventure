@@ -5,7 +5,6 @@ const resetGameState = () => {
     player?.hide();
     minimap?.hide();
     enemyManager.clear();
-    cardManager.reset();
 
     player = new Player();
     minimap = new Minimap();
@@ -15,7 +14,7 @@ const resetGameState = () => {
 async function runMainMenu() {
     resetGameState();
     // placeholder - remove
-    // await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
+    // await cardListViewScreen(cardLibrary.map(C => new C));
     // await runBattle([
     //     new enemyLibrary.Rabbit(),
     //     new enemyLibrary.RatGuard(),
@@ -32,7 +31,7 @@ async function runMainMenu() {
         await runGameRun();
     }else{
         await cardListViewScreen(
-            [...Object.values(cardLibrary)].map(C => new C),
+            cardLibrary.map(C => new C),
             true,
             false,
             'Library',
@@ -45,7 +44,7 @@ async function runMainMenu() {
 async function runGameRun() {
     resetGameState();
     minimap.showAndRender();
-    cardManager.render();
+    cardManager.reset();
 
     /* OPENING */
     const choice = await showChoiceMenu(ChoiceMenuTextEvent,

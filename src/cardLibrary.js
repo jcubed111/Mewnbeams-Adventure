@@ -96,7 +96,7 @@ const cardLibrary = {
     ConveneWithSpirits: class extends LegendaryCard{
         cardName = 'Convene with Spirits';
         pic = SpriteSheetPic(7, '#0f7');
-        actionCost = 1;
+        // actionCost = 1;
         manaCost = 1;
 
         draw = 4;

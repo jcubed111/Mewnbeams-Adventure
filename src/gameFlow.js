@@ -159,6 +159,8 @@ async function runBattle(enemies) {
     await runBattleMain();
 
     // cleanup
+    player.bleed = 0;
+    player.render();
     await cardManager.discardHand();
 }
 

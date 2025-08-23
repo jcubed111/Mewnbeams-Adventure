@@ -67,11 +67,11 @@ const monsterLibrary = {
 
         *getActionSequence() {
             if(this.summonThisCycle) {
-                yield actions.Summon(0, new monsterLibrary.Rabbit(true));
-                this.summonThisCycle = true;
+                yield actions.Summon('🐇', 0, new monsterLibrary.Rabbit(true));
             }
+            this.summonThisCycle = true;
             yield actions.Attack(2);
-            yield actions.Attack(2);
+            // yield actions.Attack(2);
             if(Math.random() < 0.5) {
                 yield actions.Attack(2);
             }
@@ -83,7 +83,7 @@ const monsterLibrary = {
         size = 150;
 
         *getActionSequence() {
-            yield actions.Summon(new monsterLibrary.Dam, new monsterLibrary.Dam);
+            yield actions.Summon('🪵🪵', new monsterLibrary.Dam, new monsterLibrary.Dam);
             yield actions.Attack(3);
         }
     },
@@ -98,7 +98,7 @@ const monsterLibrary = {
         }
     },
 
-    /* Other assorted enemies */
+    /* Support enemies */
     RatGuard: class extends Character{
         characterName = 'Rat Guard';
         maxHp = 8;
@@ -110,6 +110,20 @@ const monsterLibrary = {
                 actions.Attack(2),
                 actions.BlockAll(2),
                 actions.Block(5),
+            ]);
+        }
+    },
+
+    Mouse: class extends Character{
+        characterName = 'Mouse';
+        maxHp = 7;
+        size = 110;
+
+        *getActionSequence() {
+            yield* shuffleInPlace([
+                actions.HealAll(2),
+                // actions.Block(2),
+                actions.Attack(2),
             ]);
         }
     },

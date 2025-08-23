@@ -13,6 +13,18 @@ function getFightGenerator() {
         // Returns [monsters, card reward choices]
         // Both monsters and cardRewardChoices are instance arrays, not constructor arrays.
 
+        /* test fight */
+        // return [
+        //     [
+        //         // one basic rat and one random easy enemy
+        //         // new monsterLibrary.Rabbit,
+        //         new monsterLibrary.Beaver,
+        //     ],
+        //     getCardRewards(floorIndex),
+        // ];
+        /**************/
+
+
         if(floorIndex < 3) {
             return [
                 [
@@ -57,6 +69,7 @@ function getFightGenerator() {
                     // one basic rat and one random easy enemy
                     new monsterLibrary.RatGuard,
                     new monsterLibrary.RatKing,
+                    new monsterLibrary.Mouse,
                     new monsterLibrary.RatGuard,
                 ],
                 [],
@@ -68,6 +81,7 @@ function getFightGenerator() {
                 new monsterLibrary.BasicRat,
                 new monsterLibrary.RatGuard,
                 new monsterLibrary.RatWizard,
+                new monsterLibrary.Mouse,
                 new monsterLibrary.PoisonRat,
             ],
             getCardRewards(floorIndex),

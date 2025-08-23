@@ -36,26 +36,36 @@ const actions = {
     ],
 
     BlockAll: block => [
-        `🛡️ ${block} All`,
+        `◄ 🛡️ ${block} ►`,
         (monster, allMonsters) => {
             monster.animateAttack(-0.5);
             allMonsters.forEach(m => m.gainBlock(block));
         },
     ],
 
-    Summon: (left, right) => [
-        `Summon`,
+    HealAll: heal => [
+        `◄ 💖 ${heal} ►`,
+        (monster, allMonsters) => {
+            monster.animateAttack(-0.5);
+            allMonsters.forEach(m => m.heal(heal));
+        },
+    ],
+
+    Summon: (icon, left, right) => [
+        `+${icon}`,
         async (monster) => {
             const i = enemyManager.activeEnemies.indexOf(monster);
-            if(right) {
+            if(right && enemyManager.activeEnemies.length < ENEMY_MAX) {
                 // we need to clear the action first so we don't waste part of
                 // the action sequence on the intro animation
+                await monster.animateAttack(0, 1);
                 right.clearAction();
                 await enemyManager.animateIn([right], i + 1);
             }
-            if(left) {
+            if(left && enemyManager.activeEnemies.length < ENEMY_MAX) {
                 // we need to clear the action first so we don't waste part of
                 // the action sequence on the intro animation
+                await monster.animateAttack(0, 0);
                 left.clearAction();
                 await enemyManager.animateIn([left], i);
             }

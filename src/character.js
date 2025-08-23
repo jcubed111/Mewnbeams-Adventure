@@ -97,12 +97,14 @@ class Character extends Sprite{
         }
     }
 
-    async animateAttack(direction=1) {
+    async animateAttack(yDirection=1, xDirection) {
         const el = this.el;
         if(!el) return;
-        el.style.marginBottom = `${-20 * direction}rem`;
+        el.style.marginBottom = `${-20 * yDirection}rem`;
+        el.style.marginLeft = `${20 * xDirection}rem`;
         await wait(0.15);
         el.style.marginBottom = '';
+        el.style.marginLeft = '';
         await wait(0.15);
     }
 

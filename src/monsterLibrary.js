@@ -57,6 +57,7 @@ const monsterLibrary = {
         characterName = 'Rabbit';
         maxHp = 8;
         size = 110;
+        pic = SpriteSheetPic(51, '#f20');
 
         // The first rabbit starts with a `summon` step, but new
         // rabbits summoned via rabbit have a two turn delay

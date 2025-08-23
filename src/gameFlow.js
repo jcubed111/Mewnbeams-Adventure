@@ -17,7 +17,7 @@ async function runMainMenu() {
     // placeholder - remove
     // await cardListViewScreen([...Object.values(cardLibrary)].map(C => new C));
     // await runBattle([
-    //     new monsterLibrary.BasicRat(),
+    //     new monsterLibrary.Rabbit(),
     //     new monsterLibrary.RatGuard(),
     //     new monsterLibrary.RatWizard(),
     // ]);

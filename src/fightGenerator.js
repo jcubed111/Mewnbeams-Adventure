@@ -3,6 +3,7 @@ function getFightGenerator() {
         new enemyLibrary.BasicRat,
         new enemyLibrary.PoisonRat,
         new enemyLibrary.RatWizard,
+        new enemyLibrary.Mouse,
     ]);
 
     // The first fight after the intro fights, we run
@@ -25,7 +26,7 @@ function getFightGenerator() {
         /**************/
 
 
-        if(floorIndex < 3) {
+        if(floorIndex < 4) {
             return [
                 [
                     // one basic rat and one random easy enemy
@@ -38,28 +39,21 @@ function getFightGenerator() {
 
         if(floorIndex < 7 && !hasFoughtMiniBoss1) {
             hasFoughtMiniBoss1 = true;
-            const cards = getCardRewards(floorIndex, 2);
-            const chance = ~~(Math.random() * 3);
-            return [
+            const cards = getCardRewards(floorIndex);
+            return shuffleInPlace([
                 [
-                    [
-                        new enemyLibrary.Weasel,
-                    ],
+                    [new enemyLibrary.Weasel],
                     [cards[0], new cardLibrary.WayOfTheWeasel, cards[1]],
                 ],
                 [
-                    [
-                        new enemyLibrary.Rabbit,
-                    ],
+                    [new enemyLibrary.Rabbit],
                     [cards[0], new cardLibrary.RabbitsFoot, cards[1]],
                 ],
                 [
-                    [
-                        new enemyLibrary.Beaver,
-                    ],
+                    [new enemyLibrary.Beaver],
                     [cards[0], new cardLibrary.Dam, cards[1]],
                 ],
-            ][chance];
+            ])[0];
         }
 
         // Final boss
@@ -89,14 +83,14 @@ function getFightGenerator() {
     }
 }
 
-function getCardRewards(floorIndex, numberOfRewards = 3) {
+function getCardRewards(floorIndex) {
     const cardsByTier = [[], [], []];
     [...Object.values(cardLibrary)]
         .map(C => new C)
         .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
     cardsByTier.forEach(shuffleInPlace);
 
-    return range(numberOfRewards).map(i => {
+    return range(3).map(i => {
         // This function:
         //     floor( 2.4 * random() ^ goodness )
         // approximates a weighted random.

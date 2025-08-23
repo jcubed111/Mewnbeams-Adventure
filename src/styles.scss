@@ -204,13 +204,11 @@ body{
 }
 
 /* card */
-.C--card, .C--cardPile{
-    background: #123;
-    border: 5rem solid color-mix(in srgb, var(--c, #48f), #333);
-}
 .C--card{
     width: 190rem;
     height: 285rem;
+    border: 5rem solid #3338;
+    background-origin: border-box!important;
     // z index ranges from 11-20, 24 for hover, 25 for draw & discard
 
     &:hover, &.C--active{
@@ -255,8 +253,7 @@ body{
         color: #fff;
         background:
             linear-gradient(45deg, #123 5%, #0000 5%),
-            linear-gradient(315deg, #123 5%, #0000 5%)
-            var(--c);
+            linear-gradient(315deg, #123 5%, #0000 5%);
     }
 
     .C--cardText{
@@ -268,9 +265,11 @@ body{
         font-size: 18rem;
         justify-content: center;
         text-wrap: balance;
+        background: #123;
     }
 
 .C--cardPile{
+    border: 5rem solid #3b5d99;
     position: absolute;
     width: 80rem;
     height: 120rem;

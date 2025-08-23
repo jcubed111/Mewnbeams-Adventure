@@ -150,7 +150,7 @@ const cardLibrary = {
         gainMana = 2;
         exhaust = 1;
     },
-    YarnBall: class extends ItemCard{
+    YarnBall: class extends TrinketCard{
         cardName = 'Yarn Ball';
         pic = SpriteSheetPic(17, '#8453ff');
         manaCost = 0;
@@ -171,7 +171,7 @@ const cardLibrary = {
         }
     },
 
-    Spellbookmark: class extends ItemCard{
+    Spellbookmark: class extends TrinketCard{
         cardName = 'Spellbookmark';
         pic = SpriteSheetPic(19, '#1e44ae');
 
@@ -202,7 +202,7 @@ const cardLibrary = {
         exhaust = 1;
     },
 
-    Dam: class extends ItemCard{
+    Dam: class extends TrinketCard{
         cardName = 'Dam';
         // TODO: reuse art from the Dam monster
         // pic = SpriteSheetPic(19, '#1e44ae');

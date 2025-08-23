@@ -28,7 +28,7 @@ class Card extends Sprite{
 
     _cardTextDiv;
     makeEl() {
-        return styledDiv('C--card', {'--c': this.primaryColor}, [
+        return styledDiv('C--card', {'background': this.primaryColor}, [
             div('C--actionPointIcon', ['' + this.actionCost]),
             this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
             this.pic(),
@@ -294,7 +294,12 @@ class LegendaryCard extends Card{
     rarityOrder = 2;
     primaryColor = '#b66b17';
 }
-class ItemCard extends Card{
+class TrinketCard extends Card{
     rarityOrder = 3;
     primaryColor = '#923303';
+}
+class ItemCard extends Card{
+    rarityOrder = 4;
+    // primaryColor = '#923303';
+    primaryColor = 'linear-gradient(90deg, #b66b17, #923303, #8915a0)';
 }

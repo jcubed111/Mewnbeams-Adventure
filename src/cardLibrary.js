@@ -46,6 +46,14 @@ const cardLibrary = {
 
         bleed = 2;
     },
+    SpiritScratch: class extends RareCard{
+        cardName = 'Spirit Scratch';
+        pic = SpriteSheetPic(2, '#ccf');
+
+        targetMode = TARGET_TO_ALL;
+        cantrip = 1;
+        bleed = 1;
+    },
 
     Meow: class extends CommonCard{
         cardName = 'Meow';
@@ -78,6 +86,17 @@ const cardLibrary = {
         manaCost = 2;
 
         gainStrength = 1;
+    },
+
+    Boop: class extends RareCard{
+        cardName = 'Boop';
+        pic = SpriteSheetPic(22, '#71b6cb');
+        manaCost = 1;
+        targetMode = TARGET_TO_ALL;
+        getTextLines = () => ['Reverse Enemy Order'];
+        play() {
+            enemyManager.activeEnemies.reverse();
+        }
     },
 
     // Hiss: class extends CommonCard{

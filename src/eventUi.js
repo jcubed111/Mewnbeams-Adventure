@@ -59,7 +59,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                                 )
                                 : textContent,
                         ),
-                        styledDiv('', {flexGrow: 1}),
                         div(
                             [
                                 'C--choiceMenuOptions',
@@ -68,7 +67,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                             ].join(' '),
                             optionDivs,
                         ),
-                        styledDiv('', {flexGrow: 1}),
                     )
                 );
             }

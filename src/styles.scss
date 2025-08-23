@@ -157,10 +157,12 @@ body{
         }
 
     .C--choiceMenuOptions{
+        flex-grow: 1;
         display: flex;
         flex-wrap: wrap;
         gap: 50rem;
         justify-content: center;
+        align-content: center;
         align-items: center;
         text-align: center;
         flex-direction: row;

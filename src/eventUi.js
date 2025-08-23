@@ -3,7 +3,6 @@
 // choice menu mode bitmap
 const Bit_darkBg = 1;
 const Bit_centeredTitle = 2;  // the title text is centered
-const Bit_colOptions = 4;
 const Bit_centeredOptions = 8;
 const Bit_delayOptionVisibility = 16;
 const Bit_unclickableCardList = 32;
@@ -11,7 +10,7 @@ const Bit_darkBgButtonTop = 64;  // move option[0] button to the top right inste
 
 
 const ChoiceMenuTitle = Bit_centeredTitle | Bit_centeredOptions;
-const ChoiceMenuTextEvent = Bit_colOptions | Bit_delayOptionVisibility;
+const ChoiceMenuTextEvent = Bit_delayOptionVisibility;
 const ChoiceMenuTextEventReward = Bit_centeredOptions;
 const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
 const ChoiceMenuCardList = Bit_darkBg | Bit_darkBgButtonTop;
@@ -22,7 +21,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
     // ~2.5%
     const darkBg = modeBitmap & Bit_darkBg;
     const centeredTitle = modeBitmap & Bit_centeredTitle;
-    const colOptions = modeBitmap & Bit_colOptions;
     const centeredOptions = modeBitmap & Bit_centeredOptions;
     const delayOptionVisibility = modeBitmap & Bit_delayOptionVisibility;
     const unclickableCardList = modeBitmap & Bit_unclickableCardList;
@@ -52,7 +50,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                 const optionsWrapper = div(
                     [
                         'C--choiceMenuOptions',
-                        colOptions ? 'C--colOptions' : 'C--rowOptions',
                         centeredOptions || 'C--leftOptions',
                         darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
                     ].join(' '),

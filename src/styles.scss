@@ -163,19 +163,11 @@ body{
         justify-content: center;
         align-items: center;
         text-align: center;
+        flex-direction: row;
+        &.C--leftOptions{
+            justify-content: flex-start;
+        }
     }
-        .C--colOptions{
-            flex-direction: column;
-            &.C--leftOptions{
-                align-items: flex-start;
-            }
-        }
-        .C--rowOptions{
-            flex-direction: row;
-            &.C--leftOptions{
-                justify-content: flex-start;
-            }
-        }
 
     .C--eventTextWithPic{
         display: flex;

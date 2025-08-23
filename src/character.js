@@ -29,14 +29,14 @@ class Character extends Sprite{
         this.pendingActionEl = div('C--pendingAction');
 
         // const [picIndex, hueShiftDeg] = this.pic;
-        return styledDiv('C--character', {width: `${this.size}rem`}, [
+        return styledDiv('C--character', {width: `${this.size}rem`},
             this.specialBarEl,
             this.blockBarEl,
             this.hpBarEl,
             this.pic(),
-            div('', [this.characterName]),
+            div('', this.characterName),
             this.pendingActionEl,
-        ]);
+        );
     }
 
     // hook called after you take unblocked damange

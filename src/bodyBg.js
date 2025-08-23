@@ -1,9 +1,9 @@
 class BodyBg extends Sprite{
     makeEl() {
-        return div('C--bodyBgWrapper', [
+        return div('C--bodyBgWrapper',
             SpriteSheetPic(54, '#301b45')(),
             SpriteSheetPic(54, '#301b45')(),
-        ]);
+        );
     }
 
     async slideNext() {

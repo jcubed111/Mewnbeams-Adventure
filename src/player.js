@@ -18,10 +18,10 @@ class Player extends Character{
 
     resourceSprite = new class extends Sprite{
         makeEl() {
-            return div('C--resources', [
+            return div('C--resources',
                 div('C--actionPointRow'),
                 div('C--manaRow'),
-            ]);
+            );
         }
         render(actionPoints, manaPoints) {
             setChildNumber(

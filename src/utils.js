@@ -2,23 +2,23 @@ const br = () => {
     return plainElement('br');
 }
 
-const plainElement = (tagName, children = []) => {
-    return styled(tagName, '', {}, children);
+const plainElement = (tagName, ...children) => {
+    return styled(tagName, '', {}, ...children);
 }
 
-const div = (className = '', children = []) => {
-    return styledDiv(className, {}, children);
+const div = (className = '', ...children) => {
+    return styledDiv(className, {}, ...children);
 }
 
-const span = (className = '', children = []) => {
-    return styled('span', className, {}, children);
+const span = (className = '', ...children) => {
+    return styled('span', className, {}, ...children);
 }
 
-const styledDiv = (className = '', style = {}, children = []) => {
-    return styled("div", className, style, children);
+const styledDiv = (className = '', style = {}, ...children) => {
+    return styled("div", className, style, ...children);
 }
 
-const styled = (tagName = "div", className = "", style = {}, children = []) => {
+const styled = (tagName = "div", className = "", style = {}, ...children) => {
     const el = document.createElement(tagName);
     el.className = className;
 

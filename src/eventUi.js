@@ -37,7 +37,7 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
                     (optionContent, i) =>
                         div(
                             (!darkBg || i == 0) && 'C--buttonLike C--choiceMenuOptionButton',
-                            [optionContent],
+                            optionContent,
                         )
                 );
 
@@ -57,26 +57,26 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
                         centeredOptions || 'C--leftOptions',
                         darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
                     ].join(' '),
-                    optionDivs,
+                    ...optionDivs,
                 );
                 if(delayOptionVisibility) {
                     optionsWrapper.style.visibility = 'hidden';
                     wait(0.5).then(() => optionsWrapper.style.visibility = '');
                 }
 
-                return div(darkBg ? 'C--choiceMenuWrapper C--darkBlackMenuBack' : 'C--choiceMenuWrapper', [
-                    div(darkBg ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered', [
+                return div(darkBg ? 'C--choiceMenuWrapper C--darkBlackMenuBack' : 'C--choiceMenuWrapper',
+                    div(darkBg ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered',
                         div(
                             centeredTitle
                                 ? 'C--choiceMenuTitle C--centeredTitle'
                                 : 'C--choiceMenuTitle C--leftTitle',
-                            [mainContent],
+                            mainContent,
                         ),
                         styledDiv('', {flexGrow: 1}),
                         optionsWrapper,
                         styledDiv('', {flexGrow: 1}),
-                    ])
-                ]);
+                    )
+                );
             }
         }
 
@@ -86,12 +86,12 @@ function showChoiceMenu(modeBitmap, mainContent, ...options) {
 
 // Take a string, split it into words, then animate them in one at
 // a time. Used as a tagged template, where each fill is an element (or string).
-// Ex: fadeInText`This will show one word or ${div('', ['element'])} at a time`
+// Ex: fadeInText`This will show one word or ${div('', 'element')} at a time`
 function fadeInText(textStringParts, ...els) {
     const parts = textStringParts.flatMap((part, i) => {
         return [
-            ...part.split(/( )/g).map(p => span('', [p])),
-            span('', [els[i]]),
+            ...part.split(/( )/g).map(p => span('', p)),
+            span('', els[i]),
         ];
     });
     parts.forEach(async (p, i) => {
@@ -99,7 +99,7 @@ function fadeInText(textStringParts, ...els) {
         await wait(i * 0.02);
         p.style.opacity = 1;
     });
-    return plainElement('span', parts);
+    return plainElement('span', ...parts);
 }
 
 function deathScreen() {
@@ -111,12 +111,12 @@ function deathScreen() {
 
 function victoryScreen() {
     return showChoiceMenu(ChoiceMenuTitle,
-        div('', [
-            plainElement('h1', ['Victory!']),
-            styledDiv('', {textAlign: 'left'}, [
+        div('',
+            plainElement('h1', 'Victory!'),
+            styledDiv('', {textAlign: 'left'},
                 fadeInText`Mewnbeam, I'm back! How was killing the ${plainElement('b', [`Rat King`])}? Tasty?${br()}${br()}I got you a treat for all your hard work!`,
-            ]),
-        ]),
+            ),
+        ),
         'Continue',
     );
 }
@@ -132,10 +132,10 @@ async function cardListViewScreen(cards, sort, allowCardClick, title='') {
         : cards;
     // we subtract 1 to account for the back button and return the card index
     return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuCardList : ChoiceMenuCardListNoClick,
-        div('', [
+        div('',
             title,
             cards.length ? 0 : 'No Cards',
-        ].filter(e => e)),
+        ),
         'Back',
         ...ordered.map(card => card.asStaticElement(allowCardClick)),
     );

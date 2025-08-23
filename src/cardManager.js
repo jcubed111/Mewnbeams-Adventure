@@ -47,7 +47,7 @@ class CardManager{
 
     passButton = new class extends Sprite{
         makeEl() {
-            return div('C--passButton C--disabled C--buttonLike', ["End Turn"]);
+            return div('C--passButton C--disabled C--buttonLike', "End Turn");
         }
     }
 
@@ -300,10 +300,10 @@ class CardPile extends Sprite{
 
     _numberEl;
     makeEl() {
-        const d = styledDiv('C--cardPile', {'inset': this.insetCss}, [
+        const d = styledDiv('C--cardPile', {'inset': this.insetCss},
             this._numberEl = div(),
-             div('C--cardPileName', [this.pileName]),
-        ]);
+             div('C--cardPileName', this.pileName),
+        );
         d.addEventListener('click', this.onClick);
         return d;
     }

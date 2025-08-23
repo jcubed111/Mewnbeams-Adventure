@@ -31,23 +31,23 @@ class Card extends Sprite{
     _cardTextDiv;
     makeEl() {
         // ~0.5%
-        return styledDiv('C--card', {'background': this.primaryColor}, [
-            div('C--actionPointIcon', ['' + this.actionCost]),
-            this.manaCost > 0 && div('C--manaPointIcon', ['' + this.manaCost]),
+        return styledDiv('C--card', {'background': this.primaryColor},
+            div('C--actionPointIcon', '' + this.actionCost),
+            this.manaCost > 0 && div('C--manaPointIcon', '' + this.manaCost),
             this.pic(),
             div(
                 'C--cardName',
-                [this.cardName],
+                this.cardName,
             ),
             this._cardTextDiv = div('C--cardText'),
-        ]);
+        );
     }
 
     render(standalone) {
         this.el.classList.toggle('C--unplayable', !(standalone ?? this.playable()));
         setChildren(
             this._cardTextDiv,
-            this.getTextLines(standalone).map(d => div('', [d])),
+            this.getTextLines(standalone).map(d => div('', d)),
         );
     }
 

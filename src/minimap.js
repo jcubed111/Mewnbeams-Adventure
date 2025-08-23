@@ -93,7 +93,7 @@ class Minimap extends Sprite{
             range(NUM_FLOORS).flatMap(fi => [
                 this.drawFloorRow(fi),
                 this.drawFloorTransition(fi),
-            ]).map(r => div('.C--minimapRow', r)).slice(0, -1),
+            ]).map(r => div('.C--minimapRow', ...r)).slice(0, -1),
         );
     }
 
@@ -101,7 +101,7 @@ class Minimap extends Sprite{
         return this.roomTypesByFloor[fi].flatMap((roomType, roomIndex) => {
             return ['   ', span(
                 this.visitedRoomIndexByFloor[fi] == roomIndex && 'C--visitedPath',
-                ['@M?Z'[roomType]],
+                '@M?Z'[roomType],
             )];
         }).slice(1);
     }
@@ -112,7 +112,7 @@ class Minimap extends Sprite{
                 if(!available) return ' ';
                 return span(
                     wasChosen && 'C--visitedPath',
-                    ['\\|/'[optIndex]]
+                    '\\|/'[optIndex],
                 );
             })];
         }).slice(1);
@@ -158,10 +158,10 @@ class Minimap extends Sprite{
 
             return [
                 [optBitmapValue, deltaIndex],
-                div('', [
-                    div('C--directionChoiceLabel', [directionLabel]),
+                div('',
+                    div('C--directionChoiceLabel', directionLabel),
                     roomKindLabel,
-                ]),
+                ),
             ];
         }).filter(_=>_);
     }

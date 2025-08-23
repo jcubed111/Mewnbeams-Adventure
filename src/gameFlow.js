@@ -9,7 +9,7 @@ async function runMainMenu() {
     //////////////
 
     const selection = await showChoiceMenu(ChoiceMenuTitle,
-        plainElement('h1', ['Mewnbeam’s Quest']),
+        plainElement('h1', 'Mewnbeam’s Quest'),
         'Start',
         'Library',
     );
@@ -34,13 +34,13 @@ async function runGameRun() {
 
     /* OPENING */
     const choice = await showChoiceMenu(ChoiceMenuTextEvent,
-        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', [`take care of`])} that ${plainElement('b', [`Rat King`])} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
+        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', `take care of`)} that ${plainElement('b', `Rat King`)} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
         'Mrow?',
         'Hiiisssss!',
     );
     if(choice == 0) {
         await showChoiceMenu(ChoiceMenuTextEvent,
-            fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', [`Mana`])} carries over, but ${plainElement('b', [`actions`])} reset every round.`,
+            fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', `Mana`)} carries over, but ${plainElement('b', `actions`)} reset every round.`,
             'Hiiisssss?'
         );
     }

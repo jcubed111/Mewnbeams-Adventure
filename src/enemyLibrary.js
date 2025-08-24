@@ -86,6 +86,7 @@ const enemyLibrary = {
         characterName = 'Beaver';
         maxHp = 15;
         size = 170;
+        pic = SpriteSheetPic(52, '#a2512f');
 
         *getActionSequence() {
             yield actions.Summon('🪵🪵', new enemyLibrary.Dam, new enemyLibrary.Dam);

@@ -96,6 +96,8 @@ const enemyLibrary = {
         characterName = 'Dam';
         maxHp = 1;
         size = 130;
+        pic = SpriteSheetPic(29, '#9d411a');
+
         guard = true;
 
         *getActionSequence() {

@@ -69,8 +69,8 @@ const cardLibrary = [
     // 7
     class extends TrinketCard{
         cardName = 'Dam';
-        // TODO: reuse art from the Dam monster
-        // pic = SpriteSheetPic(19, '#1e44ae');
+        // reuses art from the Dam monster
+        pic = SpriteSheetPic(29, '#9d411a');
         actionCost = 1;
 
         dodge = 1;

@@ -5,15 +5,14 @@ const Bit_darkBg = 1;
 const Bit_centeredTitle = 2;  // the title text is centered
 const Bit_centeredOptions = 8;
 const Bit_unclickableCardList = 32;
-const Bit_darkBgButtonTop = 64;  // move option[0] button to the top right instead of button center
 
 
 const ChoiceMenuTitle = Bit_centeredTitle | Bit_centeredOptions;
 const ChoiceMenuTextEvent = 0;
 const ChoiceMenuTextEventReward = Bit_centeredOptions;
 const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
-const ChoiceMenuCardList = Bit_darkBg | Bit_darkBgButtonTop;
-const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_darkBgButtonTop | Bit_unclickableCardList;
+const ChoiceMenuCardList = Bit_darkBg;
+const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_unclickableCardList;
 
 // A big fullscreen menu element for events, card lists, etc.
 function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
@@ -22,7 +21,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
     const centeredTitle = modeBitmap & Bit_centeredTitle;
     const centeredOptions = modeBitmap & Bit_centeredOptions;
     const unclickableCardList = modeBitmap & Bit_unclickableCardList;
-    const darkBgButtonTop = modeBitmap & Bit_darkBgButtonTop;
 
     // resolves with the index of the chosen option
     return new Promise(resolve => {
@@ -63,7 +61,6 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                             [
                                 'C--choiceMenuOptions',
                                 centeredOptions || 'C--leftOptions',
-                                darkBg && (darkBgButtonTop ? 'C--darkBgButtonTop' : 'C--darkBgButtonBottom')
                             ].join(' '),
                             optionDivs,
                         ),

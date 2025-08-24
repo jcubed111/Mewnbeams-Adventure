@@ -109,8 +109,6 @@ body{
             height: 100%;
             overflow: auto;
         }
-    }
-    .C--darkBgButtonTop, .C--darkBgButtonBottom{
         // Special positioning for the first option button
         .C--choiceMenuOptionButton:first-child{
             position: absolute;
@@ -118,11 +116,8 @@ body{
             z-index: $z-choice-menu-wrapper-black-button;
         }
     }
-    .C--darkBgButtonBottom .C--choiceMenuOptionButton:first-child{
-        inset: auto 500rem 100rem;
-    }
 
-    // // this is the (maybe) bordered one
+    // this is the (maybe) bordered one
     .C--choiceMenu{
         padding: 50rem;
         display: flex;

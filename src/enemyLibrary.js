@@ -110,6 +110,8 @@ const enemyLibrary = {
         characterName = 'Rat Guard';
         maxHp = 8;
         size = 170;
+        pic = SpriteSheetPic(47, '#e11');
+
         guard = true;
 
         *getActionSequence() {

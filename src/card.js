@@ -64,7 +64,7 @@ class Card extends Sprite{
             : 166 + 5 + (800 / (outOf - 1)) * index;
 
         this.el.style.zIndex = activated ? 25 : (10 + index);
-        this.el.style.transform = `rotate(${5 * rotateNormalized}deg)`;
+        this.el.style.transform = `rotate(${5 * rotateNormalized || 0.8}deg)`;
         this.el.style.left = `calc(${leftRem}rem + ${dx}px)`;
         this.el.style.bottom = `calc(${bottomRem}rem - ${dy}px)`;
         this.el.classList.toggle('C--active', activated);

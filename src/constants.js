@@ -5,7 +5,7 @@ const MANA_PER_ROUND = 1;
 const ACTIONS_PER_ROUND = 2;
 const NUM_FLOORS = 15;
 const NAP_HEAL_AMOUNT = 5;
-const ENEMY_MAX = 7;
+const ENEMY_MAX = 6;
 
 
 const CAUSES_PASS_RETAIN_VALUE = 2;

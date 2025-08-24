@@ -1,4 +1,14 @@
 function getFightGenerator() {
+    const cardRewardRandGenerator = function*() {
+        while(true) {
+            yield* shuffleInPlace(
+                // generate one number between 0 - 0.2, one from 0.2 - 0.4, etc.
+                range(5).map(n => (n + Math.random()) / 5)
+            );
+        }
+    }();
+    const cardRewardRand = () => cardRewardRandGenerator.next().value;
+
     // floors 1 - 4
     const introEnemyChoices = shuffleInPlace([
         // need at least 4 of these
@@ -56,11 +66,25 @@ function getFightGenerator() {
         //         // new enemyLibrary.Rabbit,
         //         new enemyLibrary.Beaver,
         //     ],
-        //     getCardRewards(floorIndex),
+        //     cardRewards,
         // ];
         /**************/
 
+        // Compute card rewards
+        const cardsByTier = [[], [], []];
+        cardLibrary
+            .map(C => new C)
+            .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
+        cardsByTier.forEach(shuffleInPlace);
 
+        const rolledTiers = shuffleInPlace([
+            cardRewardRand() > (0.1 + floorIndex / 40 ) ? 0 : 1,
+            cardRewardRand() > (0.3 + floorIndex / 40 ) ? 0 : 1,
+            cardRewardRand() > (0.15 + floorIndex / 20 ) ? 1 : 2,
+        ]);
+        const cardRewards = rolledTiers.map(tier => cardsByTier[tier].pop());
+
+        // Get fight
         if(floorIndex < 4) {
             return [
                 [
@@ -68,7 +92,7 @@ function getFightGenerator() {
                     new enemyLibrary.BasicRat,
                     introEnemyChoices.pop(),
                 ],
-                getCardRewards(floorIndex),
+                cardRewards,
             ]
         }
 
@@ -76,7 +100,7 @@ function getFightGenerator() {
         // a mini boss to get players into something interesting.
         if(floorIndex < 7 && !hasFoughtMiniBoss1) {
             hasFoughtMiniBoss1 = true;
-            const cards = getCardRewards(floorIndex);
+            const cards = cardRewards;
             return shuffleInPlace([
                 [
                     [new enemyLibrary.Weasel],
@@ -96,14 +120,14 @@ function getFightGenerator() {
         if(floorIndex < 10) {
             return [
                 midTierGroupEnemyFights.pop(),
-                getCardRewards(floorIndex),
+                cardRewards,
             ];
         }
 
         if(floorIndex < NUM_FLOORS - 1) {
             return [
                 lateGameFights.pop(),
-                getCardRewards(floorIndex),
+                cardRewards,
             ];
         }
 
@@ -118,43 +142,7 @@ function getFightGenerator() {
             ],
             [],
         ];
-
-        // return [
-        //     [
-        //         new enemyLibrary.BasicRat,
-        //         new enemyLibrary.RatGuard,
-        //         new enemyLibrary.RatWizard,
-        //         new enemyLibrary.Mouse,
-        //         new enemyLibrary.PoisonRat,
-        //     ],
-        //     getCardRewards(floorIndex),
-        // ];
     }
-}
-
-function getCardRewards(floorIndex) {
-    const cardsByTier = [[], [], []];
-    cardLibrary
-        .map(C => new C)
-        .forEach(c => cardsByTier[c.rarityOrder]?.push(c));
-    cardsByTier.forEach(shuffleInPlace);
-
-    return range(3).map(i => {
-        // This function:
-        //     floor( 2.4 * random() ^ goodness )
-        // approximates a weighted random.
-        // At goodness=1.7, it gives:
-        //     60% often => 0  (common)
-        //     30% often => 1  (rare)
-        //     10% often => 2  (legendary)
-        // At goodness=0.9, it gives:
-        //     38% often => 0  (common)
-        //     43% often => 1  (rare)
-        //     19% often => 2  (legendary)
-        const goodnessFactor = 1.7 - 0.8 * (floorIndex / (NUM_FLOORS - 1));
-        const rolledRarity = ~~(2.4 * Math.random() ** goodnessFactor);
-        return cardsByTier[rolledRarity].pop();
-    });
 }
 
 const getThreeRandomTrinkets = () => shuffleInPlace(

@@ -201,7 +201,7 @@ const cardLibrary = [
     },
 
     class extends LegendaryCard{
-        cardName = 'DarkBargain';
+        cardName = 'Dark Bargain';
         pic = SpriteSheetPic(25, '#f20');
         manaCost = 1;
 

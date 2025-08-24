@@ -70,6 +70,7 @@ body{
     color: #ddd;
     user-select: none;
     overflow: hidden;
+    text-align: center;
 }
 
 i{
@@ -80,6 +81,7 @@ b, .C--visitedPath{
 }
 h1{
     font-size: 60rem;
+    // need to override because this gets placed in a left-aligned div sometimes
     text-align: center;
 }
 
@@ -108,7 +110,6 @@ h1{
     z-index: $z-choice-menu-wrapper;
     background: #0004;
     backdrop-filter: blur(20rem);
-    text-align: center;
 }
     .C--darkBlackMenuBack{
         background: #000b;
@@ -152,7 +153,6 @@ h1{
         justify-content: center;
         align-content: center;
         align-items: center;
-        text-align: center;
     }
 
     .C--choiceMenuTitle .C--spriteSheetPic{
@@ -179,7 +179,6 @@ h1{
 
 /* card and character general props */
 .C--card, .C--character{
-    text-align: center;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -306,20 +305,19 @@ h1{
         z-index: -1;
     }
 }
+    .C--actionPointIcon:before{
+        inset: 0;
+        background: #a08;
+        outline: 2rem solid #804;
+        transform: rotate(45deg);
+    }
 
-.C--actionPointIcon:before{
-    inset: 0;
-    background: #a08;
-    outline: 2rem solid #804;
-    transform: rotate(45deg);
-}
-
-.C--manaPointIcon:before{
-    inset: -3rem;
-    background: #08a;
-    outline: 2rem solid #048;
-    border-radius: 50%;
-}
+    .C--manaPointIcon:before{
+        inset: -3rem;
+        background: #08a;
+        outline: 2rem solid #048;
+        border-radius: 50%;
+    }
 
 /* characters */
 .C--character{

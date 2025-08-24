@@ -316,6 +316,5 @@ class CardPile extends Sprite{
 
     render(numCards) {
         this._numberEl.innerText = numCards;
-        // this.el?.classList.toggle('C--cardPileEmpty', numCards == 0);
     }
 }

@@ -41,7 +41,7 @@ const enemyLibrary = {
     Weasel: class extends Character{
         characterName = 'Weasel';
         maxHp = 15;
-        size = 170;
+        size = 175;
         pic = SpriteSheetPic(50, '#c76d24');
 
         *getActionSequence() {
@@ -85,7 +85,7 @@ const enemyLibrary = {
     Beaver: class extends Character{
         characterName = 'Beaver';
         maxHp = 15;
-        size = 170;
+        size = 175;
         pic = SpriteSheetPic(52, '#a2512f');
 
         *getActionSequence() {
@@ -110,7 +110,7 @@ const enemyLibrary = {
     RatGuard: class extends Character{
         characterName = 'Rat Guard';
         maxHp = 8;
-        size = 170;
+        size = 175;
         pic = SpriteSheetPic(47, '#e11');
 
         guard = true;
@@ -142,7 +142,7 @@ const enemyLibrary = {
     Snake: class extends Character{
         characterName = 'Snake';
         maxHp = 15;
-        size = 170;
+        size = 175;
         guard = true;
 
         async onStartOfTurn() {
@@ -166,7 +166,8 @@ const enemyLibrary = {
     RatKing: class extends Character{
         characterName = 'Rat King';
         maxHp = 25;
-        size = 270;
+        size = 175;
+        pic = SpriteSheetPic(48, '#e11', 1);
 
         *getActionSequence() {
             yield actions.Summon('🐀🐀', new enemyLibrary.BasicRat, new enemyLibrary.BasicRat);

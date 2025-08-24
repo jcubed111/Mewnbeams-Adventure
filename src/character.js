@@ -23,9 +23,9 @@ class Character extends Sprite{
         // ~1%
         this.currentHp ??= this.maxHp;
 
-        this.specialBarEl = div(`C--pipBar ${this.size >= 220 && 'C--wide'}`);
-        this.blockBarEl = div(`C--pipBar ${this.size >= 220 && 'C--wide'}`);
-        this.hpBarEl = div(`C--pipBar ${this.size >= 220 && 'C--wide'}`);
+        this.specialBarEl = div(`C--pipBar ${this.size >= 170 && 'C--wide'}`);
+        this.blockBarEl = div(`C--pipBar ${this.size >= 170 && 'C--wide'}`);
+        this.hpBarEl = div(`C--pipBar ${this.size >= 170 && 'C--wide'}`);
         this.pendingActionEl = div('C--pendingAction');
 
         // const [picIndex, hueShiftDeg] = this.pic;

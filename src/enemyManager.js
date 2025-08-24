@@ -15,7 +15,7 @@ class EnemyManager{
             enemy.el.style.bottom = (
                 pending.includes(enemy)
                     ? `1100rem`
-                    : enemy.guard ? `600rem` : `700rem`
+                    : enemy.guard ? `525rem` : `600rem`
             );
             enemy.el.style.left = `${x}rem`;
             x += enemy.size + SPACING;

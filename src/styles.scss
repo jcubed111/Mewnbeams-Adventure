@@ -329,16 +329,22 @@ h1{
             outline: 5rem solid #fff8;
         }
     }
+    .C--character .C--spriteSheetPic{
+        border-radius: 0.1px;
+        outline: 20rem solid $grey-7;
+    }
 
+    $pip-size: 18rem;
     .C--pipBar{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
-        width: 101rem;
+        max-width: $pip-size * 5 + 1rem;
+        width: max-content;
 
         &.C--wide{
-            width: 201rem;
+            max-width: $pip-size * 10 + 1rem;
         }
     }
         // hp chunks
@@ -348,8 +354,8 @@ h1{
         .C--hpChunk-pending,
         .C--dodgeChunk,
         .C--blockChunk{
-            width: 20rem;
-            height: 20rem;
+            width: $pip-size;
+            height: $pip-size;
             $outset: 25%;
             clip-path: polygon(
                 50% 0% - $outset,

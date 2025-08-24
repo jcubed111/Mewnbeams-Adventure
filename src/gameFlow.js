@@ -18,10 +18,11 @@ async function runMainMenu() {
     // await deathScreen();
     // await victoryScreen();
     // await cardListViewScreen(cardLibrary.map(C => new C), 0, 0, 'Title');
-    await runBattle([
-        new enemyLibrary.Beaver(),
-        new enemyLibrary.RatGuard(),
-    ]);
+    // await runBattle([
+    //     new enemyLibrary.Beaver(),
+    //     new enemyLibrary.RatGuard(),
+    //     new enemyLibrary.RatKing(),
+    // ]);
     //////////////
 
     const selection = await showChoiceMenu(ChoiceMenuDefault,

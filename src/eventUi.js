@@ -2,25 +2,19 @@
 
 // choice menu mode bitmap
 const Bit_darkBg = 1;
-const Bit_centeredTitle = 2;  // the title text is centered
-const Bit_centeredOptions = 8;
 const Bit_unclickableCardList = 32;
 
 
-const ChoiceMenuTitle = Bit_centeredTitle | Bit_centeredOptions;
-const ChoiceMenuTextEvent = 0;
-const ChoiceMenuTextEventReward = Bit_centeredOptions;
-const ChoiceMenuCardReward = Bit_centeredTitle | Bit_centeredOptions;
-const ChoiceMenuCardList = Bit_darkBg;
-const ChoiceMenuCardListNoClick = Bit_darkBg | Bit_unclickableCardList;
+const ChoiceMenuDefault = 0;
+const ChoiceMenuDarkBg = 1;
+const ChoiceMenuDarkBgNoClick = 2;
 
 // A big fullscreen menu element for events, card lists, etc.
-function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
-    // ~2.5%
-    const darkBg = modeBitmap & Bit_darkBg;
-    const centeredTitle = modeBitmap & Bit_centeredTitle;
-    const centeredOptions = modeBitmap & Bit_centeredOptions;
-    const unclickableCardList = modeBitmap & Bit_unclickableCardList;
+function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
+
+    // not split -> centered
+    // is split -> left
+    // is split title -> centered
 
     // resolves with the index of the chosen option
     return new Promise(resolve => {
@@ -29,13 +23,13 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                 const optionDivs = options.map(
                     (optionContent, i) =>
                         div(
-                            (!darkBg || i == 0) && 'C--buttonLike C--choiceMenuOptionButton',
+                            (!darkModeMode || i == 0) && 'C--buttonLike C--choiceMenuOptionButton',
                             optionContent,
                         )
                 );
 
                 optionDivs.forEach((el, i) => {
-                    if(i == 0 || !unclickableCardList) {
+                    if(i == 0 || darkModeMode != 2) {
                         el.addEventListener('click', () => {
                             this.hide();
                             resolve(i);
@@ -44,24 +38,22 @@ function showChoiceMenu(modeBitmap, textContent, heroPic, ...options) {
                 });
 
 
-                return div(darkBg ? 'C--choiceMenuWrapper C--darkBlackMenuBack' : 'C--choiceMenuWrapper',
-                    div(darkBg ? 'C--choiceMenu' : 'C--choiceMenu C--choiceMenuBordered',
+                return div(
+                    darkModeMode
+                        ? 'C--choiceMenuWrapper C--darkBlackMenuBack'
+                        : 'C--choiceMenuWrapper',
+                    div(
+                        darkModeMode
+                            ? 'C--choiceMenu'
+                            : 'C--choiceMenu C--choiceMenuBordered',
                         div(
-                            centeredTitle
-                                ? 'C--choiceMenuTitle C--centeredTitle'
-                                : 'C--choiceMenuTitle C--leftTitle',
                             heroPic
-                                ? div('C--eventTextWithPic',
-                                    textContent,
-                                    heroPic,
-                                )
-                                : textContent,
+                                ? 'C--choiceMenuTitle C--eventTextWithPic'
+                                : 'C--choiceMenuTitle',
+                            textContent,
+                            heroPic,
                         ),
-                        div(
-                            [
-                                'C--choiceMenuOptions',
-                                centeredOptions || 'C--leftOptions',
-                            ].join(' '),
+                        div('C--choiceMenuOptions',
                             optionDivs,
                         ),
                     )
@@ -94,7 +86,7 @@ function fadeInText(textStringParts, ...els) {
 const witchPic = SpriteSheetPic(44, '#f40', 1);
 
 function deathScreen() {
-    return showChoiceMenu(ChoiceMenuTextEventReward,
+    return showChoiceMenu(ChoiceMenuDefault,
         fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
         witchPic(),
         'Try Again',
@@ -102,7 +94,7 @@ function deathScreen() {
 }
 
 function victoryScreen() {
-    return showChoiceMenu(ChoiceMenuTitle,
+    return showChoiceMenu(ChoiceMenuDefault,
         div('',
             plainElement('h1', 'Victory!'),
             styledDiv('', {textAlign: 'left'},
@@ -124,12 +116,12 @@ async function cardListViewScreen(cards, sort, allowCardClick, title='') {
         )
         : cards;
     // we subtract 1 to account for the back button and return the card index
-    return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuCardList : ChoiceMenuCardListNoClick,
+    return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuDarkBg : ChoiceMenuDarkBgNoClick,
         div('',
             title,
             cards.length ? 0 : 'No Cards',
         ),
-        0,
+        ' ',  // provide a "pic" so we align the title text left
         'Back',
         ...ordered.map(card => card.asStaticElement(allowCardClick)),
     );

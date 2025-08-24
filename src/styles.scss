@@ -73,6 +73,17 @@ body{
     overflow: hidden;
 }
 
+i{
+    color: #8bd;
+}
+b{
+    color: #f0a;
+}
+h1{
+    font-size: 60rem;
+    text-align: center;
+}
+
 *{
     box-sizing: border-box;
 }
@@ -98,18 +109,16 @@ body{
     z-index: $z-choice-menu-wrapper;
     background: #0004;
     backdrop-filter: blur(20rem);
+    text-align: center;
 }
     .C--darkBlackMenuBack{
         background: #000b;
         z-index: $z-choice-menu-wrapper-black;  // place above deck button
 
-        // Special positioning for inner and the first option button
-        .C--choiceMenu{
-            padding: 115rem 80rem;
-            height: 100%;
-            overflow: auto;
+        // Special positioning for the options & first button
+        .C--choiceMenuOptions{
+            justify-content: flex-start;
         }
-        // Special positioning for the first option button
         .C--choiceMenuOptionButton:first-child{
             position: absolute;
             inset: 100rem 100rem auto auto;
@@ -117,66 +126,47 @@ body{
         }
     }
 
-    // this is the (maybe) bordered one
     .C--choiceMenu{
-        padding: 50rem;
+        padding: 115rem 80rem;
+        max-height: 100%;
+        overflow: auto;
         display: flex;
         flex-direction: column;
         align-items: stretch;
-
-        i{
-            color: #8bd;
-        }
-        b{
-            color: #f0a;
-        }
-        h1{
-            font-size: 60rem;
-        }
     }
-        .C--choiceMenuBordered{
-            background: $grey-7;
-            border: 5rem solid $grey-5;
-            position: absolute;
-            inset: 150rem 216rem;
-        }
 
-    .C--choiceMenuTitle{
-        margin-bottom: 50rem;
-        line-height: 1.5;
+    .C--choiceMenuBordered{
+        padding: 50rem;
+        background: $grey-7;
+        border: 5rem solid $grey-5;
+        position: absolute;
+        inset: 150rem 216rem;
     }
-        .C--centeredTitle{
-            text-align: center;
-        }
-        .C--leftTitle{
-            text-align: left;
-        }
 
     .C--choiceMenuOptions{
+        margin-top: 50rem;
         flex-grow: 1;
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         gap: 50rem;
         justify-content: center;
         align-content: center;
         align-items: center;
         text-align: center;
-        flex-direction: row;
-        &.C--leftOptions{
-            justify-content: flex-start;
-        }
     }
 
+    .C--choiceMenuTitle .C--spriteSheetPic{
+        flex: 0 0 250rem;
+        width: 250rem;
+        align-self: center;
+    }
     .C--eventTextWithPic{
         display: flex;
         gap: 100rem;
         align-items: center;
         justify-content: space-between;
-    }
-    .C--choiceMenuTitle .C--spriteSheetPic{
-        flex: 0 0 250rem;
-        width: 250rem;
-        align-self: center;
+        text-align: left;
     }
 
 /* card and character general props */

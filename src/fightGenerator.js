@@ -104,15 +104,15 @@ function getFightGenerator() {
             return shuffleInPlace([
                 [
                     [new enemyLibrary.Weasel],
-                    [cards[0], new CARD_WAY_OF_THE_WEASEL, cards[1]],
+                    [cards[0], new Card_WayOfTheWeasel, cards[1]],
                 ],
                 [
                     [new enemyLibrary.Rabbit],
-                    [cards[0], new CARD_RABBITS_FOOT, cards[1]],
+                    [cards[0], new Card_RabbitsFoot, cards[1]],
                 ],
                 [
                     [new enemyLibrary.Beaver],
-                    [cards[0], new CARD_DAM, cards[1]],
+                    [cards[0], new Card_Dam, cards[1]],
                 ],
             ])[0];
         }

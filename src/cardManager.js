@@ -8,12 +8,12 @@ class CardManager{
 
     reset() {
         this.deck = [
-            new CARD_CLAW,
-            new CARD_CLAW,
-            new CARD_CLAW,
-            new CARD_SCRATCH,
-            new CARD_SWIPE,
-            new CARD_STOMP,
+            new Card_Claw,
+            new Card_Claw,
+            new Card_Claw,
+            new Card_Scratch,
+            new Card_Swipe,
+            new Card_Stomp,
         ];
         this.render();
     }

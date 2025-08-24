@@ -11,9 +11,11 @@ JS_FILES := \
 	src/player.js \
 	src/enemyLibrary.js \
 	src/cardLibrary.js \
+	build/cardConstants.js \
 	src/cardManager.js \
 	src/enemyManager.js \
 	src/eventUi.js \
+	src/eventLibrary.js \
 	src/fightGenerator.js \
 	src/gameFlow.js \
 	src/main.js
@@ -43,14 +45,20 @@ dev/%.webp: dist/%.webp
 dev/%.js: src/%.js
 	cp $^ $@
 
+dev/build/cardConstants.js: build/cardConstants.js
+	@mkdir -p dev/build
+	@cp $^ $@
+
 dev/styles.css: build/styles-min.css
 	cp $^ $@
 
-dev/index.html: build/index.html $(IMAGES_DEV) $(JS_DEV) combine-dev.py dev/styles.css
+dev/index.html: build/index.html $(IMAGES_DEV) $(JS_DEV) dev/build/cardConstants.js combine-dev.py dev/styles.css
 	python3 combine-dev.py $(JS_DEV) > $@
 
 
 # we save 20 bytes replacing forEach with map
+build/cardConstants.js: src/cardLibrary.js generateCardConstants.js
+	@cat $< | node generateCardConstants.js > $@
 build/main-max.js: $(JS_FILES)
 	@echo $@ "<-" $^
 	@cat $^ | sed 's/.forEach[(]/.map(/g' > build/main-max.js

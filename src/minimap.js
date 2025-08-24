@@ -6,17 +6,20 @@ const RoomType = {
     Nap: 3,
 };
 
-const roomGen = function* getRandomRoom() {
-    while(true) {
+function* getRoomsGenerator() {
+    for(let i = 0; true; i++) {
         yield* shuffleInPlace([
             RoomType.Fight,
             RoomType.Fight,
             RoomType.Fight,
-            RoomType.Event,
+            RoomType.Fight,
+            // Don't make more than 4 events
+            i > 4 ? RoomType.Fight : RoomType.Event,
+            RoomType.Nap,
             RoomType.Nap,
         ]);
     }
-}();
+};
 
 class Minimap extends Sprite{
     // Apologies to anyone reading this class, it's a complete mess. I tried
@@ -34,6 +37,7 @@ class Minimap extends Sprite{
 
     constructor() {
         super();
+        const roomGen = getRoomsGenerator();
         this.roomTypesByFloor = [[RoomType.Fight]];
         for(let floorIndex = 1; floorIndex < NUM_FLOORS; floorIndex++) {
             const previousNum = this.roomTypesByFloor[floorIndex - 1].length;
@@ -101,7 +105,7 @@ class Minimap extends Sprite{
         return this.roomTypesByFloor[fi].flatMap((roomType, roomIndex) => {
             return ['   ', span(
                 this.visitedRoomIndexByFloor[fi] == roomIndex && 'C--visitedPath',
-                '@M?Z'[roomType],
+                '#R?z'[roomType],
             )];
         }).slice(1);
     }

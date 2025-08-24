@@ -3,8 +3,6 @@
 const cardLibrary = [
     // Each (standard) card definition takes up about 22bytes zipped.
 
-    /* Special Cards come first, so we can easily index into them */
-    // 0
     class extends CommonCard{
         cardName = 'Claw';
         pic = SpriteSheetPic(1, '#d0f');
@@ -12,7 +10,7 @@ const cardLibrary = [
 
         damage = 1;
     },
-    // 1
+
     class extends CommonCard{
         cardName = 'Scratch';
         actionCost = 1;
@@ -20,7 +18,7 @@ const cardLibrary = [
 
         bleed = 2;
     },
-    // 2
+
     class extends CommonCard{
         cardName = 'Swipe';
         pic = SpriteSheetPic(2, '#f50');
@@ -30,7 +28,7 @@ const cardLibrary = [
         damage = 1;
         exhaust = true;
     },
-    // 3
+
     class extends RareCard{
         cardName = 'Stomp';
         pic = SpriteSheetPic(20, '#e8961b');
@@ -38,13 +36,13 @@ const cardLibrary = [
 
         stun = 1;
     },
-    // 4
+
     class extends CurseCard{
         cardName = 'Curse';
         pic = SpriteSheetPic(26, '#289876');
         cantrip = 1;
     },
-    // 5
+
     class extends ItemCard{
         cardName = 'Rabbit’s Foot';
         pic = SpriteSheetPic(21, '#f02');
@@ -57,7 +55,7 @@ const cardLibrary = [
             await super.play(targets);
         }
     },
-    // 6
+
     class extends LegendaryCard{
         cardName = 'Way of the Weasel';
         pic = SpriteSheetPic(50, '#c76d24');
@@ -66,7 +64,7 @@ const cardLibrary = [
         dodge = 5;
         exhaust = 1;
     },
-    // 7
+
     class extends TrinketCard{
         cardName = 'Dam';
         // reuses art from the Dam monster
@@ -75,7 +73,7 @@ const cardLibrary = [
 
         dodge = 1;
     },
-    // 8
+
     class extends CommonCard{
         cardName = 'Fireball';
         pic = SpriteSheetPic(12, '#f61');
@@ -86,6 +84,26 @@ const cardLibrary = [
         splashDamage = 2;
     },
 
+    class extends ItemCard{
+        cardName = 'Spellbook';
+        pic = SpriteSheetPic(18, '#7d2300');
+        manaCost = 1;
+        getTextLines = () => ['Draw your entire Draw Pile'];
+        draw = 7;
+        render(standalone) {
+            super.render(standalone);
+            this.draw = cardManager.drawPile.length;
+        }
+    },
+
+    class extends TrinketCard{
+        cardName = 'Spellbookmark';
+        pic = SpriteSheetPic(19, '#1e44ae');
+
+        cantrip = 1;
+        damage = 2;
+        targetMode = AT_LEFT_ENEMY;
+    },
 
     class extends RareCard{
         cardName = 'Paw';
@@ -184,7 +202,7 @@ const cardLibrary = [
         extraCardText = 'Add a Fireball to your Discard';
         play = () => cardManager.animateInto(
             ANIMATE_INTO_TARGET_DISCARD,
-            new CARD_FIREBALL,
+            new Card_Fireball,
         );
     },
 
@@ -213,7 +231,7 @@ const cardLibrary = [
         async play(targets) {
             await cardManager.animateInto(
                 ANIMATE_INTO_TARGET_DRAW,
-                new CARD_CURSE,
+                new Card_Curse,
             );
             super.play(targets);
         }
@@ -305,37 +323,7 @@ const cardLibrary = [
         // exhaust = true;
     },
 
-    class extends ItemCard{
-        cardName = 'Spellbook';
-        pic = SpriteSheetPic(18, '#7d2300');
-        manaCost = 1;
-        getTextLines = () => ['Draw your entire Draw Pile'];
-        draw = 7;
-        render(standalone) {
-            super.render(standalone);
-            this.draw = cardManager.drawPile.length;
-        }
-    },
-
-    class extends TrinketCard{
-        cardName = 'Spellbookmark';
-        pic = SpriteSheetPic(19, '#1e44ae');
-
-        cantrip = 1;
-        damage = 2;
-        targetMode = AT_LEFT_ENEMY;
-    },
 
     // - see ghost - replay the previous card
     // - 9 lives
 ];
-
-const CARD_CLAW = cardLibrary[0];
-const CARD_SCRATCH = cardLibrary[1];
-const CARD_SWIPE = cardLibrary[2];
-const CARD_STOMP = cardLibrary[3];
-const CARD_CURSE = cardLibrary[4];
-const CARD_RABBITS_FOOT = cardLibrary[5];
-const CARD_WAY_OF_THE_WEASEL = cardLibrary[6];
-const CARD_DAM = cardLibrary[7];
-const CARD_FIREBALL = cardLibrary[8];

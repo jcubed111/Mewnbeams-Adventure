@@ -60,13 +60,12 @@ html{
 
 body{
     background: $grey-7;
-    font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', P052, serif;
     width: 1333rem;
     height: 1000rem;
     overflow: hidden;
     font-size: 21rem;
     margin: 0;
-    // text-wrap: pretty;
     position: relative;
     color: #ddd;
     user-select: none;
@@ -76,7 +75,7 @@ body{
 i{
     color: #8bd;
 }
-b{
+b, .C--visitedPath{
     color: #f0a;
 }
 h1{
@@ -140,7 +139,7 @@ h1{
         background: $grey-7;
         border: 5rem solid $grey-5;
         position: absolute;
-        inset: 150rem 216rem;
+        inset: 150rem 200rem;
     }
 
     .C--choiceMenuOptions{
@@ -168,6 +167,15 @@ h1{
         justify-content: space-between;
         text-align: left;
     }
+
+.C--CardMultiReward{
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 80rem;
+    &>div{
+        margin-right: -80rem;
+    }
+}
 
 /* card and character general props */
 .C--card, .C--character{
@@ -454,9 +462,6 @@ h1{
 }
     .C--minimapRow{
         white-space: nowrap;
-    }
-    .C--visitedPath{
-        color: #f0a;
     }
 
 .C--directionChoiceLabel{

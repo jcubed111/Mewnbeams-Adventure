@@ -50,7 +50,7 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
                             heroPic
                                 ? 'C--choiceMenuTitle C--eventTextWithPic'
                                 : 'C--choiceMenuTitle',
-                            textContent,
+                            div('', textContent),
                             heroPic,
                         ),
                         div('C--choiceMenuOptions',
@@ -104,6 +104,26 @@ function victoryScreen() {
         witchPic(),
         'Continue',
     );
+}
+
+async function cardRewardScreen(text, pic, cardInstances) {
+    // Turn all card instances into arrays, to support multi card rewards
+    const cardRewardArrays = cardInstances.map(c => [c].flat());
+
+    const cardChoice = await showChoiceMenu(ChoiceMenuDefault,
+        text,
+        pic,
+        ...cardRewardArrays.map(cards =>
+            div('C--CardMultiReward',
+                cards.map(c => c.asStaticElement())
+            )
+        ),
+        "Hiisss!",
+    );
+
+    if(cardChoice < cardRewardArrays.length) {
+        cardManager.addToDeck(...cardRewardArrays[cardChoice]);
+    };
 }
 
 async function cardListViewScreen(cards, sort, allowCardClick, title='') {

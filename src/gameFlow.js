@@ -8,12 +8,14 @@ const resetGameState = () => {
 
     player = new Player();
     minimap = new Minimap();
-    player.showAndRender();
 };
 
 async function runMainMenu() {
     resetGameState();
     // placeholder - remove
+    // for(const e of eventLibrary) {
+    //     await e();
+    // }
     // await runNap();
     // await deathScreen();
     // await victoryScreen();
@@ -51,7 +53,9 @@ async function runMainMenu() {
 async function runGameRun() {
     resetGameState();
     minimap.showAndRender();
+    player.showAndRender();
     cardManager.reset();
+    const shuffledEvents = shuffleInPlace([...eventLibrary]);
 
     /* OPENING */
     const choice = await showChoiceMenu(ChoiceMenuDefault,
@@ -67,13 +71,11 @@ async function runGameRun() {
             'Hiiisssss?'
         );
     }
-    const choices = getThreeRandomTrinkets();
-    const boonChoice = await showChoiceMenu(ChoiceMenuDefault,
-        fadeInText`Hmph. Alright.${br()}${br()}I do need to be off to the potion shop, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
+    const boonChoice = await cardRewardScreen(
+        fadeInText`Hmph. Alright, I do need to be off to the potion shop, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ' ',
-        ...choices.map(c => c.asStaticElement()),
+        getThreeRandomTrinkets(),
     );
-    cardManager.addToDeck(choices[boonChoice]);
 
     /* Floors */
     const fightGenerator = getFightGenerator();
@@ -99,9 +101,9 @@ async function runGameRun() {
             await runNap();
 
         }else if(chosenFloorType == RoomType.Event) {
-            await showChoiceMenu(ChoiceMenuDefault, 'Event TODO', witchPic(), 'Go');
+            await shuffledEvents.pop()();
             // Note: we don't check for death here because none
-            // of the events can (yet) kill you.
+            // of the events can kill you.
 
         }else{  // Fight or Boss
             const [enemies, cardRewards] = fightGenerator(floorIndex);
@@ -115,15 +117,11 @@ async function runGameRun() {
 
             /* Card Reward */
             if(floorIndex < NUM_FLOORS - 1) {
-                const cardChoice = await showChoiceMenu(ChoiceMenuDefault,
+                const cardChoice = await cardRewardScreen(
                     `Choose...`,
                     0,
-                    ...cardRewards.map(c => c.asStaticElement()),
-                    "Pass",
+                    cardRewards,
                 );
-                if(cardChoice < cardRewards.length) {
-                    cardManager.addToDeck(cardRewards[cardChoice]);
-                }
             }
         }
     }

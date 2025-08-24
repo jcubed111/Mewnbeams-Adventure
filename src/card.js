@@ -83,9 +83,9 @@ class Card extends Sprite{
     setCantripPosition(numPending) {
         this.el.style.zIndex = 26 + numPending;
         this.el.style.transform = `rotate(0deg)`;
-        this.el.style.left = `${556 + 40 * Math.random()}rem`;
-        this.el.style.bottom = `${300 + 40 * Math.random()}rem`;
-        this.el.classList.add('C--active');
+        this.el.style.left = `${536 + 80 * Math.random()}rem`;
+        this.el.style.bottom = `${280 + 80 * Math.random()}rem`;
+        this.el.classList.remove('C--active');
         this.el.classList.remove('C--faceDown');
     }
 

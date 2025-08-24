@@ -11,7 +11,7 @@ const ChoiceMenuDarkBgNoClick = 2;
 
 // A big fullscreen menu element for events, card lists, etc.
 function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
-
+    // ~1.8%
     // not split -> centered
     // is split -> left
     // is split title -> centered
@@ -23,7 +23,7 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
                 const optionDivs = options.map(
                     (optionContent, i) =>
                         div(
-                            (!darkModeMode || i == 0) && 'C--buttonLike C--choiceMenuOptionButton',
+                            (!darkModeMode || i == 0) && 'C--buttonLike',
                             optionContent,
                         )
                 );

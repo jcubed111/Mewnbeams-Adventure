@@ -119,7 +119,7 @@ h1{
         .C--choiceMenuOptions{
             justify-content: flex-start;
         }
-        .C--choiceMenuOptionButton:first-child{
+        .C--buttonLike:first-child{
             position: absolute;
             inset: 100rem 100rem auto auto;
             z-index: $z-choice-menu-wrapper-black-button;

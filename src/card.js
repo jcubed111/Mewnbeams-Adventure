@@ -9,12 +9,15 @@ class Card extends Sprite{
     actionCost = 0;
     manaCost = 0;
 
+    ghostified;
+
     /* Render Methods */
     asStaticElement(clickable) {
         // ~0.5%
         // returns a view only version of this card for showing
         // in deck/reward selection/etc.
         const clone = new this.constructor();
+        if(this.ghostified) ghostifyCard(clone);
         clone.el = clone.makeEl();
         clone.render(true);
         clone.el.style.position = 'relative';
@@ -155,8 +158,6 @@ class Card extends Sprite{
     splashDamage;
     // bleed?: number - damage per turn, decay 1 per turn
     bleed;
-    // fear?: number - reduces next attack by X, decay all
-    // fear;
     // stun?: 0 | 1 - cancels the enemy's action this turn
     stun;
 
@@ -197,9 +198,6 @@ class Card extends Sprite{
 
             this.bleed != undefined &&
                 `Bleed ${this.bleed}${targetModeText}`,
-
-            // this.fear != undefined &&
-            //     `Scare ${this.fear}${targetModeText}`,
 
             this.stun &&
                 `Stun${targetModeText}`,
@@ -325,4 +323,15 @@ class ItemCard extends Card{
 class CurseCard extends Card{
     rarityOrder = 6;
     primaryColor = '#289876';
+}
+
+
+// Modifies card in place
+const ghostifyCard = card => {
+    card.primaryColor = 'linear-gradient(135deg, #70a2a588 40%, #a7c4c6bb, #70a2a588 60%)';
+    card.ghostified = 1;
+    card.exhaust = 1;
+    card.actionCost = 0;
+    card.manaCost = 0;
+    return card;
 }

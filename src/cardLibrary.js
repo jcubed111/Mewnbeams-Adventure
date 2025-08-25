@@ -140,8 +140,9 @@ const cardLibrary = [
     class extends CommonCard{
         cardName = 'Meow';
         pic = SpriteSheetPic(10, '#7fae10');
-        actionCost = 1;
+        actionCost = 0;
 
+        cantrip = 1;
         draw = 2;
     },
 
@@ -185,7 +186,7 @@ const cardLibrary = [
         actionCost = 1;
 
         damage = 1;
-        extraCardText = 'Move Right';
+        extraCardText = 'Push to the right';
         play([target]) {
             const i = enemyManager.activeEnemies.indexOf(target);
             enemyManager.activeEnemies.splice(i, 1);
@@ -269,7 +270,7 @@ const cardLibrary = [
         draw = 4;
         exhaust = true;
     },
-    class extends RareCard{
+    class extends CommonCard{
         cardName = 'Channel';
         pic = SpriteSheetPic(8, '#3bf');
         manaCost = 0;
@@ -278,11 +279,11 @@ const cardLibrary = [
     },
     class extends RareCard{
         cardName = 'See Ghost';
-        manaCost = 2;
+        manaCost = 1;
 
         pic = SpriteSheetPic(3, '#005f39');
 
-        extraCardText = 'Copy a Discarded Card';
+        extraCardText = 'Make a ghostly copy of a discarded Card';
         playable() {
             return super.playable() && cardManager.discardPile.length;
         }
@@ -294,15 +295,40 @@ const cardLibrary = [
             }
             await cardManager.animateInto(
                 ANIMATE_INTO_TARGET_HAND,
-                new discard[chosenIndex].constructor,
+                ghostifyCard(new discard[chosenIndex].constructor),
             );
         }
     },
+
+    // class extends TrinketCard{
+    //     cardName = 'Vampire Bat Extract';
+    //     actionCost = 1;
+    //     pic = SpriteSheetPic(0, '#f0f');
+    //     exhaust = 1;
+
+    //     extraCardText = 'Make 3 ghostly Bites';
+    //     async play() {
+    //         await cardManager.animateInto(
+    //             ANIMATE_INTO_TARGET_HAND,
+    //             ghostifyCard(new Card_Bite),
+    //         );
+    //         await cardManager.animateInto(
+    //             ANIMATE_INTO_TARGET_HAND,
+    //             ghostifyCard(new Card_Bite),
+    //         );
+    //         await cardManager.animateInto(
+    //             ANIMATE_INTO_TARGET_HAND,
+    //             ghostifyCard(new Card_Bite),
+    //         );
+    //     }
+    // },
+
     class extends RareCard{
         cardName = 'Zoomies';
         pic = SpriteSheetPic(13, '#496fcf');
         manaCost = 1;
 
+        dodge = 1;
         gainActions = 2;
     },
     class extends LegendaryCard{

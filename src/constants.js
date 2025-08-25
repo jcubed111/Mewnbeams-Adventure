@@ -15,3 +15,10 @@ const AT_LEFT_ENEMY = 2;
 const ANIMATE_INTO_TARGET_DRAW = 0;
 const ANIMATE_INTO_TARGET_HAND = 1;
 const ANIMATE_INTO_TARGET_DISCARD = 2;
+
+const RoomType = {
+    Fight: 0,
+    Boss: 1,
+    Event: 2,
+    Nap: 3,
+};

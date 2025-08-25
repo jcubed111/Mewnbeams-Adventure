@@ -455,6 +455,30 @@ h1{
     }
 
 
+// ADVANCED MINIMAP
+// .C--minimap{
+//     display: flex;
+//     flex-direction: column-reverse;
+//     align-items: center;
+//     position: absolute;
+//     inset: 40rem 20rem auto auto;
+//     font-family: monospace;
+//     white-space: pre;
+//     font-size: 15rem;
+//     color: #fff9;
+//     z-index: $z-minimap;
+// }
+//     .C--minimapRow{
+//         white-space: nowrap;
+//     }
+
+// .C--directionChoiceLabel{
+//     font-size: 75%;
+//     margin-bottom: 10rem;
+//     width: 150rem;
+// }
+
+
 .C--minimap{
     display: flex;
     flex-direction: column-reverse;
@@ -466,13 +490,4 @@ h1{
     font-size: 15rem;
     color: #fff9;
     z-index: $z-minimap;
-}
-    .C--minimapRow{
-        white-space: nowrap;
-    }
-
-.C--directionChoiceLabel{
-    font-size: 75%;
-    margin-bottom: 10rem;
-    width: 150rem;
 }

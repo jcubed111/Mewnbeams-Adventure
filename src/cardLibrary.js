@@ -99,7 +99,7 @@ const cardLibrary = [
     class extends ItemCard{
         cardName = 'Ratsbane';
         pic = SpriteSheetPic(32, '#53890b');
-        actionCost = 1;
+        actionCost = 2;
 
         damage = 10;
         exhaust = 1;
@@ -282,7 +282,7 @@ const cardLibrary = [
     },
 
     class extends LegendaryCard{
-        cardName = 'Convene with Spirits';
+        cardName = 'Convene with Spirits';  // aka Seek
         pic = SpriteSheetPic(7, '#0f7');
         manaCost = 1;
 
@@ -297,6 +297,7 @@ const cardLibrary = [
                 if(draw.length < 1) break;
                 const chosenIndex = await cardListViewScreen(draw, 0, 1, `Draw ${2 - i}`)
                 if(chosenIndex == -1) {
+                    i--;
                     continue;
                 }
                 cardManager.hand.push(...cardManager.drawPile.splice(chosenIndex, 1));

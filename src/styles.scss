@@ -34,6 +34,7 @@ $card-active-outline: #fff;
 $clickable-disabled: $grey-5;
 // a desaturated grey-6 so we don't match button bgs
 $card-text-area-bg: #261e2e;
+$card-back-border: #337;
 
 
 $z-body-bg: 0;
@@ -249,7 +250,7 @@ h1{
 
     .C--cardPile,
     .C--faceDown:before{
-        background: repeating-linear-gradient(45deg, #123 0 10rem, #246 10rem 20rem);
+        background: repeating-linear-gradient(45deg, #113 0 10rem, #226 10rem 20rem);
     }
     .C--faceDown:before{
         content: '';
@@ -258,7 +259,12 @@ h1{
         z-index: $z-card-local-card-back;
     }
 
-    .C--faceDown .C--actionPointIcon{
+    .C--cardPile,
+    .C--faceDown{
+        border: 5rem solid $card-back-border;
+    }
+    .C--faceDown .C--actionPointIcon,
+    .C--faceDown .C--manaPointIcon{
         display: none;
     }
 
@@ -284,7 +290,6 @@ h1{
     }
 
 .C--cardPile{
-    border: 5rem solid #3b5d99;
     position: absolute;
     width: 80rem;
     height: 120rem;
@@ -415,9 +420,9 @@ h1{
 
 .C--buttonLike {
     padding: 7rem 14rem;
-    background: #123;
+    background: #113;
     // outline: 4rem solid $clickable-disabled;
-    border: 5rem solid #469;
+    border: 5rem solid #449;
 }
 
 .C--buttonLike:not(.C--disabled),

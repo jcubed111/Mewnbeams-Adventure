@@ -12,7 +12,7 @@ class Card extends Sprite{
     ghostified;
 
     /* Render Methods */
-    asStaticElement(clickable) {
+    asStaticElement(clickable, back) {
         // ~0.5%
         // returns a view only version of this card for showing
         // in deck/reward selection/etc.
@@ -28,6 +28,9 @@ class Card extends Sprite{
         }
         // cube root here to bias away from rotate(0), which looks boring
         clone.el.style.transform = `rotate(${4 * Math.cbrt(Math.random() - 0.5)}deg)`;
+        if(back) {
+            clone.el.classList.add('C--faceDown');
+        }
         return clone.el;
     }
 
@@ -84,7 +87,7 @@ class Card extends Sprite{
     }
 
     setCantripPosition(numPending) {
-        this.el.style.zIndex = 26 + numPending;
+        this.el.style.zIndex = 26 + numPending + '!important';  // important prevents hovering from changing z
         this.el.style.transform = `rotate(0deg)`;
         this.el.style.left = `${536 + 80 * Math.random()}rem`;
         this.el.style.bottom = `${280 + 80 * Math.random()}rem`;
@@ -213,7 +216,7 @@ class Card extends Sprite{
                 `Heal ${this.selfHeal}`,
 
             this.selfDamage != undefined &&
-                `Damage Self ${this.selfDamage}`,
+                `Damage self ${this.selfDamage}`,
 
             this.gainStrength != undefined &&
                 `Attacks do +${this.gainStrength} damage this fight`,

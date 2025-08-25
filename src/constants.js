@@ -22,3 +22,5 @@ const RoomType = {
     Event: 2,
     Nap: 3,
 };
+
+const LOCAL_STORAGE_PREFIX = 'mewnbeam_lZrc_';

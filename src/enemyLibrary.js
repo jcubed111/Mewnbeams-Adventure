@@ -19,7 +19,7 @@ const enemyLibrary = {
         characterName = 'Rat Wizard';
         maxHp = 3;
         size = 130;
-        pic = SpriteSheetPic(46, '#5af');
+        pic = SpriteSheetPic(41, '#07f');
 
         *getActionSequence() {
             yield actions.Pass;
@@ -94,7 +94,7 @@ const enemyLibrary = {
         }
     },
     Dam: class extends Character{
-        characterName = 'Dam';
+        characterName = 'Dam 🛡️';
         maxHp = 1;
         size = 130;
         pic = SpriteSheetPic(29, '#9d411a');
@@ -144,6 +144,7 @@ const enemyLibrary = {
         maxHp = 15;
         size = 175;
         pic = SpriteSheetPic(40, '#348100');
+        dodge = 1;
 
         async onStartOfTurn() {
             await super.onStartOfTurn();
@@ -173,7 +174,7 @@ const enemyLibrary = {
         *getActionSequence() {
             yield actions.Summon('🐀🐀', new enemyLibrary.BasicRat, new enemyLibrary.BasicRat);
             for(let i = 0; true; i++) {
-                yield actions.Attack(5 + i);
+                yield actions.Attack(5 + 2 * i);
                 yield actions.HealAll(2);
                 yield actions.Summon('🐀', new enemyLibrary.BasicRat, 0);
             }

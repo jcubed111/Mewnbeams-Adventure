@@ -129,7 +129,13 @@ async function cardRewardScreen(text, pic, cardInstances) {
     };
 }
 
-async function cardListViewScreen(cards, sort, allowCardClick, title) {
+const undiscoveredCard = new class extends Card{
+    cardName = '???';
+    primaryColor = '#444';
+
+};
+
+async function cardListViewScreen(cards, sort, allowCardClick, title, libraryView) {
     const ordered = sort
         // google closure compiler doesn't know about toSorted lol
         ? cards['toSorted'](
@@ -143,9 +149,15 @@ async function cardListViewScreen(cards, sort, allowCardClick, title) {
         div('',
             title,
             cards.length ? 0 : ' (Empty)',
+            libraryView ? ` (${cards.filter(isCardDiscovered).length} / ${cards.length})` : '',
         ),
         ' ',  // provide a "pic" so we align the title text left
         'Back',
-        ...ordered.map(card => card.asStaticElement(allowCardClick)),
+        ...ordered.map(card =>
+            card.asStaticElement(
+                allowCardClick,
+                libraryView && !isCardDiscovered(card),
+            ),
+        ),
     );
 }

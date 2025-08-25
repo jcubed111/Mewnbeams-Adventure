@@ -1,3 +1,17 @@
+const isCardDiscovered = card => !!window.localStorage[LOCAL_STORAGE_PREFIX + card.cardName];
+const discoverCard = card => window.localStorage[LOCAL_STORAGE_PREFIX + card.cardName] = 1;
+
+const getStarterDeck = () => [
+    new Card_Claw,
+    new Card_Claw,
+    new Card_Claw,
+    new Card_Scratch,
+    new Card_Swipe,
+    new Card_Stomp,
+];
+getStarterDeck().map(discoverCard);
+
+
 class CardManager{
     deck = [];
     drawPile = [];
@@ -7,14 +21,7 @@ class CardManager{
     exhaustPile = [];
 
     reset() {
-        this.deck = [
-            new Card_Claw,
-            new Card_Claw,
-            new Card_Claw,
-            new Card_Scratch,
-            new Card_Swipe,
-            new Card_Stomp,
-        ];
+        this.deck = getStarterDeck();
         this.render();
     }
 
@@ -84,6 +91,7 @@ class CardManager{
 
     addToDeck(...cards) {
         this.deck.push(...cards);
+        cards.map(discoverCard);
         this.render();
     }
 
@@ -282,6 +290,7 @@ class CardManager{
     //   ANIMATE_INTO_TARGET_HAND = 1
     //   ANIMATE_INTO_TARGET_DISCARD = 2
     async animateInto(target, ...cards) {
+        cards.map(discoverCard);
         for(const card of cards) {
             card.showAndRender();
             card.setCantripPosition(-1);

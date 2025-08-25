@@ -10,6 +10,7 @@ const resetGameState = () => {
     minimap = new Minimap();
 };
 
+
 async function runMainMenu() {
     resetGameState();
     // placeholder - remove
@@ -44,6 +45,7 @@ async function runMainMenu() {
             true,
             false,
             'Library',
+            true,
         );
     }
 
@@ -107,7 +109,7 @@ async function runGameRun() {
             /* Card Reward */
             if(floorIndex < NUM_FLOORS - 1) {
                 const cardChoice = await cardRewardScreen(
-                    `Choose...`,
+                    plainElement('h2', `Choose...`),
                     0,
                     cardRewards,
                 );
@@ -130,7 +132,7 @@ async function runNap() {
             `This looks like a cozy spot for a nap...`,
         ],
         0,
-        `Sleep (Heal ${NAP_HEAL_AMOUNT})`,
+        `Sleep (Heal ${NAP_HEAL_AMOUNT}: ${player.currentHp} → ${Math.min(player.maxHp, player.currentHp + NAP_HEAL_AMOUNT)})`,
         'Lick (Remove a Card)',
     );
     // player.el.style.zIndex = '';
@@ -218,6 +220,7 @@ async function runBattleMain() {
         retainOneTurn = false;
 
         /* enemy turn */
+        // 1. bleed
         for(const e of enemyManager.activeEnemies) {
             await e.onStartOfTurn();
 
@@ -225,11 +228,9 @@ async function runBattleMain() {
             if(enemyManager.activeEnemies.length == 0) {
                 return;
             }
-            if(player.currentHp <= 0) {
-                return;
-            }
         }
 
+        // 2. actions
         const startOfRoundEnemies = [...enemyManager.activeEnemies];
         for(const enemy of startOfRoundEnemies) {
             // It's possible this got killed by a fellow enemy before
@@ -240,6 +241,9 @@ async function runBattleMain() {
             await wait(0.1);
             enemy.clearAction();
             await wait(0.5);
+            if(player.currentHp <= 0) {
+                return;
+            }
         }
 
         if(enemyManager.activeEnemies.length == 0) {
@@ -289,7 +293,7 @@ async function getMove() {
 
         async function onMouseUp(e) {
             const [dx, dy] = getTravelDelta(activateEvent, e);
-            if(dx ** 2 + dy ** 2 < 15 ** 2) {
+            if(dx ** 2 + dy ** 2 < 25 ** 2) {
                 // treat this as a click event to start activation, then listen
                 // for a future click event to end.
                 await wait(0.05);
@@ -343,7 +347,6 @@ function inAoeBounds(e) {
     const {top, left, right, height} = document.body.getBoundingClientRect();
     return e.clientX >= left
         && e.clientX <= right
-        && e.clientY >= top
         && e.clientY <= top + 0.7 * height;
 }
 

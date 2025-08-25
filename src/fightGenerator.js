@@ -47,6 +47,7 @@ function getFightGenerator() {
             new enemyLibrary.Mouse,
         ],
         [   // weasel with healing
+            new enemyLibrary.BasicRat,
             new enemyLibrary.Weasel,
             new enemyLibrary.Mouse,
         ],

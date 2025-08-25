@@ -39,7 +39,7 @@ const enemyLibrary = {
 
     /* Midgame mini bosses */
     Weasel: class extends Character{
-        characterName = 'Weasel';
+        characterName = 'Weasel 🛑2';
         maxHp = 15;
         size = 175;
         pic = SpriteSheetPic(50, '#c76d24');
@@ -53,7 +53,7 @@ const enemyLibrary = {
         }
 
         afterUnblockedDamage() {
-            this.dodge = 3;
+            this.dodge = 2;
         }
     },
     Rabbit: class extends Character{
@@ -108,7 +108,7 @@ const enemyLibrary = {
 
     /* Support enemies */
     RatGuard: class extends Character{
-        characterName = 'Rat Guard';
+        characterName = 'Rat Guard 🛡️';
         maxHp = 8;
         size = 175;
         pic = SpriteSheetPic(47, '#e11');
@@ -140,10 +140,10 @@ const enemyLibrary = {
 
     /* Late game unique enemies */
     Snake: class extends Character{
-        characterName = 'Snake';
+        characterName = 'Snake 🐍';
         maxHp = 15;
         size = 175;
-        pic = SpriteSheetPic(40, '#348100', 1);
+        pic = SpriteSheetPic(40, '#348100');
 
         async onStartOfTurn() {
             await super.onStartOfTurn();

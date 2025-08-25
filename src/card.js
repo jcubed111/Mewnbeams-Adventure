@@ -248,11 +248,12 @@ class Card extends Sprite{
             // add a wait to make the repeat more obvious
             if(i > 0) await wait(0.2);
 
-            targets.forEach(target => {
+            for(const target of targets) {
                 if(this.damage != undefined) {
                     target.animateDamage(this.damage + player.strength);
                 }
                 if(this.splashDamage != undefined) {
+                    await wait(0.2);
                     enemyManager.activeEnemies
                         .forEach((adjacent, i, arr) => {
                             if(
@@ -266,11 +267,10 @@ class Card extends Sprite{
                 if(this.bleed != undefined) {
                     target.gainBleed(this.bleed);
                 }
-                // TODO: fear
                 if(this.stun != undefined) {
                     target.clearAction();
                 }
-            });
+            };
 
             if(this.gainActions != undefined) {
                 player.pay(-this.gainActions, 0);

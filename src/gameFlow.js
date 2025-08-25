@@ -225,6 +225,9 @@ async function runBattleMain() {
             if(enemyManager.activeEnemies.length == 0) {
                 return;
             }
+            if(player.currentHp <= 0) {
+                return;
+            }
         }
 
         const startOfRoundEnemies = [...enemyManager.activeEnemies];

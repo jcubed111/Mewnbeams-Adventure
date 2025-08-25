@@ -121,7 +121,7 @@ async function cardRewardScreen(text, pic, cardInstances) {
                 cards.map(c => c.asStaticElement())
             )
         ),
-        "Hiisss!",
+        "Hiisss! (Pass)",
     );
 
     if(cardChoice < cardRewardArrays.length) {

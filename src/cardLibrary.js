@@ -126,8 +126,10 @@ const cardLibrary = [
     class extends CommonCard{
         cardName = 'Sneak Attack';
         pic = SpriteSheetPic(33, '#301b45');
+        actionCost = 1;
+        manaCost = 1;
 
-        damage = 2;
+        damage = 3;
         splashDamage = 2;
         targetMode = AT_LEFT_ENEMY;
     },
@@ -179,6 +181,7 @@ const cardLibrary = [
 
         damage = 1;
         selfHeal = 1;
+        exhaust = 1;
     },
     class extends LegendaryCard{
         cardName = 'Tongue Bath';
@@ -278,20 +281,9 @@ const cardLibrary = [
         gainStrength = 2;
     },
 
-    // class extends CommonCard{
-    //     cardName = 'Hiss';
-    //     actionCost = 1;
-
-    //     fear = 1;
-    // },
-
-    // - dodge - next attack misses
-    // - swat - move enemy left 1 spot
-
     class extends LegendaryCard{
         cardName = 'Convene with Spirits';
         pic = SpriteSheetPic(7, '#0f7');
-        // actionCost = 1;
         manaCost = 1;
 
         extraCardText = 'Draw 2 cards of your choice';
@@ -300,10 +292,10 @@ const cardLibrary = [
             return super.playable() && cardManager.drawPile.length;
         }
         async play() {
-            for(let i = 0; i < 2;  i++) {
+            for(let i = 0; i < 2; i++) {
                 const draw = cardManager.drawPile;
                 if(draw.length < 1) break;
-                const chosenIndex = await cardListViewScreen(draw, 0, 1)
+                const chosenIndex = await cardListViewScreen(draw, 0, 1, `Draw ${2 - i}`)
                 if(chosenIndex == -1) {
                     continue;
                 }
@@ -323,7 +315,7 @@ const cardLibrary = [
     },
     class extends RareCard{
         cardName = 'See Ghost';
-        manaCost = 1;
+        manaCost = 2;
 
         pic = SpriteSheetPic(3, '#005f39');
 

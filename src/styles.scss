@@ -28,6 +28,13 @@ $grey-5: #301b45;
 $grey-6: #20122e;
 $grey-7: #150e1d;
 
+$clickable-outline: #8bd;
+$clickable-outline-hover: #e8f;
+$card-active-outline: #fff;
+$clickable-disabled: $grey-5;
+// a desaturated grey-6 so we don't match button bgs
+$card-text-area-bg: #261e2e;
+
 
 $z-body-bg: 0;
 $z-character: 5;
@@ -190,7 +197,7 @@ h1{
         margin 0.15s linear;  // used for character attack animation
 }
 .C--card.C--active{
-    box-shadow: 0 0 0 4rem #fff;
+    outline: 4rem solid $card-active-outline;
     // speed up the transition here
     transition:
         inset 0.1s linear,
@@ -256,8 +263,8 @@ h1{
         padding: 5rem;
         color: #fff;
         background:
-            linear-gradient(45deg, #123 5%, #0000 5%),
-            linear-gradient(315deg, #123 5%, #0000 5%);
+            linear-gradient(45deg, $card-text-area-bg 5%, #0000 5%),
+            linear-gradient(315deg, $card-text-area-bg 5%, #0000 5%);
     }
 
     .C--cardText{
@@ -269,7 +276,7 @@ h1{
         font-size: 18rem;
         justify-content: center;
         text-wrap: balance;
-        background: #123;
+        background: $card-text-area-bg;
     }
 
 .C--cardPile{
@@ -285,7 +292,7 @@ h1{
     cursor: pointer;
     z-index: $z-card-pile;
     &:hover{
-        box-shadow: 0 0 0 4rem #e8f;
+        outline: 4rem solid $clickable-outline;
     }
 }
     .C--cardPileName{
@@ -405,6 +412,7 @@ h1{
 .C--buttonLike {
     padding: 7rem 14rem;
     background: #123;
+    // outline: 4rem solid $clickable-disabled;
     border: 5rem solid #469;
 }
 
@@ -412,20 +420,21 @@ h1{
 .C--gettingCard .C--card:not(.C--unplayable),
 .C--cardForceClickable {
     // the "click a card/button" state
-    box-shadow: 0 0 0 4rem #8bd;
+    outline: 4rem solid $clickable-outline;
     cursor: pointer;
 
     &:hover{
-        box-shadow: 0 0 0 4rem #e8f;
+        outline: 4rem solid $clickable-outline-hover;
     }
 }
 
 /* floating ui elements */
 .C--passButton{
     position: absolute;
-    right: 10rem;
+    right: 20rem;
     bottom: 310rem;
     z-index: $z-fight-ui-pass-button;
+    // background: #424;
 }
 
 .C--resources{

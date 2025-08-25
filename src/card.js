@@ -21,7 +21,7 @@ class Card extends Sprite{
         if(clickable) {
             clone.el.classList.add('C--cardForceClickable');
         }else{
-            clone.el.style.boxShadow = 'none';
+            clone.el.style.outline = 'none';
         }
         // cube root here to bias away from rotate(0), which looks boring
         clone.el.style.transform = `rotate(${4 * Math.cbrt(Math.random() - 0.5)}deg)`;

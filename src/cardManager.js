@@ -245,7 +245,7 @@ class CardManager{
             this.passButton.el.classList.remove('C--disabled');
             this.passButton.el.addEventListener('click', pass);
             const onKey = e => {
-                if(e.key == "Space") {
+                if(e.key == " ") {
                     pass();
                 }
             };

@@ -101,7 +101,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(32, '#53890b');
         actionCost = 2;
 
-        damage = 10;
+        damage = 9;
         exhaust = 1;
     },
 
@@ -147,7 +147,7 @@ const cardLibrary = [
         actionCost = 2;
 
         damage = 2;
-        bleed = 2;
+        bleed = 3;
     },
     class extends RareCard{
         cardName = 'Boom Bop Bam';
@@ -215,7 +215,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(28, '#a18600');
         actionCost = 1;
 
-        damage = 1;
+        damage = 2;
         extraCardText = 'Push to the right';
         play([target]) {
             const i = enemyManager.activeEnemies.indexOf(target);

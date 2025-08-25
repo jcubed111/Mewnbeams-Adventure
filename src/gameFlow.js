@@ -30,7 +30,7 @@ async function runMainMenu() {
 
     const selection = await showChoiceMenu(ChoiceMenuDefault,
         [
-            plainElement('h1', 'Mewnbeam’s Quest'),
+            plainElement('h1', 'Mewnbeam’s Adventure'),
             player.pic(),
         ],
         0,

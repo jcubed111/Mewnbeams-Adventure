@@ -126,7 +126,7 @@ async function cardRewardScreen(text, pic, cardInstances) {
     };
 }
 
-async function cardListViewScreen(cards, sort, allowCardClick, title='') {
+async function cardListViewScreen(cards, sort, allowCardClick, title) {
     const ordered = sort
         // google closure compiler doesn't know about toSorted lol
         ? cards['toSorted'](
@@ -139,7 +139,7 @@ async function cardListViewScreen(cards, sort, allowCardClick, title='') {
     return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuDarkBg : ChoiceMenuDarkBgNoClick,
         div('',
             title,
-            cards.length ? 0 : 'No Cards',
+            cards.length ? 0 : ' (Empty)',
         ),
         ' ',  // provide a "pic" so we align the title text left
         'Back',

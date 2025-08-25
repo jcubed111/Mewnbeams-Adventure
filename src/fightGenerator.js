@@ -22,7 +22,7 @@ function getFightGenerator() {
     let hasFoughtMiniBoss1 = false;
 
     // floors 6 - 10
-    // need at least 5 of these
+    // need at least 4 of these
     const midTierGroupEnemyFights = shuffleInPlace([
         [new enemyLibrary.RatGuard, new enemyLibrary.Mouse],
         [new enemyLibrary.RatGuard, new enemyLibrary.PoisonRat],
@@ -32,7 +32,7 @@ function getFightGenerator() {
     ]);
 
     // Floors 11 - 14
-    // need at least 4 of these
+    // need at least 3 of these
     const lateGameFights = shuffleInPlace([
         [  // mini menagerie
             new enemyLibrary.BasicRat,

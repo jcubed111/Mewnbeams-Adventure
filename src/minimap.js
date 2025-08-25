@@ -5,30 +5,41 @@ class Minimap extends Sprite{
 
         // 2 - 4 are random nap, event, fight
         ...shuffleInPlace([
-            RoomType.Fight,
-            RoomType.Nap,
-            RoomType.Event,
+            RoomType.Fight,  // f=1
+            RoomType.Nap,    // n=1
+            RoomType.Event,  // e=1
         ]),
 
-        ...shuffleInPlace([
-            RoomType.Fight,
-            RoomType.Fight,
-            RoomType.Fight,
-            RoomType.Fight,
-            RoomType.Nap,
-            RoomType.Nap,
-            RoomType.Event,
-        ]).slice(0, 5),
+        // 5
+        RoomType.Fight,      // f=1
 
+        // 6 - 9
         ...shuffleInPlace([
+            RoomType.Fight,  // f=2.4
             RoomType.Fight,
             RoomType.Fight,
-            RoomType.Fight,
-            RoomType.Fight,
-            RoomType.Nap,
-            RoomType.Nap,
-            RoomType.Event,
-        ]).slice(0, 5),
+            RoomType.Nap,    // n=0.8
+            RoomType.Event,  // e=0.8
+        ]).slice(0, 4),
+
+        // 10
+        RoomType.Fight,      // f=1
+
+        // 11 - 12
+        ...shuffleInPlace([
+            RoomType.Fight,  // f=0.67
+            RoomType.Nap,    // n=0.67
+            RoomType.Event,  // e=0.67
+        ]).slice(0, 2),
+
+        // 13
+        RoomType.Fight,      // f=1
+
+        // 14
+        shuffleInPlace([
+            RoomType.Fight,  // f=0.5
+            RoomType.Nap,    // n=0.5
+        ])[0],
 
         // 15 is boss
         RoomType.Boss,

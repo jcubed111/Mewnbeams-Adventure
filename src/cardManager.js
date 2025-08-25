@@ -60,19 +60,19 @@ class CardManager{
     deckButton = new CardPile(
         'Deck',
         '20rem auto auto 20rem',
-        e => cardListViewScreen(this.deck),
+        e => cardListViewScreen(this.deck, 0, 0, 'Deck'),
     );
 
     drawButton = new CardPile(
         'Draw',
         'auto auto 20rem 20rem',
-        e => cardListViewScreen(this.drawPile, true),
+        e => cardListViewScreen(this.drawPile, 1, 0, 'Draw Pile'),
     );
 
     discardButton = new CardPile(
         'Discard',
         'auto 20rem 20rem auto',
-        e => cardListViewScreen(this.discardPile),
+        e => cardListViewScreen(this.discardPile, 0, 0, 'Discard Pile'),
     );
 
     // Tracks activating a card to play it

@@ -44,18 +44,6 @@ class Minimap extends Sprite{
         // 15 is boss
         RoomType.Boss,
     ];
-    roomPositionByFloor = range(14).reduce(acc => {
-        const prev = acc[0];
-        const next = shuffleInPlace([
-            // 0 -> 0 or 1
-            [0, 1, 1],
-            // 1 -> 0 or 1 or 2
-            [0, 0, 1, 2, 2],
-            // 2 -> 1 or 2
-            [1, 1, 2],
-        ][prev])[0];
-        return [next, ...acc];
-    }, [1]);
     currentFloor = -1;
 
     makeEl() {
@@ -64,32 +52,13 @@ class Minimap extends Sprite{
 
     render() {
         setChildren(this.el,
-            range(NUM_FLOORS).flatMap(fi => {
-                const roomType = this.roomTypeByFloor[fi];
-                const roomPosition = this.roomPositionByFloor[fi];
-                const nextRoomPosition = this.roomPositionByFloor[fi + 1];
-
-                const floorText = (
-                    ' '.repeat(1 + 2 * roomPosition)
-                    + '#R?z'[roomType]
-                    + ' '.repeat(5 - 2 * roomPosition)
-                );
-
-                const transitionText = (
-                    ' '.repeat(2 * roomPosition)
-                    + [
-                        '\\  ',
-                        ' | ',
-                        '  /',
-                    ][nextRoomPosition - roomPosition + 1]
-                    + ' '.repeat(4 - 2 * roomPosition)
-                );
-
+            this.roomTypeByFloor.flatMap((roomType, i) => {
+                if(i == 14) return div('', '👑');
                 return [
-                    div(fi <= this.currentFloor && 'C--visitedPath', floorText),
-                    div(fi < this.currentFloor && 'C--visitedPath', transitionText),
+                    div(i == 0 || i <= this.currentFloor ? 'C--visitedPath' : '', '#R?z'[roomType]),
+                    div('C--mapArrow ' + (i < this.currentFloor && 'C--visitedPath'), '↑'),
                 ];
-            }).slice(0, -1),
+            }),
         );
     }
 

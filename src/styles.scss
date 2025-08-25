@@ -484,10 +484,14 @@ h1{
     flex-direction: column-reverse;
     align-items: center;
     position: absolute;
-    inset: 40rem 20rem auto auto;
+    inset: 40rem 40rem auto auto;
     font-family: monospace;
     white-space: pre;
     font-size: 15rem;
-    color: #fff9;
+    color: #aaa;
     z-index: $z-minimap;
+    gap: 1rem;
+}
+.C--mapArrow{
+    opacity: 0.5;
 }

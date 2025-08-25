@@ -77,7 +77,7 @@ function fadeInText(textStringParts, ...els) {
     });
     parts.forEach(async (p, i) => {
         p.style.opacity = 0;
-        await wait(i * 0.02);
+        await wait(i * 0.8 / parts.length);
         p.style.opacity = 1;
     });
     return plainElement('span', parts);

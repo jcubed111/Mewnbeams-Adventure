@@ -66,4 +66,19 @@ const eventLibrary = [
             cards,
         );
     },
+    async () => {
+        const cards = [
+            [new Card_Ratsbane],
+            [new Card_VampireBatExtract],
+            [new Card_Toadstool],
+        ];
+        await cardRewardScreen(
+            [
+                plainElement('h2', 'Brewery'),
+                fadeInText`So many things to knock on the floor, so little time.`,
+            ],
+            cards[0][0].pic(),
+            cards,
+        );
+    },
 ];

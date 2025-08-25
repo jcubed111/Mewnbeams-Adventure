@@ -281,16 +281,24 @@ class CardManager{
     //   ANIMATE_INTO_TARGET_DRAW = 0
     //   ANIMATE_INTO_TARGET_HAND = 1
     //   ANIMATE_INTO_TARGET_DISCARD = 2
-    async animateInto(target, card) {
-        card.showAndRender();
-        card.setCantripPosition(-1);
+    async animateInto(target, ...cards) {
+        for(const card of cards) {
+            card.showAndRender();
+            card.setCantripPosition(-1);
+        }
         await wait(0.2);
         [
             this.drawPile,
             this.hand,
             this.discardPile,
-        ][target].push(card);
+        ][target].push(...cards);
+        // overflow hand cards into the discard
+        while(this.hand.length > MAX_HAND_SIZE) {
+            this.discardPile.push(this.hand.pop());
+        }
+        // reshuffle the draw pile in case we added to it
         shuffleInPlace(this.drawPile);
+        // make everything move to the proper place
         this.render();
         await wait(0.2);
     }

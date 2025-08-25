@@ -143,7 +143,7 @@ const enemyLibrary = {
         characterName = 'Snake';
         maxHp = 15;
         size = 175;
-        guard = true;
+        pic = SpriteSheetPic(40, '#348100', 1);
 
         async onStartOfTurn() {
             await super.onStartOfTurn();
@@ -158,6 +158,7 @@ const enemyLibrary = {
                     yield actions.Summon('🐁', 0, new enemyLibrary.Mouse);
                 }
                 yield actions.Attack(shuffleInPlace([2, 3, 4])[0]);
+                // TODO: eat mouse to heal?
             }
         }
     },

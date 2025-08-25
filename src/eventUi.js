@@ -87,7 +87,10 @@ const witchPic = SpriteSheetPic(44, '#f40', 1);
 
 function deathScreen() {
     return showChoiceMenu(ChoiceMenuDefault,
-        fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
+        [
+            plainElement('h2', 'Defeat...'),
+            fadeInText`Mewnbeam, I'm back! How was killing th--${br()}${br()}Oh. Oh dear.${br()}${br()}Let’s see, where’d I put that revivify potion...`,
+        ],
         witchPic(),
         'Try Again',
     );
@@ -95,12 +98,12 @@ function deathScreen() {
 
 function victoryScreen() {
     return showChoiceMenu(ChoiceMenuDefault,
-        div('',
+        [
             plainElement('h1', 'Victory!'),
             styledDiv('', {textAlign: 'left'},
                 fadeInText`Mewnbeam, I'm back! How was killing the ${plainElement('b', `Rat King`)}? Tasty?${br()}${br()}I got you a treat for all your hard work!`,
             ),
-        ),
+        ],
         witchPic(),
         'Continue',
     );

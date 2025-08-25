@@ -59,7 +59,7 @@ class Card extends Sprite{
         // card width is 200rem, view is 1000rem wide.
         const rotateNormalized = outOf == 1 ? 0 : -1 + 2 * (index / (outOf - 1));
 
-        const bottomRem = (activated ? 55 : 5) - 20 * rotateNormalized ** 2;
+        const bottomRem = (activated ? 55 : 15) - 20 * rotateNormalized ** 2;
         const leftRem = outOf <= 5
             // gap between cards is 10rem, with 166+5rem on each side at limit
             ? 166 + 505 + 200 * (index - outOf / 2)
@@ -194,7 +194,7 @@ class Card extends Sprite{
                 `Splash Attack ${
                     this.splashDamage
                     + (standalone ? 0 : player.strength)
-                }${targetModeText}`,
+                }`,
 
             this.bleed != undefined &&
                 `Bleed ${this.bleed}${targetModeText}`,

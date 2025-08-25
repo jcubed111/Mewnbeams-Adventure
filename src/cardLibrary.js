@@ -43,7 +43,7 @@ const cardLibrary = [
         cantrip = 1;
     },
 
-    class extends ItemCard{
+    class extends TrinketCard{
         cardName = 'Rabbit’s Foot';
         pic = SpriteSheetPic(21, '#f02');
         manaCost = 1;
@@ -96,12 +96,39 @@ const cardLibrary = [
         }
     },
 
+    class extends ItemCard{
+        cardName = 'Ratsbane';
+        pic = SpriteSheetPic(32, '#53890b');
+        actionCost = 1;
+
+        damage = 10;
+        exhaust = 1;
+    },
+
+    class extends TrinketCard{
+        cardName = 'Toadstool';
+        pic = SpriteSheetPic(31, '#d42916');
+        actionCost = 1;
+
+        bleed = 3;
+        exhaust = 1;
+    },
+
     class extends TrinketCard{
         cardName = 'Spellbookmark';
         pic = SpriteSheetPic(19, '#1e44ae');
 
         cantrip = 1;
         damage = 2;
+        targetMode = AT_LEFT_ENEMY;
+    },
+
+    class extends CommonCard{
+        cardName = 'Sneak Attack';
+        pic = SpriteSheetPic(33, '#301b45');
+
+        damage = 2;
+        splashDamage = 2;
         targetMode = AT_LEFT_ENEMY;
     },
 
@@ -142,7 +169,6 @@ const cardLibrary = [
         pic = SpriteSheetPic(10, '#7fae10');
         actionCost = 0;
 
-        cantrip = 1;
         draw = 2;
     },
 
@@ -156,7 +182,7 @@ const cardLibrary = [
     },
     class extends LegendaryCard{
         cardName = 'Tongue Bath';
-        pic = SpriteSheetPic(16, '#436');
+        pic = SpriteSheetPic(16, '#4d1c92');
         actionCost = 1;
 
         selfHeal = 4;
@@ -223,10 +249,10 @@ const cardLibrary = [
         cardName = 'Dark Bargain';
         pic = SpriteSheetPic(25, '#f20');
         manaCost = 1;
+        damage = 0;
 
         render(standalone) {
             super.render(standalone);
-            this.damage = cardManager.cardsInPlay().filter(c => c.cardName == 'Curse').length;
         }
 
         async play(targets) {
@@ -234,10 +260,11 @@ const cardLibrary = [
                 ANIMATE_INTO_TARGET_DRAW,
                 new Card_Curse,
             );
+            this.damage = 2 * cardManager.cardsInPlay().filter(c => c.cardName == 'Curse').length;
             super.play(targets);
         }
 
-        getTextLines = () => ['Make a Curse', 'Attack 1 per Curse in Play'];
+        getTextLines = () => ['Make a Curse', 'Attack 2 per Curse in Play'];
     },
 
 
@@ -267,8 +294,25 @@ const cardLibrary = [
         // actionCost = 1;
         manaCost = 1;
 
-        draw = 4;
-        exhaust = true;
+        extraCardText = 'Draw 2 cards of your choice';
+
+        playable() {
+            return super.playable() && cardManager.drawPile.length;
+        }
+        async play() {
+            for(let i = 0; i < 2;  i++) {
+                const draw = cardManager.drawPile;
+                if(draw.length < 1) break;
+                const chosenIndex = await cardListViewScreen(draw, 0, 1)
+                if(chosenIndex == -1) {
+                    continue;
+                }
+                cardManager.hand.push(...cardManager.drawPile.splice(chosenIndex, 1));
+                cardManager.render();
+            }
+            // We showed the draw pile in order so shuffle it
+            shuffleInPlace(cardManager.drawPile);
+        }
     },
     class extends CommonCard{
         cardName = 'Channel';
@@ -300,28 +344,22 @@ const cardLibrary = [
         }
     },
 
-    // class extends TrinketCard{
-    //     cardName = 'Vampire Bat Extract';
-    //     actionCost = 1;
-    //     pic = SpriteSheetPic(0, '#f0f');
-    //     exhaust = 1;
+    class extends ItemCard{
+        cardName = 'Vampire Bat Extract';
+        manaCost = 1;
+        pic = SpriteSheetPic(30, '#f20');
+        exhaust = 1;
 
-    //     extraCardText = 'Make 3 ghostly Bites';
-    //     async play() {
-    //         await cardManager.animateInto(
-    //             ANIMATE_INTO_TARGET_HAND,
-    //             ghostifyCard(new Card_Bite),
-    //         );
-    //         await cardManager.animateInto(
-    //             ANIMATE_INTO_TARGET_HAND,
-    //             ghostifyCard(new Card_Bite),
-    //         );
-    //         await cardManager.animateInto(
-    //             ANIMATE_INTO_TARGET_HAND,
-    //             ghostifyCard(new Card_Bite),
-    //         );
-    //     }
-    // },
+        extraCardText = 'Make 3 ghostly Bites';
+        async play() {
+            await cardManager.animateInto(
+                ANIMATE_INTO_TARGET_HAND,
+                ghostifyCard(new Card_Bite),
+                ghostifyCard(new Card_Bite),
+                ghostifyCard(new Card_Bite),
+            );
+        }
+    },
 
     class extends RareCard{
         cardName = 'Zoomies';
@@ -345,8 +383,8 @@ const cardLibrary = [
         pic = SpriteSheetPic(17, '#8453ff');
         manaCost = 0;
 
+        gainMana = 1;
         causesPass = CAUSES_PASS_RETAIN_VALUE;
-        // exhaust = true;
     },
 
 

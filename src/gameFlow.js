@@ -81,21 +81,10 @@ async function runGameRun() {
     const fightGenerator = getFightGenerator();
     for(let floorIndex = 0; floorIndex < NUM_FLOORS; floorIndex++) {
         /* Direction Choice */
-        if(floorIndex > 0) {
-            const directionChoices = minimap.getAdvanceOptions();
-            const choiceIndex = directionChoices.length > 1
-                ? await showChoiceMenu(ChoiceMenuDefault,
-                    `Where to?`,
-                    0,
-                    ...directionChoices.map(c => c[1]),
-                )
-                : 0;
-            minimap.advance(directionChoices[choiceIndex][0]);
-        }
+
+        const chosenFloorType = await minimap.getNextFloor();
 
         await bodyBg.slideNext();
-
-        const chosenFloorType = minimap.getCurrentFloorType();
 
         if(chosenFloorType == RoomType.Nap) {
             await runNap();

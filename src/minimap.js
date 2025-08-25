@@ -32,7 +32,7 @@ class Minimap extends Sprite{
     visitedRoomIndexByFloor = [0];
     chosenDirectionByFloorByRoom = range(NUM_FLOORS).map(_ => [0, 0, 0]);
 
-    currentFloor = 0;
+    currentFloor = -1;
     currentRoomIndex = 0;
 
     constructor() {
@@ -122,6 +122,29 @@ class Minimap extends Sprite{
         }).slice(1);
     }
 
+    async getNextFloor() {
+        // returns next floor type
+        if(this.currentFloor >= 0) {
+            const directionChoices = this.getAdvanceOptions();
+            const choiceIndex = directionChoices.length > 1
+                ? await showChoiceMenu(ChoiceMenuDefault,
+                    `Where to?`,
+                    0,
+                    ...directionChoices.map(c => c[1]),
+                )
+                : 0;
+            // the argument to this is the first part of the option tuple from `getAdvanceOptions`
+            const [[optBitmapValue, deltaIndex]] = directionChoices[choiceIndex];
+            // returns to room type
+            this.chosenDirectionByFloorByRoom[this.currentFloor][this.currentRoomIndex] = optBitmapValue;
+            this.currentRoomIndex += deltaIndex;
+        }
+        this.currentFloor++;
+        this.visitedRoomIndexByFloor[this.currentFloor] = this.currentRoomIndex;
+        this.render();
+        return this.roomTypesByFloor[this.currentFloor][this.currentRoomIndex];
+    }
+
     getAvailableDirections(fi, ri) {
         // returns [
         //     [canGoLeft, didGoLeft, indexDelta],
@@ -168,19 +191,5 @@ class Minimap extends Sprite{
                 ),
             ];
         }).filter(_=>_);
-    }
-
-    // the argument to this is the first part of the option tuple from `getAdvanceOptions`
-    advance([optBitmapValue, deltaIndex]) {
-        // returns to room type
-        this.chosenDirectionByFloorByRoom[this.currentFloor][this.currentRoomIndex] = optBitmapValue;
-        this.currentRoomIndex += deltaIndex;
-        this.currentFloor += 1;
-        this.visitedRoomIndexByFloor[this.currentFloor] = this.currentRoomIndex;
-        this.render();
-    }
-
-    getCurrentFloorType() {
-        return this.roomTypesByFloor[this.currentFloor][this.currentRoomIndex];
     }
 }

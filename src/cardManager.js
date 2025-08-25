@@ -241,12 +241,19 @@ class CardManager{
                 removers.push(() => card.el.removeEventListener('mousedown', cb));
             }
 
-            const pass = e => resolve(["pass", e]);
+            const pass = _ => resolve(["pass"]);
             this.passButton.el.classList.remove('C--disabled');
             this.passButton.el.addEventListener('click', pass);
+            const onKey = e => {
+                if(e.key == "Space") {
+                    pass();
+                }
+            };
+            window.addEventListener('keydown', onKey);
             removers.push(() => {
                 this.passButton.el.classList.add('C--disabled');
                 this.passButton.el.removeEventListener('click', pass);
+                window.removeEventListener('keydown', onKey);
             });
         });
         document.body.classList.remove('C--gettingCard');

@@ -226,7 +226,7 @@ h1{
 
     // z index ranges from 11-20, 24 for hover, 25 for draw & discard
 
-    &:hover, &.C--active{
+    &:hover:not(.C--cantripped), &.C--active{
         transform: rotate(0deg)!important;
         z-index: $z-card-hover!important;
     }

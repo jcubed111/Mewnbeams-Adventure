@@ -123,7 +123,6 @@ async function runGameRun() {
 
 
 async function runNap() {
-    // player.el.style.zIndex = 55;
     const napChoice = await showChoiceMenu(ChoiceMenuDefault,
         [
             styledDiv('', {height: '60rem'}),
@@ -135,7 +134,6 @@ async function runNap() {
         `Sleep (Heal ${NAP_HEAL_AMOUNT}: ${player.currentHp} → ${Math.min(player.maxHp, player.currentHp + NAP_HEAL_AMOUNT)})`,
         'Lick (Remove a Card)',
     );
-    // player.el.style.zIndex = '';
 
     if(napChoice == 0) {
         player.heal(NAP_HEAL_AMOUNT);

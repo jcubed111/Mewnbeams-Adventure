@@ -119,7 +119,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(19, '#1e44ae');
 
         cantrip = 1;
-        damage = 2;
+        damage = 3;
         targetMode = AT_LEFT_ENEMY;
     },
 
@@ -139,6 +139,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(4, '#ff32f1');
 
         damage = 0;
+        repeatPlay = 2;
     },
     class extends CommonCard{
         cardName = 'Maul';
@@ -195,7 +196,7 @@ const cardLibrary = [
     class extends RareCard{
         cardName = 'Boba Eyes';
         pic = SpriteSheetPic(9, '#406');
-        manaCost = 2;
+        manaCost = 1;
 
         gainStrength = 1;
     },

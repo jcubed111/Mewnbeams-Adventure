@@ -75,6 +75,7 @@ class Card extends Sprite{
         this.el.style.bottom = `calc(${bottomRem}rem - ${dy}px)`;
         this.el.classList.toggle('C--active', activated);
         this.el.classList.remove('C--faceDown');
+        this.el.classList.remove('C--cantripped');
     }
 
     setDrawPosition() {
@@ -84,15 +85,17 @@ class Card extends Sprite{
         this.el.style.bottom = '-100rem';
         this.el.classList.remove('C--active');
         this.el.classList.add('C--faceDown');
+        this.el.classList.add('C--cantripped');
     }
 
     setCantripPosition(numPending) {
-        this.el.style.zIndex = 26 + numPending + '!important';  // important prevents hovering from changing z
+        this.el.style.zIndex = 26 + numPending;
         this.el.style.transform = `rotate(0deg)`;
         this.el.style.left = `${536 + 80 * Math.random()}rem`;
         this.el.style.bottom = `${280 + 80 * Math.random()}rem`;
         this.el.classList.remove('C--active');
         this.el.classList.remove('C--faceDown');
+        this.el.classList.add('C--cantripped');
     }
 
     // pick a static (but random) discard spot so we don't change it
@@ -109,6 +112,7 @@ class Card extends Sprite{
         this.el.style.bottom = `${dy}rem`;
         this.el.classList.remove('C--active');
         this.el.classList.remove('C--faceDown');
+        this.el.classList.remove('C--cantripped');
     }
 
     setExhaustedPosition() {

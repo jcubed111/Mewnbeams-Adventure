@@ -47,7 +47,7 @@ const cardLibrary = [
         cardName = 'Rabbit’s Foot';
         pic = SpriteSheetPic(21, '#f02');
         manaCost = 1;
-        getTextLines = () => ['Redraw Your Hand'];
+        extraCardText = 'Discard your hand';
 
         draw = TURN_START_HAND_SIZE;
         async play(targets) {
@@ -56,10 +56,10 @@ const cardLibrary = [
         }
     },
 
-    class extends LegendaryCard{
-        cardName = 'Way of the Weasel';
+    class extends ItemCard{
+        cardName = 'Weasel Pelt';
         pic = SpriteSheetPic(50, '#c76d24');
-        manaCost = 2;
+        manaCost = 1;
 
         dodge = 5;
         exhaust = 1;
@@ -69,7 +69,7 @@ const cardLibrary = [
         cardName = 'Dam';
         // reuses art from the Dam monster
         pic = SpriteSheetPic(29, '#9d411a');
-        actionCost = 1;
+        manaCost = 1;
 
         dodge = 1;
     },
@@ -77,7 +77,6 @@ const cardLibrary = [
     class extends CommonCard{
         cardName = 'Fireball';
         pic = SpriteSheetPic(12, '#f61');
-        actionCost = 1;
         manaCost = 2;
 
         damage = 4;
@@ -88,12 +87,7 @@ const cardLibrary = [
         cardName = 'Spellbook';
         pic = SpriteSheetPic(18, '#7d2300');
         manaCost = 1;
-        getTextLines = () => ['Draw your entire Draw Pile'];
         draw = 7;
-        render(standalone) {
-            super.render(standalone);
-            this.draw = cardManager.drawPile.length;
-        }
     },
 
     class extends ItemCard{
@@ -165,6 +159,7 @@ const cardLibrary = [
         targetMode = TARGET_TO_ALL;
         cantrip = 1;
         bleed = 1;
+        draw = 1;
     },
 
     class extends CommonCard{
@@ -208,6 +203,7 @@ const cardLibrary = [
         targetMode = TARGET_TO_ALL;
         extraCardText = 'Reverse Enemy Order';
         play = () => enemyManager.activeEnemies.reverse();
+        exhaust = 1;
     },
 
     class extends CommonCard{
@@ -215,7 +211,8 @@ const cardLibrary = [
         pic = SpriteSheetPic(28, '#a18600');
         actionCost = 1;
 
-        damage = 2;
+        damage = 1;
+        gainMana = 1;
         extraCardText = 'Push to the right';
         play([target]) {
             const i = enemyManager.activeEnemies.indexOf(target);
@@ -230,10 +227,10 @@ const cardLibrary = [
         pic = SpriteSheetPic(23, '#ca8f5f');
         actionCost = 1;
 
-        extraCardText = 'Add a Fireball to your Discard';
+        extraCardText = 'Add a ghostly Fireball to your discard';
         play = () => cardManager.animateInto(
             ANIMATE_INTO_TARGET_DISCARD,
-            new Card_Fireball,
+            ghostifyCard(new Card_Fireball),
         );
     },
 
@@ -269,6 +266,15 @@ const cardLibrary = [
         }
 
         getTextLines = () => ['Make a Curse', 'Attack 2 per Curse in Play'];
+    },
+
+    class extends LegendaryCard{
+        cardName = 'Cat Opera';
+        pic = SpriteSheetPic(34, '#08f');
+        manaCost = 4;
+
+        targetMode = TARGET_TO_ALL;
+        damage = 5;
     },
 
 

@@ -201,7 +201,10 @@ async function runBattleMain() {
                 cardManager.resolvePending();
 
                 enemyManager.removeDead();
-                if(enemyManager.activeEnemies.length == 0) {
+                if(
+                    enemyManager.activeEnemies.length == 0
+                    || player.currentHp <= 0
+                ) {
                     return;
                 }
 

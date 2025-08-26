@@ -76,7 +76,7 @@ const enemyLibrary = {
             }
             this.summonThisCycle = true;
             yield actions.Attack(2);
-            // yield actions.Attack(2);
+            yield actions.Attack(1);
             if(Math.random() < 0.5) {
                 yield actions.Attack(2);
             }
@@ -119,7 +119,7 @@ const enemyLibrary = {
             yield* shuffleInPlace([
                 actions.Attack(2),
                 actions.BlockAll(2),
-                actions.Block(5),
+                actions.Block(4),
             ]);
         }
     },
@@ -133,7 +133,7 @@ const enemyLibrary = {
             yield* shuffleInPlace([
                 actions.HealAll(2),
                 // actions.Block(2),
-                actions.Attack(2),
+                actions.Attack(1),
             ]);
         }
     },
@@ -158,7 +158,7 @@ const enemyLibrary = {
                 if(i == 0) {
                     yield actions.Summon('🐁', 0, new enemyLibrary.Mouse);
                 }
-                yield actions.Attack(shuffleInPlace([2, 3, 4])[0]);
+                yield actions.Attack(shuffleInPlace([2, 3])[0]);
                 // TODO: eat mouse to heal?
             }
         }

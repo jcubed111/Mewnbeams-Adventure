@@ -74,6 +74,32 @@ const cardLibrary = [
         dodge = 1;
     },
 
+    class extends RareCard{
+        cardName = 'Tail Flick';
+        pic = SpriteSheetPic(35, '#0d915a');
+        manaCost = 1;
+        targetMode = AT_LEFT_ENEMY;
+
+        stun = 1;
+    },
+
+    class extends LegendaryCard{
+        cardName = 'Pounce';
+        pic = SpriteSheetPic(36, '#a65504');
+        actionCost = 1;
+        targetMode = AT_LEFT_ENEMY;
+
+        damage = 5;
+    },
+
+    class extends TrinketCard{
+        cardName = 'Feather Toy on a String';
+        pic = SpriteSheetPic(37, '#a2f');
+
+        draw = 1;
+        gainMana = 1;
+    },
+
     class extends CommonCard{
         cardName = 'Fireball';
         pic = SpriteSheetPic(12, '#f61');
@@ -104,7 +130,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(31, '#d42916');
         actionCost = 1;
 
-        bleed = 3;
+        bleed = 4;
         exhaust = 1;
     },
 

@@ -2,7 +2,7 @@ class Player extends Character{
     characterName = 'Mewnbeam';
     size = 230;
     maxHp = 40;
-    pic = SpriteSheetPic(39, '#000');
+    pic = SpriteSheetPic(38, '#000');
 
     actionPoints;
     manaPoints;

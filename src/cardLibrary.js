@@ -184,8 +184,7 @@ const cardLibrary = [
 
         targetMode = TARGET_TO_ALL;
         cantrip = 1;
-        bleed = 1;
-        draw = 1;
+        bleed = 2;
     },
 
     class extends CommonCard{

@@ -31,7 +31,7 @@ async function runMainMenu() {
     const selection = await showChoiceMenu(ChoiceMenuDefault,
         [
             plainElement('h1', 'Mewnbeam’s Adventure'),
-            player.pic(),
+            SpriteSheetPic(39, '#000')(),
         ],
         0,
         'Start',
@@ -126,7 +126,7 @@ async function runNap() {
     const napChoice = await showChoiceMenu(ChoiceMenuDefault,
         [
             styledDiv('', {height: '60rem'}),
-            player.pic(),
+            SpriteSheetPic(39, '#000')(),
             styledDiv('', {height: '60rem'}),
             `This looks like a cozy spot for a nap...`,
         ],

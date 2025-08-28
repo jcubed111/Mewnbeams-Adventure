@@ -3,7 +3,7 @@ const enemyLibrary = {
     /* Intro fight enemies */
     BasicRat: class extends Character{
         characterName = 'Rat';
-        maxHp = 4;
+        maxHp = 5;
         size = 130;
         pic = SpriteSheetPic(46, '#e11');
 
@@ -48,7 +48,7 @@ const enemyLibrary = {
             yield* shuffleInPlace([
                 actions.Attack(2),
                 actions.Attack(3),
-                actions.Attack(4),
+                actions.Attack(5),
             ]);
         }
 
@@ -90,7 +90,7 @@ const enemyLibrary = {
 
         *getActionSequence() {
             yield actions.Summon('🪵🪵', new enemyLibrary.Dam, new enemyLibrary.Dam);
-            yield actions.Attack(3);
+            yield actions.Attack(4);
         }
     },
     Dam: class extends Character{
@@ -133,7 +133,7 @@ const enemyLibrary = {
             yield* shuffleInPlace([
                 actions.HealAll(2),
                 // actions.Block(2),
-                actions.Attack(1),
+                actions.Attack(2),
             ]);
         }
     },
@@ -158,7 +158,7 @@ const enemyLibrary = {
                 if(i == 0) {
                     yield actions.Summon('🐁', 0, new enemyLibrary.Mouse);
                 }
-                yield actions.Attack(shuffleInPlace([2, 3])[0]);
+                yield actions.Attack(shuffleInPlace([3, 4])[0]);
                 // TODO: eat mouse to heal?
             }
         }

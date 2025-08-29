@@ -84,7 +84,7 @@ const enemyLibrary = {
     },
     Beaver: class extends Character{
         characterName = 'Beaver';
-        maxHp = 15;
+        maxHp = 17;
         size = 175;
         pic = SpriteSheetPic(52, '#a2512f');
 
@@ -141,7 +141,7 @@ const enemyLibrary = {
     /* Late game unique enemies */
     Snake: class extends Character{
         characterName = 'Snake 🐍';
-        maxHp = 15;
+        maxHp = 17;
         size = 175;
         pic = SpriteSheetPic(40, '#348100');
         dodge = 1;
@@ -167,7 +167,7 @@ const enemyLibrary = {
     /* Rat King */
     RatKing: class extends Character{
         characterName = 'Rat King';
-        maxHp = 25;
+        maxHp = 30;
         size = 175;
         pic = SpriteSheetPic(48, '#e11', 1);
 

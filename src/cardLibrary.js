@@ -184,7 +184,7 @@ const cardLibrary = [
 
         targetMode = TARGET_TO_ALL;
         cantrip = 1;
-        bleed = 2;
+        bleed = 1;
     },
 
     class extends CommonCard{
@@ -274,6 +274,7 @@ const cardLibrary = [
     class extends LegendaryCard{
         cardName = 'Dark Bargain';
         pic = SpriteSheetPic(25, '#f20');
+        actionCost = 1;
         manaCost = 1;
         damage = 0;
 

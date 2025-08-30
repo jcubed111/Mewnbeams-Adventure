@@ -167,7 +167,9 @@ async function runBattle(enemies) {
     await runBattleMain();
 
     // cleanup
-    player.reset();
+    if(player.currentHp > 0) {
+        player.reset();
+    }
     await cardManager.discardHand();
 }
 

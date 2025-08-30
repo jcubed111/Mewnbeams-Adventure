@@ -211,10 +211,12 @@ class Card extends Sprite{
 
 
             this.gainActions != undefined &&
-                `Gain ${this.gainActions} Actions`,
+                [`Gain `, span('C--actionPointIcon', '' + this.gainActions)],
+                // [`Gain ${this.gainActions} Actions`, styled('span', '', {color: '#a08'}, '◆')],
 
             this.gainMana != undefined &&
-                `Gain ${this.gainMana} Mana`,
+                [`Gain `, span('C--manaPointIcon', '' + this.gainMana)],
+                // [`Gain ${this.gainMana} Mana`, styled('span', '', {color: '#08a'}, '●')],
 
             this.selfHeal != undefined &&
                 `Heal ${this.selfHeal}`,

@@ -22,6 +22,8 @@ class Player extends Character{
         this.el.style.left = '150rem';
         this.el.classList.add('C--playerCharacter');
 
+        this.nameEl.innerText = `${this.characterName}${this.strength ? ` (+${this.strength})` : ''}`;
+
         this.resourceSprite.showAndRender(this.actionPoints, this.manaPoints);
     }
 

@@ -27,6 +27,7 @@ class Character extends Sprite{
         this.blockBarEl = div(`C--pipBar ${this.size >= 170 && 'C--wide'}`);
         this.hpBarEl = div(`C--pipBar ${this.size >= 170 && 'C--wide'}`);
         this.pendingActionEl = div('C--pendingAction');
+        this.nameEl = div('', this.characterName);
 
         // const [picIndex, hueShiftDeg] = this.pic;
         return styledDiv('C--character', {width: `${this.size}rem`},
@@ -34,7 +35,7 @@ class Character extends Sprite{
             this.blockBarEl,
             this.hpBarEl,
             this.pic(),
-            div('', this.characterName),
+            this.nameEl,
             this.pendingActionEl,
         );
     }

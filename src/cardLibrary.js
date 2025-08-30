@@ -328,7 +328,7 @@ const cardLibrary = [
             for(let i = 0; i < 2; i++) {
                 const draw = cardManager.drawPile;
                 if(draw.length < 1) break;
-                const chosenIndex = await cardListViewScreen(draw, 0, 1, `Draw ${2 - i}`)
+                const chosenIndex = await cardListViewScreen(draw, 0, CardListWithCardSelect, `Draw ${2 - i}`)
                 if(chosenIndex == -1) {
                     i--;
                     continue;
@@ -359,7 +359,7 @@ const cardLibrary = [
         }
         async play() {
             const discard = cardManager.discardPile;
-            const chosenIndex = await cardListViewScreen(discard, 0, 1)
+            const chosenIndex = await cardListViewScreen(discard, 0, CardListWithCardSelect);
             if(chosenIndex == -1) {
                 return await this.play();
             }

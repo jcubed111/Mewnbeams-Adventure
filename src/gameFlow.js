@@ -20,7 +20,7 @@ async function runMainMenu() {
     // await runNap();
     // await deathScreen();
     // await victoryScreen();
-    // await cardListViewScreen(cardLibrary.map(C => new C), 0, 0, 'Title');
+    // await cardListViewScreen(cardLibrary.map(C => new C), 0, CardListWithBackButton, 'Title');
     // await runBattle([
     //     new enemyLibrary.Beaver(),
     //     new enemyLibrary.RatGuard(),
@@ -43,7 +43,7 @@ async function runMainMenu() {
         await cardListViewScreen(
             cardLibrary.map(C => new C),
             true,
-            false,
+            CardListWithBackButton,
             'Library',
             true,
         );
@@ -142,7 +142,7 @@ async function runNap() {
         const removeIndex = await cardListViewScreen(
             cardManager.deck,
             false,
-            true,
+            CardListWithCardSelectAndBack,
             'Remove a Card...',
         );
         // If we clicked back, just run the nap again

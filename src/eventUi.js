@@ -1,13 +1,10 @@
 
 
 // choice menu mode bitmap
-const Bit_darkBg = 1;
-const Bit_unclickableCardList = 32;
-
-
 const ChoiceMenuDefault = 0;
 const ChoiceMenuDarkBg = 1;
-const ChoiceMenuDarkBgNoClick = 2;
+const ChoiceMenuDarkBgNoCardClick = 2;
+const ChoiceMenuDarkBgNoBack = 4;
 
 // A big fullscreen menu element for events, card lists, etc.
 function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
@@ -21,15 +18,19 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
         const choiceMenuSprite = new class extends Sprite{
             makeEl() {
                 const optionDivs = options.map(
-                    (optionContent, i) =>
-                        div(
+                    (optionContent, i) => {
+                        if(i == 0 && (darkModeMode & ChoiceMenuDarkBgNoBack)) {
+                            return div('');
+                        }
+                        return div(
                             (!darkModeMode || i == 0) && 'C--buttonLike',
                             optionContent,
-                        )
+                        );
+                    }
                 );
 
                 optionDivs.forEach((el, i) => {
-                    if(i == 0 || darkModeMode != 2) {
+                    if(i == 0 || !(darkModeMode & 2)) {
                         el.addEventListener('click', () => {
                             this.hide();
                             resolve(i);
@@ -132,10 +133,14 @@ async function cardRewardScreen(text, pic, cardInstances) {
 const undiscoveredCard = new class extends Card{
     cardName = '???';
     primaryColor = '#444';
-
 };
 
-async function cardListViewScreen(cards, sort, allowCardClick, title, libraryView) {
+// card list modes:
+const CardListWithCardSelect = ChoiceMenuDarkBg | ChoiceMenuDarkBgNoBack;
+const CardListWithBackButton = ChoiceMenuDarkBg | ChoiceMenuDarkBgNoCardClick;
+const CardListWithCardSelectAndBack = ChoiceMenuDarkBg;
+
+async function cardListViewScreen(cards, sort, mode, title, libraryView) {
     const ordered = sort
         // google closure compiler doesn't know about toSorted lol
         ? cards['toSorted'](
@@ -144,8 +149,9 @@ async function cardListViewScreen(cards, sort, allowCardClick, title, libraryVie
                 || a.cardName.localeCompare(b.cardName)
         )
         : cards;
+
     // we subtract 1 to account for the back button and return the card index
-    return -1 + await showChoiceMenu(allowCardClick ? ChoiceMenuDarkBg : ChoiceMenuDarkBgNoClick,
+    return -1 + await showChoiceMenu(mode,
         div('',
             title,
             cards.length ? 0 : ' (Empty)',
@@ -155,7 +161,7 @@ async function cardListViewScreen(cards, sort, allowCardClick, title, libraryVie
         'Back',
         ...ordered.map(card =>
             card.asStaticElement(
-                allowCardClick,
+                !(mode & ChoiceMenuDarkBgNoCardClick),
                 libraryView && !isCardDiscovered(card),
             ),
         ),

@@ -38,6 +38,7 @@ $card-back-border: #337;
 
 
 $z-body-bg: 0;
+$z-body-stars: 1;
 $z-character: 5;
 $z-fight-resources: 7;
 $z-card-pile: 7;
@@ -99,7 +100,7 @@ h1{
 }
 
 /* Fullscreen ux elements */
-.C--arrowCanvas, .C--choiceMenuWrapper, .C--bodyBgWrapper{
+.C--arrowCanvas, .C--choiceMenuWrapper, .C--bodyBgWrapper, .C--bodyBgStars{
     position: absolute;
     inset: 0;
 }
@@ -108,6 +109,19 @@ h1{
     z-index: $z-body-bg;
     top: auto;
     transition: inset 0.75s ease-in-out;
+}
+
+.C--bodyBgStars{
+    z-index: $z-body-stars;
+    inset: 0 0 auto 0;
+    display: flex;
+    justify-content: space-between;
+    height: 170rem;
+    padding: 0 65rem;
+
+    .C--spriteSheetPic{
+        width: auto;
+    }
 }
 
 .C--arrowCanvas{

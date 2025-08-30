@@ -1,8 +1,14 @@
 class BodyBg extends Sprite{
     makeEl() {
-        return div('C--bodyBgWrapper',
-            SpriteSheetPic(54, '#301b45')(),
-            SpriteSheetPic(54, '#301b45')(),
+        return div('',
+            div('C--bodyBgWrapper',
+                SpriteSheetPic(54, '#301b45')(),
+                SpriteSheetPic(54, '#301b45')(),
+            ),
+            div('C--bodyBgStars',
+                SpriteSheetPic(42, '#0000')(),
+                SpriteSheetPic(43, '#0000')(),
+            ),
         );
     }
 

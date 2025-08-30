@@ -26,7 +26,7 @@ function getFightGenerator() {
     const midTierGroupEnemyFights = shuffleInPlace([
         [new enemyLibrary.RatGuard, new enemyLibrary.Mouse],
         [new enemyLibrary.RatGuard, new enemyLibrary.PoisonRat],
-        [new enemyLibrary.PoisonRat, new enemyLibrary.PoisonRat, new enemyLibrary.RatWizard],
+        [new enemyLibrary.BasicRat, new enemyLibrary.PoisonRat, new enemyLibrary.PoisonRat, new enemyLibrary.RatWizard],
         [new enemyLibrary.RatGuard, new enemyLibrary.RatWizard, new enemyLibrary.RatGuard],
         [new enemyLibrary.Mouse, new enemyLibrary.Mouse, new enemyLibrary.Mouse],
     ]);

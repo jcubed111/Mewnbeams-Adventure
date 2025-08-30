@@ -235,14 +235,13 @@ h1{
         border-color: #666;
     }
 
-    .C--actionPointIcon, .C--manaPointIcon{
+    .C--cardCostIcon{
         position: absolute;
         top: -2rem;
         left: -2rem;
         z-index: $z-card-local-cost-icons;
     }
-
-    .C--manaPointIcon{
+    .C--cardCostIcon+.C--cardCostIcon{
         top: 38rem;
     }
 }

@@ -38,8 +38,8 @@ class Card extends Sprite{
     makeEl() {
         // ~0.5%
         return styledDiv('C--card', {'background': this.primaryColor},
-            div('C--actionPointIcon', '' + this.actionCost),
-            this.manaCost > 0 && div('C--manaPointIcon', '' + this.manaCost),
+            (this.actionCost > 0 || this.manaCost == 0) && div('C--actionPointIcon C--cardCostIcon', '' + this.actionCost),
+            this.manaCost > 0 && div('C--manaPointIcon C--cardCostIcon', '' + this.manaCost),
             this.pic(),
             div(
                 'C--cardName',

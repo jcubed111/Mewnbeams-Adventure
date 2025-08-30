@@ -21,13 +21,14 @@ async function runMainMenu() {
     // await deathScreen();
     // await victoryScreen();
     // await cardListViewScreen(cardLibrary.map(C => new C), 0, CardListWithBackButton, 'Title');
-    resetGameState();
-    player.showAndRender();
-    await runBattle([
-        new enemyLibrary.Beaver(),
-        new enemyLibrary.Weasel(),
-        new enemyLibrary.RatKing(),
-    ]);
+    //////////////
+    // resetGameState();
+    // player.showAndRender();
+    // await runBattle([
+    //     new enemyLibrary.Beaver(),
+    //     new enemyLibrary.Weasel(),
+    //     new enemyLibrary.PoisonRat(),
+    // ]);
     //////////////
 
     const selection = await showChoiceMenu(ChoiceMenuDefault,

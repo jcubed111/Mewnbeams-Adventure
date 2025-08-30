@@ -30,7 +30,7 @@ const enemyLibrary = {
         characterName = 'Poison Rat';
         maxHp = 3;
         size = 130;
-        pic = SpriteSheetPic(46, '#1e1');
+        pic = SpriteSheetPic(37, '#1e1');
 
         *getActionSequence() {
             yield actions.Poison(2);

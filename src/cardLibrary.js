@@ -94,7 +94,7 @@ const cardLibrary = [
 
     class extends TrinketCard{
         cardName = 'Feather Toy on a String';
-        pic = SpriteSheetPic(37, '#a2f');
+        pic = SpriteSheetPic(0, '#a2f');
 
         draw = 1;
         gainMana = 1;

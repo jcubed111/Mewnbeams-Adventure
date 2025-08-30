@@ -216,9 +216,9 @@ const cardLibrary = [
     class extends RareCard{
         cardName = 'Boba Eyes';
         pic = SpriteSheetPic(9, '#406');
-        manaCost = 1;
+        manaCost = 2;
 
-        gainStrength = 1;
+        gainStrength = 2;
     },
 
     class extends RareCard{
@@ -311,7 +311,7 @@ const cardLibrary = [
         manaCost = 1;
 
         selfDamage = 1;
-        gainStrength = 2;
+        gainStrength = 3;
     },
 
     class extends LegendaryCard{

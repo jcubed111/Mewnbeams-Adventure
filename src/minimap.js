@@ -53,9 +53,21 @@ class Minimap extends Sprite{
     render() {
         setChildren(this.el,
             this.roomTypeByFloor.flatMap((roomType, i) => {
-                if(i == 14) return div('', '👑');
+                if(i == 14) {
+                    return div(
+                        i == this.currentFloor ? 'C--currentRoom' : '',
+                        '👑',
+                    );
+                }
                 return [
-                    div(i == 0 || i <= this.currentFloor ? 'C--visitedPath' : '', '#R?z'[roomType]),
+                    div(
+                        i == this.currentFloor
+                            ? 'C--currentRoom'
+                            : i == 0 || i <= this.currentFloor
+                                ? 'C--visitedPath'
+                                : '',
+                        '#R?z'[roomType],
+                    ),
                     div('C--mapArrow ' + (i < this.currentFloor && 'C--visitedPath'), '↑'),
                 ];
             }),

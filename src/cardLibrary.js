@@ -226,7 +226,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(22, '#71b6cb');
         manaCost = 1;
         targetMode = TARGET_TO_ALL;
-        extraCardText = 'Reverse Enemy Order';
+        extraCardText = 'Reverse enemy order';
         play = () => enemyManager.activeEnemies.reverse();
         exhaust = 1;
     },
@@ -264,7 +264,7 @@ const cardLibrary = [
         pic = SpriteSheetPic(24, '#923303');
         manaCost = 1;
 
-        extraCardText = 'Make a Random Trinket';
+        extraCardText = 'Make a random Trinket';
         play = () => cardManager.animateInto(
             ANIMATE_INTO_TARGET_HAND,
             getThreeRandomTrinkets()[0],
@@ -291,7 +291,7 @@ const cardLibrary = [
             super.play(targets);
         }
 
-        getTextLines = () => ['Make a Curse', 'Attack 2 per Curse in Play'];
+        getTextLines = () => ['Make a Curse', 'Attack 2 per Curse in play'];
     },
 
     class extends LegendaryCard{
@@ -353,7 +353,7 @@ const cardLibrary = [
 
         pic = SpriteSheetPic(3, '#005f39');
 
-        extraCardText = 'Make a ghostly copy of a discarded Card';
+        extraCardText = 'Make a ghostly copy of a discarded card';
         playable() {
             return super.playable() && cardManager.discardPile.length;
         }

@@ -310,7 +310,7 @@ const cardLibrary = [
         actionCost = 1;
         manaCost = 1;
 
-        selfDamage = 2;
+        selfDamage = 1;
         gainStrength = 2;
     },
 

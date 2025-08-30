@@ -17,6 +17,17 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
     return new Promise(resolve => {
         const choiceMenuSprite = new class extends Sprite{
             makeEl() {
+                const escKey = e => {
+                    if(e.key == 'Escape') {
+                        this.hide();
+                        window.removeEventListener('keydown', escKey);
+                        resolve(0);
+                    }
+                };
+                if(darkModeMode && !(darkModeMode & ChoiceMenuDarkBgNoBack)) {
+                    window.addEventListener('keydown', escKey);
+                }
+
                 const optionDivs = options.map(
                     (optionContent, i) => {
                         if(i == 0 && (darkModeMode & ChoiceMenuDarkBgNoBack)) {
@@ -32,6 +43,7 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
                 optionDivs.forEach((el, i) => {
                     if(i == 0 || !(darkModeMode & 2)) {
                         el.addEventListener('click', () => {
+                            window.removeEventListener('keydown', escKey);
                             this.hide();
                             resolve(i);
                         });

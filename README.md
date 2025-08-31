@@ -49,4 +49,8 @@ The action an enemy will take on its turn is listed below it:
 * 🛡️ X: Gain X block. Each block prevents a single point of attack damage, then goes away at the start of the enemy's next turn.
 * 💖 X: Heal self for X.
 * Summon [icon]: Summon the specified enemies.
-* ◄ [action] ►: The action applies to all enemies, including self.
+* ◄[action]►: The action applies to all enemies, including self.
+
+## Keyboard Controls:
+[space] will end your turn
+[esc] will get you out of card menus, or cancel the selected card

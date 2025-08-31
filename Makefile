@@ -112,7 +112,7 @@ out.zip: dist/index.html $(IMAGES_DIST)
 	@rm -f $@ dist/@
 	@cd dist && 7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $($^:dist/%=%)
 	@mv dist/$@ $@
-	@npx advzip --recompress --shrink-insane -q -i250 $@
+	@npx advzip --recompress --shrink-insane -q -i1000 $@
 	@rm -rf test_extract
 	@unzip out.zip -d test_extract > /dev/null
 

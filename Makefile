@@ -1,4 +1,3 @@
-# 	src/zzfx.js
 JS_FILES := \
 	src/constants.js \
 	src/utils.js \

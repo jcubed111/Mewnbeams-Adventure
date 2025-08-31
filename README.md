@@ -2,6 +2,8 @@
 
 A black-cat-themed deckbuilder built for js13kgames 2025.
 
+[Play now](https://www.jstimac.com/mewnbeams-adventure/index.html)
+
 ## How to Play
 
 1. Click or drag a card to play it
@@ -54,3 +56,7 @@ The action an enemy will take on its turn is listed below it:
 ## Keyboard Controls:
 [space] will end your turn
 [esc] will get you out of card menus, or cancel the selected card
+
+
+# License
+Copyright 2025 John Stimac

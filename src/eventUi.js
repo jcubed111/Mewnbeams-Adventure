@@ -31,7 +31,7 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
                 const optionDivs = options.map(
                     (optionContent, i) => {
                         if(i == 0 && (darkModeMode & ChoiceMenuDarkBgNoBack)) {
-                            return div('');
+                            return null;
                         }
                         return div(
                             (!darkModeMode || i == 0) && 'C--buttonLike',
@@ -42,7 +42,7 @@ function showChoiceMenu(darkModeMode, textContent, heroPic, ...options) {
 
                 optionDivs.forEach((el, i) => {
                     if(i == 0 || !(darkModeMode & 2)) {
-                        el.addEventListener('click', () => {
+                        el?.addEventListener('click', () => {
                             window.removeEventListener('keydown', escKey);
                             this.hide();
                             resolve(i);

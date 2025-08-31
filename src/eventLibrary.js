@@ -75,7 +75,7 @@ const eventLibrary = [
         await cardRewardScreen(
             [
                 plainElement('h2', 'Brewery'),
-                fadeInText`So many things to knock on the floor, so little time.`,
+                fadeInText`So many things to knock on the floor!`,
             ],
             cards[0][0].pic(),
             cards,

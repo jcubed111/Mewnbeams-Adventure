@@ -47,8 +47,7 @@ class Character extends Sprite{
         // ~1%
         if(this.dodge) {
             this.dodge--;
-            this.render();
-            return;
+            return this.render();
         }
 
         this._preAnimateHp ??= this.currentHp;
@@ -80,10 +79,18 @@ class Character extends Sprite{
         // repeated verbatium from above to hopefully get optimized
         if(this.dodge) {
             this.dodge--;
-            this.render();
-            return;
+        }else{
+            this.bleed += bleed;
         }
-        this.bleed += bleed;
+        this.render();
+    }
+
+    stun() {
+        if(this.dodge) {
+            this.dodge--;
+        }else{
+            this.clearAction();
+        }
         this.render();
     }
 

@@ -275,7 +275,7 @@ class Card extends Sprite{
                     target.gainBleed(this.bleed);
                 }
                 if(this.stun != undefined) {
-                    target.clearAction();
+                    target.stun();
                 }
             };
 

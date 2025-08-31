@@ -207,6 +207,7 @@ class CardManager{
             card.setCantripPosition(this.pending.length);
             await wait(0.4);
             await card.play(enemyManager.activeEnemies);
+            enemyManager.removeDead();
         }
 
         await wait(0.4);

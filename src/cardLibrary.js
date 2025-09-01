@@ -38,7 +38,7 @@ const cardLibrary = [
     },
 
     class extends CurseCard{
-        cardName = 'Curse';
+        cardName = 'Curse: Scream';
         pic = SpriteSheetPic(26, '#289876');
         cantrip = 1;
     },
@@ -252,9 +252,9 @@ const cardLibrary = [
         pic = SpriteSheetPic(23, '#ca8f5f');
         actionCost = 1;
 
-        extraCardText = 'Add a ghostly Fireball to your discard';
+        extraCardText = 'Add a ghostly Fireball to your draw pile';
         play = () => cardManager.animateInto(
-            ANIMATE_INTO_TARGET_DISCARD,
+            ANIMATE_INTO_TARGET_DRAW,
             ghostifyCard(new Card_Fireball),
         );
     },
@@ -285,9 +285,9 @@ const cardLibrary = [
         async play(targets) {
             await cardManager.animateInto(
                 ANIMATE_INTO_TARGET_DRAW,
-                new Card_Curse,
+                new Card_CurseScream,
             );
-            this.damage = 2 * cardManager.cardsInPlay().filter(c => c.cardName == 'Curse').length;
+            this.damage = 2 * cardManager.cardsInPlay().filter(c => c.rarityOrder == 6).length;
             super.play(targets);
         }
 
@@ -413,7 +413,20 @@ const cardLibrary = [
         causesPass = CAUSES_PASS_RETAIN_VALUE;
     },
 
+    class extends CurseCard{
+        cardName = 'Curse: Rat Pack';
+        pic = SpriteSheetPic(46, '#00ff86');
 
-    // - see ghost - replay the previous card
-    // - 9 lives
+        cantrip = 1;
+        extraCardText = 'Summon a Rat';
+        exhaust = 1;
+
+        async play() {
+            if(enemyManager.activeEnemies.length < ENEMY_MAX) {
+                const e = new enemyLibrary.BasicRat();
+                e.clearAction();
+                await enemyManager.animateIn([e], ENEMY_MAX);
+            }
+        }
+    }
 ];

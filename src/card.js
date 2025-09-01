@@ -186,10 +186,10 @@ class Card extends Sprite{
         // ~2%
         const targetModeText = ['', ' to all', ' to the left enemy'][this.targetMode];
         return [
-            this.extraCardText,
-
             this.cantrip &&
                 `Cantrip`,
+
+            this.extraCardText,
 
             this.damage != undefined &&
                 `Attack ${
@@ -328,7 +328,7 @@ class ItemCard extends Card{
     primaryColor = 'linear-gradient(90deg, #b66b17, #923303, #8915a0)';
 }
 class CurseCard extends Card{
-    rarityOrder = 6;
+    rarityOrder = 6;  // If you change this, update the check in Dark Bargain
     primaryColor = '#289876';
 }
 

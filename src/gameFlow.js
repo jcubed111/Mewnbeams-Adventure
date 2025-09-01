@@ -64,18 +64,18 @@ async function runGameRun() {
 
     /* OPENING */
     const choice = await showChoiceMenu(ChoiceMenuDefault,
-        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', `take care of`)} that ${plainElement('b', `Rat King`)} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.`,
+        fadeInText`Mewnbeam, would you be a dear and ${plainElement('i', `take care of`)} that ${plainElement('b', `Rat King`)} while I’m out?${br()}${br()}He should be easy to find, he’s been causing lots of trouble up in the attic.${br()}${br()}Shouldn’t be a big deal, just remember: ${plainElement('i', `Mana`)} carries over, but ${plainElement('b', `actions`)} reset every round.`,
         witchPic(),
         'Mrow?',
-        'Hiiisssss!',
+        // 'Hiiisssss!',
     );
-    if(choice == 0) {
-        await showChoiceMenu(ChoiceMenuDefault,
-            fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', `Mana`)} carries over, but ${plainElement('b', `actions`)} reset every round.`,
-            witchPic(),
-            'Hiiisssss?'
-        );
-    }
+    // if(choice == 0) {
+    //     await showChoiceMenu(ChoiceMenuDefault,
+    //         fadeInText`Shouldn’t be a big deal, just remember: ${plainElement('i', `Mana`)} carries over, but ${plainElement('b', `actions`)} reset every round.`,
+    //         witchPic(),
+    //         'Hiiisssss?'
+    //     );
+    // }
     const boonChoice = await cardRewardScreen(
         fadeInText`Hmph. Alright, I do need to be off to the potion shop, but I suppose I could give you some help before I go.${br()}${br()}What’ll it be?`,
         ' ',

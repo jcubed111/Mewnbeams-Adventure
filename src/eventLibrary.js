@@ -2,14 +2,16 @@ const eventLibrary = [
     // Need at least 5 events to guaranteed not run out
     async () => {
         const spellbook = new Card_Spellbook;
-        const spellbookmark = new Card_Spellbookmark;
         await cardRewardScreen(
             [
                 plainElement('h2', 'The Library'),
                 fadeInText`Short-Tongue loves her spell book, but maybe that ribbon is more my jam...`,
             ],
             spellbook.pic(),
-            [spellbook, spellbookmark],
+            [
+                [new Card_CurseRatPack, spellbook],
+                new Card_Spellbookmark,
+            ],
         );
     },
     async () => {
@@ -25,8 +27,8 @@ const eventLibrary = [
     },
     async () => {
         const cards = [
-            new Card_Curse,
-            new Card_Curse,
+            new Card_CurseScream,
+            new Card_CurseScream,
             new Card_DarkBargain,
         ];
         await cardRewardScreen(
@@ -62,7 +64,7 @@ const eventLibrary = [
                 plainElement('h2', 'Closed Door'),
                 fadeInText`How ${plainElement('b', 'dare')} she!`,
             ],
-            new Card_Curse().pic(),
+            new Card_CurseScream().pic(),
             cards,
         );
     },

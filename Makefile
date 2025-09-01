@@ -28,7 +28,7 @@ JS_DEV := $(JS_FILES:src/%=dev/%)
 
 .PHONY: all report clean
 
-all: $(IMAGES_DEV) dev/index.html out.zip report
+all: $(IMAGES_DEV) dev/index.html mewnbeams-adventure.zip report
 
 clean:
 	rm -rf dev/*
@@ -106,19 +106,19 @@ dist/index.html: build/index.html build/main-min.js build/styles-min.css combine
 	@echo $@ "<-" $^
 	@python3 combine.py > $@
 
-out.zip: dist/index.html $(IMAGES_DIST)
+mewnbeams-adventure.zip: dist/index.html $(IMAGES_DIST)
 	@echo $@ "<-" $^
 	@rm -f $@ dist/@
 	@cd dist && 7z a -tzip -bd -bso0 -bsp0 -mx9 $@ $($^:dist/%=%)
 	@mv dist/$@ $@
 	@npx advzip --recompress --shrink-insane -q -i1000 $@
 	@rm -rf test_extract
-	@unzip out.zip -d test_extract > /dev/null
+	@unzip mewnbeams-adventure.zip -d test_extract > /dev/null
 
-report: out.zip
+report: mewnbeams-adventure.zip
 	@echo '------------------------------------';
 	@echo;
-	@FILE_SIZE=$$(stat -c%s out.zip 2>/dev/null || stat -f%z out.zip); \
+	@FILE_SIZE=$$(stat -c%s mewnbeams-adventure.zip 2>/dev/null || stat -f%z mewnbeams-adventure.zip); \
 		PERCENT=$$(awk -v f="$$FILE_SIZE" -v t="13312" 'BEGIN { printf "%.3f", (f/t)*100 }'); \
 		if (( $$(echo "$$PERCENT > 100" | bc -l) )); then \
 			MESSAGE=$$(echo "🛑 TOO LARGE 🛑"); \

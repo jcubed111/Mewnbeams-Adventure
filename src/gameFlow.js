@@ -131,10 +131,10 @@ async function runNap() {
             styledDiv('', {height: '60rem'}),
             SpriteSheetPic(39, '#000')(),
             styledDiv('', {height: '60rem'}),
-            `This looks like a cozy spot for a nap...`,
+            `This looks like a cozy spot...`,
         ],
         0,
-        `Sleep (Heal ${NAP_HEAL_AMOUNT}: ${player.currentHp} → ${Math.min(player.maxHp, player.currentHp + NAP_HEAL_AMOUNT)})`,
+        `Cat Nap (Heal ${NAP_HEAL_AMOUNT}: ${player.currentHp} → ${Math.min(player.maxHp, player.currentHp + NAP_HEAL_AMOUNT)})`,
         'Lick (Remove a Card)',
     );
 

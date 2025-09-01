@@ -13,6 +13,7 @@ class Player extends Character{
         player.actionPoints = ACTIONS_PER_ROUND;
         player.strength = 0;
         player.bleed = 0;
+        player.dodge = 0;
         this.render();
     }
 
